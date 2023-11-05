@@ -1,2 +1,4 @@
 Django
 python-dotenv==1.0.0
+psycopd
+psycopd2
