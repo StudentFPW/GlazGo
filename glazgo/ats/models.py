@@ -63,14 +63,14 @@ class Users(models.Model):
 
 # Класс содержащий список обязанностей
 class Responsibilities(models.Model):
-    name_resp = models.CharField(max_length=64, unique=True) # описание обязанности
+    name_resp = models.CharField(max_length=250, unique=True) # описание обязанности
 
     def __str__(self):
         return f'name_resp: {self.name_resp}'
 
 # Класс содержащий список требований
 class Requirements(models.Model):
-    name_req = models.CharField(max_length=64, unique=True) # описание требований
+    name_req = models.CharField(max_length=250, unique=True) # описание требований
 
     def __str__(self):
         return f'name_req: {self.name_req}'
