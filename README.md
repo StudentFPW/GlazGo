@@ -28,3 +28,5 @@ def post_save_candidate_promotion(**kwargs):
     user_id = models.ForeignKey(Users, on_delete=models.PROTECT) #ссылка на сотрудника, получатель сообщения
     candidate_id = models.ForeignKey(Candidate, on_delete=models.PROTECT) #ссылка на кандидата
     viewed = models.BooleanField('Просмотрено', default=False) #новость просмотрена`
+
+API по GET запросу http://127.0.0.1:8000/notification/my-message/
