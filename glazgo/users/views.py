@@ -1,7 +1,8 @@
-from .serializers import UserSerializer
-from .models import Users
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
+
+from .serializers import UserSerializer
+from .models import Users
 
 
 @api_view(["GET"])

@@ -1,10 +1,12 @@
-from .models import Conversation
-from rest_framework.decorators import api_view
-from rest_framework.response import Response
-from users.models import Users
-from .serializers import ConversationListSerializer, ConversationSerializer
 from django.db.models import Q
 from django.shortcuts import redirect, reverse
+
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
+
+from .models import Conversation
+from users.models import Users
+from .serializers import ConversationListSerializer, ConversationSerializer
 
 
 @api_view(["POST"])
