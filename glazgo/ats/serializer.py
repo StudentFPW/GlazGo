@@ -45,7 +45,7 @@ class MessageSerializer(serializers.ModelSerializer):
         fields = "__all__"
 
 
-class MyMessageSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Message
-        fields = ("candidate_id", "viewed")
+# class MyMessageSerializer(serializers.ModelSerializer):
+#     class Meta:
+#         model = Message
+#         fields = ("candidate_id", "viewed")
