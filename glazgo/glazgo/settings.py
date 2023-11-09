@@ -39,21 +39,20 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    "ats",
-    "notification",
     "django.contrib.sites",
     "rest_framework",
+    "rest_framework.authtoken",
+    "drf_yasg",
     "channels",
     "corsheaders",
-    "rest_framework.authtoken",
     "dj_rest_auth",
     "allauth",
     "allauth.account",
     "allauth.socialaccount",
     "dj_rest_auth.registration",
+    "ats",
     "users",
     "chat",
-    "drf_yasg",
 ]
 
 SITE_ID = 1
@@ -142,7 +141,6 @@ TIME_ZONE = "UTC"
 USE_I18N = True
 
 USE_TZ = True
-
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/

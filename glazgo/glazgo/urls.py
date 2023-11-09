@@ -17,17 +17,22 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 
-from rest_framework.routers import SimpleRouter
+from rest_framework import routers
 from rest_framework import permissions
 from drf_yasg.views import get_schema_view
 from drf_yasg import openapi
 
-from ats.views import MyMessageViewSet, CandidateViewSet
+from ats.views import *
 
-
-router = SimpleRouter()
-router.register(r"my-message", MyMessageViewSet, "my-message")
-router.register(r"candidate", CandidateViewSet, "candidate")
+router = routers.DefaultRouter()
+router.register(r"cust", CustomerViewSet)
+router.register(r"res", ResponsibilitiesViewSet)
+router.register(r"req", RequirementsViewSet)
+router.register(r"vac", VacancyViewSet)
+router.register(r"cand", CandidateViewSet)
+router.register(r"candpromo", CandidatePromotionViewSet)
+router.register(r"mes", MessageViewSet)
+router.register(r"my-mes", MyMessageViewSet)
 
 schema_view = get_schema_view(
     openapi.Info(
@@ -45,18 +50,11 @@ schema_view = get_schema_view(
 urlpatterns = [
     path("", include(router.urls)),
     path("admin/", admin.site.urls),
-    path("notification/", include("notification.urls")),
     path("auth/", include("dj_rest_auth.urls")),
     path("auth/registration/", include("dj_rest_auth.registration.urls")),
     path("conversations/", include("chat.urls")),
     path("users/", include("users.urls")),
-    path(
-        "swagger<format>/", schema_view.without_ui(cache_timeout=0), name="schema-json"
-    ),
-    path(
-        "swagger/",
-        schema_view.with_ui("swagger", cache_timeout=0),
-        name="schema-swagger-ui",
-    ),
+    path("swagger<format>/", schema_view.without_ui(cache_timeout=0), name="schema-json"),
+    path("swagger/", schema_view.with_ui("swagger", cache_timeout=0), name="schema-swagger-ui"),
     path("redoc/", schema_view.with_ui("redoc", cache_timeout=0), name="schema-redoc"),
 ]
