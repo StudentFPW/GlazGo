@@ -18,8 +18,6 @@ class MyMessageViewSet(viewsets.GenericViewSet, mixins.ListModelMixin):
 
     def get_queryset(self):
         self.request.session['user_id'] = 2 # костыль для проверки, пока авторизации нет
-        print(f"Test: User {self.request.session['user_id']}")
         qs = get_message(self.request.session['user_id'])
-        print(f'Test: Message {qs}')
 
         return qs
