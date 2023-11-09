@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'ats',
     'notification',
+    'rest_framework',
 ]
 
 SITE_ID = 1
