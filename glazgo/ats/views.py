@@ -1,6 +1,6 @@
 from rest_framework import viewsets, mixins
-from .models import Message
-from .serializer import MyMessageSerializer
+from .models import *
+from .serializer import CandidateSerializer, MyMessageSerializer
 
 
 def get_message(user):
@@ -20,11 +20,16 @@ class MyMessageViewSet(viewsets.GenericViewSet, mixins.ListModelMixin):
     # permission_classes = (IsAuthenticated,)
 
     def get_queryset(self):
-        self.request.session[
-            "user_id"
-        ] = 2  # костыль для проверки, пока авторизации нет
+        # костыль для проверки, пока авторизации нет
+        self.request.session["user_id"] = 2
         print(f"Test: User {self.request.session['user_id']}")
         qs = get_message(self.request.session["user_id"])
         print(f"Test: Message {qs}")
 
         return qs
+
+
+class CandidateViewSet(viewsets.ModelViewSet):
+    serializer_class = CandidateSerializer
+    queryset = Candidate.objects.all()
+    # permission_classes = (IsAuthenticated,)
