@@ -1,6 +1,4 @@
 from django.db import models
-from datetime import datetime, date
-from django.utils import timezone
 
 # статус кандидата, в виде списка кортежей, отображается в виде поля выбора со списком
 # в базе хранится порядковый номер элемента списка
@@ -135,7 +133,7 @@ class Vacancy(models.Model):
         Users, on_delete=models.PROTECT, related_name="user_customer"
     )  # сотрудник заказчика, ответственный за вакансию
     name_vacancy = models.CharField(
-        "Название вакансии", max_length=30
+        "Название вакансии", max_length=250
     )  # краткое название вакансии
     description_vacancy = models.TextField("Описание вакансии")  # описание вакансии
     region = models.CharField(
@@ -148,7 +146,7 @@ class Vacancy(models.Model):
     salary1 = models.IntegerField("Зарплата (нижняя планка)", default=0)
     salary2 = models.IntegerField("Зарплата (верхняя планка)", default=0)
     motivation = models.IntegerField("Дополнительная мотивация (Сумма)", default=0)
-    auto = models.BooleanField("Наличие автомобиля", default=False)
+    avto = models.BooleanField("Наличие автомобиля", default=False)
     gsm = models.IntegerField("Расходы на топливо", default=0)
     substitute = models.BooleanField("Подменный сотрудник", default=False)
     type_job = models.BooleanField("Удаленная работа", default=False)
@@ -188,6 +186,7 @@ class Candidate(models.Model):
     tlg = models.CharField("Телеграм", max_length=15)
     ref = models.TextField("Кто привел кандидата")  # если кандидата кто-то привел
     avto = models.BooleanField("Наличие автомобиля", default=False)
+    resume = models.FileField("Файл резюме", null=True)
 
     def __str__(self):
         return f"id: {self.pk}, name: {self.name}, surname: {self.surname}"
