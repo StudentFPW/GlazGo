@@ -1,6 +1,14 @@
 Django
 python-dotenv==1.0.0
-psycopd
-psycopd2
+psycopg
+psycopg2
 djangorestframework
 django-filter
+
+channels
+channels_redis
+django-cors-headers
+dj-rest-auth[with_social]
+redis
+djangorestframework-simplejwt
+drf-yasg

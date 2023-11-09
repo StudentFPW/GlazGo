@@ -29,7 +29,7 @@ SECRET_KEY = os.getenv("SECRET_KEY")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["*"]
 
 # Application definition
 
@@ -42,6 +42,19 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "ats",
     "notification",
+    "django.contrib.sites",
+    "rest_framework",
+    "channels",
+    "corsheaders",
+    "rest_framework.authtoken",
+    "dj_rest_auth",
+    "allauth",
+    "allauth.account",
+    "allauth.socialaccount",
+    "dj_rest_auth.registration",
+    "users",
+    "chat",
+    "drf_yasg",
 ]
 
 SITE_ID = 1
@@ -49,6 +62,7 @@ SITE_ID = 1
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
+    "corsheaders.middleware.CorsMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
@@ -61,7 +75,7 @@ ROOT_URLCONF = "glazgo.urls"
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [os.path.join(BASE_DIR, "templates")],
+        "DIRS": [BASE_DIR / "templates"],
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
@@ -80,24 +94,24 @@ WSGI_APPLICATION = "glazgo.wsgi.application"
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': BASE_DIR / 'db.sqlite3',
-#     }
-# }
-
-# В проекте используется Postgresql, настройки БД в .env
 DATABASES = {
     "default": {
-        "ENGINE": "django.db.backends.postgresql",
-        "NAME": os.getenv("DB_NAME"),
-        "USER": os.getenv("FSTR_DB_LOGIN"),
-        "PASSWORD": os.getenv("FSTR_DB_PASS"),
-        "HOST": os.getenv("FSTR_DB_HOST"),
-        "PORT": os.getenv("FSTR_DB_PORT"),
+        "ENGINE": "django.db.backends.sqlite3",
+        "NAME": BASE_DIR / "db.sqlite3",
     }
 }
+
+# В проекте используется Postgresql, настройки БД в .env
+# DATABASES = {
+#     "default": {
+#         "ENGINE": "django.db.backends.postgresql",
+#         "NAME": os.getenv("DB_NAME"),
+#         "USER": os.getenv("FSTR_DB_LOGIN"),
+#         "PASSWORD": os.getenv("FSTR_DB_PASS"),
+#         "HOST": os.getenv("FSTR_DB_HOST"),
+#         "PORT": os.getenv("FSTR_DB_PORT"),
+#     }
+# }
 
 
 # Password validation
@@ -140,3 +154,52 @@ STATIC_URL = "static/"
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+ASGI_APPLICATION = "glazgo.asgi.application"
+
+AUTHENTICATION_BACKENDS = [
+    "django.contrib.auth.backends.ModelBackend",
+    "allauth.account.auth_backends.AuthenticationBackend",
+]
+
+LOGIN_REDIRECT_URL = "/"
+ACCOUNT_UNIQUE_EMAIL = True
+ACCOUNT_EMAIL_REQUIRED = True
+ACCOUNT_USERNAME_REQUIRED = True
+ACCOUNT_AUTHENTICATION_METHOD = "username"
+ACCOUNT_EMAIL_VERIFICATION = "none"
+
+SITE_ID = 1
+
+CORS_ALLOW_ALL_ORIGINS = True
+
+REST_FRAMEWORK = {
+    "DEFAULT_PERMISSION_CLASSES": [
+        # "rest_framework.permissions.AllowAny",
+        "rest_framework.permissions.IsAuthenticated",
+    ],
+    "DEFAULT_AUTHENTICATION_CLASSES": [
+        "dj_rest_auth.jwt_auth.JWTCookieAuthentication",
+    ],
+}
+
+REST_AUTH = {
+    "USE_JWT": True,
+    "JWT_AUTH_COOKIE": "jwt-auth",
+    "JWT_AUTH_REFRESH_COOKIE": "jwt-refresh-token",
+}
+
+AUTH_USER_MODEL = "users.Users"
+
+CHANNEL_LAYERS = {
+    "default": {
+        "BACKEND": "channels_redis.core.RedisChannelLayer",
+        "CONFIG": {
+            "hosts": [
+                (
+                    f"redis://{os.getenv('PASSWORD')}@{os.getenv('HOST')}:{os.getenv('PORT')}"
+                )
+            ],
+        },
+    },
+}
