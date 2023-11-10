@@ -1,5 +1,10 @@
 export interface ITheme {
-    sizes: {
-        container: { width: number }
-      }
+  colors: {
+    primary: string,
+    inactive: string
+  }
+  sizes: {
+    container: { width: number }
+  },
+
 }
