@@ -2,20 +2,21 @@ import React from 'react'
 import * as C from '../../styles/components'
 import * as S from './AuthorizationStyles'
 import { SubmitHandler, useForm } from 'react-hook-form'
+import userApi from '../../services/UserServise'
+import { IAuthData } from '../../modules/IAuth'
 const Authorization = () => {
-  interface AuthForm {
-    login: string,
-    password: string
-  }
+
+  const [fetchAuth, {data: auth, error}] = userApi.useFetchAuthMutation()
+  console.log(auth?.token)
 
   const {
     register,
     formState: { errors, isValid},
     handleSubmit
-  } = useForm<AuthForm>({mode: 'onBlur'})
+  } = useForm<IAuthData>({mode: 'onBlur'})
 
-  const onSubmit: SubmitHandler<AuthForm> = (data) => {
-
+  const onSubmit: SubmitHandler<IAuthData> = async (data) => {
+    await fetchAuth(data)
   }
 
   return (
@@ -28,7 +29,7 @@ const Authorization = () => {
               {errors?.login && <p>{errors?.login?.message}</p>}
               <S.Label htmlFor="password">Пароль</S.Label>
               <S.Input id='password' type="password" {...register('password', {required: 'Поле обязательно к заполнению'})} />
-              {errors?.password && <p>{errors?.password?.message}</p>}
+              {(errors?.password || error) && <p>{errors?.password?.message || 'Ошибка от апи'}</p>}
               <S.Button disabled={!isValid}>Продолжить</S.Button>
             </S.Form>
         </C.Container>
