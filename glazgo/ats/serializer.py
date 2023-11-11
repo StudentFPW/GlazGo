@@ -3,6 +3,12 @@ from rest_framework import serializers
 from .models import *
 
 
+class CPHistorySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = CPHistory
+        fields = "__all__"
+
+
 class CustomerSerializer(serializers.ModelSerializer):
     class Meta:
         model = Customer
@@ -33,7 +39,7 @@ class CandidateSerializer(serializers.ModelSerializer):
         fields = "__all__"
 
 
-class CandidatePromotionSerializer(serializers.ModelSerializer):
+class CPromotionSerializer(serializers.ModelSerializer):
     class Meta:
         model = CandidatePromotion
         fields = "__all__"

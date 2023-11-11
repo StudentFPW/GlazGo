@@ -2,6 +2,25 @@ from django.db import models
 from django.conf import settings
 
 
+class CPHistory(models.Model):
+    """
+    Класс CPHistory представляет историю продвижения кандидата на вакансию, включая его
+    статус, время его записи и любые комментарии...
+    """
+
+    candidat_id = models.ForeignKey("Кандидат", "Candidate", on_delete=models.CASCADE)
+    vacancy_id = models.ForeignKey(
+        "Состоялся/состоит в вакансии", "Vacancy", on_delete=models.CASCADE
+    )
+    recruter_id = models.ForeignKey(
+        "Ответственный по кандидатам",
+        settings.AUTH_USER_MODEL,
+        on_delete=models.PROTECT,
+    )
+    status = models.IntegerField("Статус", default=0)
+    datetime = models.DateTimeField("Зафиксированное время", auto_now_add=True)
+
+
 class Customer(models.Model):
     """
     Класс «Клиент» представляет клиента с различными атрибутами, такими как
@@ -12,8 +31,8 @@ class Customer(models.Model):
     description = models.TextField("Описание организации")
     legal_address = models.CharField("Юридический адрес", max_length=250)
     mailing_address = models.CharField("Почтовый адрес", max_length=250)
-    inn = models.CharField("ИНН", max_length=10)
-    checking_account = models.CharField("Расчетный счет", max_length=20)
+    inn = models.CharField("ИНН", max_length=10, null=True)
+    checking_account = models.CharField("Расчетный счет", max_length=20, null=True)
     phone = models.CharField("Телефон", max_length=15)
     email = models.EmailField("Электронная почта")
 
@@ -70,7 +89,7 @@ class Vacancy(models.Model):
     )
 
     customer = models.ForeignKey(
-        settings.AUTH_USER_MODEL, on_delete=models.PROTECT, related_name="user_customer"
+        Customer, on_delete=models.PROTECT, related_name="user_customer"
     )
 
     name_vacancy = models.CharField("Название вакансии", max_length=250)
@@ -84,12 +103,12 @@ class Vacancy(models.Model):
     salary1 = models.IntegerField("Зарплата (нижняя планка)", default=0)
     salary2 = models.IntegerField("Зарплата (верхняя планка)", default=0)
     motivation = models.IntegerField("Дополнительная мотивация (Сумма)", default=0)
-    avto = models.BooleanField("Наличие автомобиля", default=False)
+    auto = models.BooleanField("Наличие автомобиля", default=False)
     gsm = models.IntegerField("Расходы на топливо", default=0)
     substitute = models.BooleanField("Подменный сотрудник", default=False)
     type_job = models.BooleanField("Удаленная работа", default=False)
     intern = models.IntegerField("Вид стажировки", choices=INTERN_TYPE, default=1)
-    schedule = models.CharField("График работы", max_length=30)
+    schedule = models.CharField("График работы", max_length=30, null=True)
     count_hours = models.IntegerField("Среднее количество часов в день")
     count_tt = models.IntegerField("Среднее количество ТТ в день")
 
@@ -117,7 +136,7 @@ class Candidate(models.Model):
     birthday = models.DateField("Дата рождения")
     mail = models.EmailField("Почта")
     phone = models.CharField("Телефон", max_length=15)
-    tlg = models.CharField("Телеграм", max_length=15)
+    tlg = models.CharField("Телеграм", max_length=15, null=True)
     ref = models.TextField("Кто привел кандидата")
     auto = models.BooleanField("Наличие автомобиля", default=False)
     resume = models.FileField("Файл резюме", null=True)

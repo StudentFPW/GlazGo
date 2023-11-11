@@ -25,13 +25,14 @@ from drf_yasg import openapi
 from ats.views import *
 
 router = routers.DefaultRouter()
-router.register(r"customer", CustomerViewSet)
-router.register(r"responsibilities", ResponsibilitiesViewSet)
-router.register(r"requirements", RequirementsViewSet)
-router.register(r"vacancy", VacancyViewSet)
-router.register(r"candidate", CandidateViewSet)
-router.register(r"candidate-promotion", CandidatePromotionViewSet)
-router.register(r"message", MessageViewSet)
+router.register(r"cust", CustomerViewSet)
+router.register(r"resp", ResponsibilitiesViewSet)
+router.register(r"req", RequirementsViewSet)
+router.register(r"vac", VacancyViewSet)
+router.register(r"cand", CandidateViewSet)
+router.register(r"c-p", CPromotionViewSet)
+router.register(r"mes", MessageViewSet)
+router.register(r"cph", CPHistoryViewSet)
 # router.register(r"my-mes", MyMessageViewSet)
 
 schema_view = get_schema_view(

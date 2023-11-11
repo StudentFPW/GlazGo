@@ -1,12 +1,35 @@
-from rest_framework import viewsets, mixins
+from rest_framework import viewsets, generics, filters, mixins
+from django_filters.rest_framework import DjangoFilterBackend
 
 from .models import *
 from .serializer import *
 
 
-class CustomerViewSet(viewsets.ModelViewSet):
+class CPHistoryViewSet(generics.ListAPIView):
+    serializer_class = CPHistorySerializer
+    queryset = CPHistory.objects.all()
+    filter_backends = [DjangoFilterBackend, filters.OrderingFilter]
+    ordering_fields = "__all__"
+    filterset_fields = [
+        "candidat_id",
+        "vacancy_id",
+        "recruter_id",
+        "status",
+        "datetime",
+    ]
+
+
+class CustomerViewSet(generics.ListAPIView):
     serializer_class = CustomerSerializer
     queryset = Customer.objects.all()
+    filter_backends = [DjangoFilterBackend, filters.OrderingFilter]
+    ordering_fields = "__all__"
+    filterset_fields = [
+        "company_name",
+        "mailing_address",
+        "phone",
+        "email",
+    ]
 
 
 class ResponsibilitiesViewSet(viewsets.ModelViewSet):
@@ -19,24 +42,50 @@ class RequirementsViewSet(viewsets.ModelViewSet):
     queryset = Requirements.objects.all()
 
 
-class VacancyViewSet(viewsets.ModelViewSet):
+class VacancyViewSet(generics.ListAPIView):
     serializer_class = VacancySerializer
     queryset = Vacancy.objects.all()
+    filter_backends = [DjangoFilterBackend, filters.OrderingFilter]
+    ordering_fields = "__all__"
+    filterset_fields = [
+        "recruter",
+        "customer",
+        "status_vacancy",
+        "salary2",
+    ]
 
 
-class CandidateViewSet(viewsets.ModelViewSet):
+class CandidateViewSet(generics.ListAPIView):
     serializer_class = CandidateSerializer
     queryset = Candidate.objects.all()
+    filter_backends = [DjangoFilterBackend, filters.OrderingFilter]
+    ordering_fields = "__all__"
+    filterset_fields = [
+        "user_id",
+        "phone",
+    ]
 
 
-class CandidatePromotionViewSet(viewsets.ModelViewSet):
-    serializer_class = CandidatePromotionSerializer
+class CPromotionViewSet(generics.ListAPIView):
+    serializer_class = CPromotionSerializer
     queryset = CandidatePromotion.objects.all()
+    filter_backends = [DjangoFilterBackend, filters.OrderingFilter]
+    ordering_fields = "__all__"
+    filterset_fields = [
+        "candidat_id",
+        "status_change",
+    ]
 
 
-class MessageViewSet(viewsets.ModelViewSet):
+class MessageViewSet(generics.ListAPIView):
     serializer_class = MessageSerializer
     queryset = Message.objects.all()
+    filter_backends = [DjangoFilterBackend, filters.OrderingFilter]
+    ordering_fields = "__all__"
+    filterset_fields = [
+        "user_id",
+        "candidate_id",
+    ]
 
 
 # def get_message(user):
