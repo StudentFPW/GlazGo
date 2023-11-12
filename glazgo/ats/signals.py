@@ -18,7 +18,7 @@ def post_save_candidate_promotion(instance, **kwargs):
     CPHistory.objects.create(
         candidat_id=instance.candidat_id,
         vacancy_id=instance.vacancy_id,
-        # recruter_id = instance.recruter_id, # TODO FIND RECRUTER OBJECT
+        recruter_id=instance.vacancy_id.recruter,
         status=instance.status_change,
         datetime=datetime.now(),
     )
