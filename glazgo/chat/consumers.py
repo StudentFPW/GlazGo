@@ -17,7 +17,6 @@ class ChatConsumer(WebsocketConsumer):
     """
 
     def connect(self):
-        print("here")
         self.room_name = self.scope["url_route"]["kwargs"]["room_name"]
         self.room_group_name = f"chat_{self.room_name}"
 
@@ -25,9 +24,7 @@ class ChatConsumer(WebsocketConsumer):
         async_to_sync(self.channel_layer.group_add)(
             self.room_group_name, self.channel_name
         )
-        print("here2")
         self.accept()
-        print("here3")
 
     def disconnect(self, close_code):
         # Leave room group

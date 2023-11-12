@@ -8,15 +8,14 @@ class CPHistory(models.Model):
     статус, время его записи и любые комментарии...
     """
 
-    candidat_id = models.ForeignKey("Кандидат", "Candidate", on_delete=models.CASCADE)
-    vacancy_id = models.ForeignKey(
-        "Состоялся/состоит в вакансии", "Vacancy", on_delete=models.CASCADE
-    )
+    candidat_id = models.ForeignKey("Candidate", on_delete=models.CASCADE)
+    vacancy_id = models.ForeignKey("Vacancy", on_delete=models.CASCADE)
+
     recruter_id = models.ForeignKey(
-        "Ответственный по кандидатам",
         settings.AUTH_USER_MODEL,
         on_delete=models.PROTECT,
     )
+
     status = models.IntegerField("Статус", default=0)
     datetime = models.DateTimeField("Зафиксированное время", auto_now_add=True)
 

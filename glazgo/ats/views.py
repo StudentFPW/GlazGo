@@ -5,7 +5,7 @@ from .models import *
 from .serializer import *
 
 
-class CPHistoryViewSet(generics.ListAPIView):
+class CPHistoryViewSet(viewsets.ModelViewSet):
     serializer_class = CPHistorySerializer
     queryset = CPHistory.objects.all()
     filter_backends = [DjangoFilterBackend, filters.OrderingFilter]
@@ -19,7 +19,7 @@ class CPHistoryViewSet(generics.ListAPIView):
     ]
 
 
-class CustomerViewSet(generics.ListAPIView):
+class CustomerViewSet(viewsets.ModelViewSet):
     serializer_class = CustomerSerializer
     queryset = Customer.objects.all()
     filter_backends = [DjangoFilterBackend, filters.OrderingFilter]
@@ -42,7 +42,7 @@ class RequirementsViewSet(viewsets.ModelViewSet):
     queryset = Requirements.objects.all()
 
 
-class VacancyViewSet(generics.ListAPIView):
+class VacancyViewSet(viewsets.ModelViewSet):
     serializer_class = VacancySerializer
     queryset = Vacancy.objects.all()
     filter_backends = [DjangoFilterBackend, filters.OrderingFilter]
@@ -55,7 +55,7 @@ class VacancyViewSet(generics.ListAPIView):
     ]
 
 
-class CandidateViewSet(generics.ListAPIView):
+class CandidateViewSet(viewsets.ModelViewSet):
     serializer_class = CandidateSerializer
     queryset = Candidate.objects.all()
     filter_backends = [DjangoFilterBackend, filters.OrderingFilter]
@@ -66,7 +66,7 @@ class CandidateViewSet(generics.ListAPIView):
     ]
 
 
-class CPromotionViewSet(generics.ListAPIView):
+class CPromotionViewSet(viewsets.ModelViewSet):
     serializer_class = CPromotionSerializer
     queryset = CandidatePromotion.objects.all()
     filter_backends = [DjangoFilterBackend, filters.OrderingFilter]
@@ -77,7 +77,7 @@ class CPromotionViewSet(generics.ListAPIView):
     ]
 
 
-class MessageViewSet(generics.ListAPIView):
+class MessageViewSet(viewsets.ModelViewSet):
     serializer_class = MessageSerializer
     queryset = Message.objects.all()
     filter_backends = [DjangoFilterBackend, filters.OrderingFilter]
