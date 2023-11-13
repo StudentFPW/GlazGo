@@ -8,9 +8,15 @@ class CPHistory(models.Model):
     статус, время его записи и любые комментарии...
     """
 
-    candidat_id = models.ForeignKey("Candidate", on_delete=models.CASCADE)
-    vacancy_id = models.ForeignKey("Vacancy", on_delete=models.CASCADE)
-    recruter_id = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.PROTECT)
+    candidat_id = models.ForeignKey(
+        "Candidate", on_delete=models.CASCADE, related_name="CPHC"
+    )
+    vacancy_id = models.ForeignKey(
+        "Vacancy", on_delete=models.CASCADE, related_name="CPHV"
+    )
+    recruter_id = models.ForeignKey(
+        settings.AUTH_USER_MODEL, on_delete=models.PROTECT, related_name="CPHR"
+    )
     status = models.IntegerField("Статус", default=0)
     datetime = models.DateTimeField("Зафиксированное время", auto_now_add=True)
 
@@ -75,9 +81,15 @@ class Vacancy(models.Model):
     ]
 
     date_cust = models.DateTimeField("Дата поступления вакансии", auto_now_add=True)
-    employer = models.ForeignKey(Customer, on_delete=models.PROTECT)
-    recruter = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.PROTECT)
-    customer = models.ForeignKey(Customer, on_delete=models.PROTECT)
+    employer = models.ForeignKey(
+        Customer, on_delete=models.PROTECT, related_name="employers"
+    )
+    recruter = models.ForeignKey(
+        settings.AUTH_USER_MODEL, on_delete=models.PROTECT, related_name="reporters"
+    )
+    customer = models.ForeignKey(
+        Customer, on_delete=models.PROTECT, related_name="customers"
+    )
     name_vacancy = models.CharField("Название вакансии", max_length=250)
     description_vacancy = models.TextField("Описание вакансии")
     region = models.CharField("Место работы", max_length=250)
@@ -97,8 +109,10 @@ class Vacancy(models.Model):
     schedule = models.CharField("График работы", max_length=30)
     count_hours = models.IntegerField("Среднее количество часов в день")
     count_tt = models.IntegerField("Среднее количество ТТ в день")
-    responsibilities = models.ManyToManyField(Responsibilities)
-    requirements = models.ManyToManyField(Requirements)
+    responsibilities = models.ManyToManyField(
+        Responsibilities, related_name="responsibilities"
+    )
+    requirements = models.ManyToManyField(Requirements, related_name="requirements")
     cause = models.CharField("Причина открытия вакансии", max_length=500)
 
     def __str__(self):
@@ -111,7 +125,11 @@ class Candidate(models.Model):
     фамилия, дата рождения, адрес электронной почты, номер телефона и т. д.
     """
 
-    user_id = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.PROTECT)
+    user_id = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.PROTECT,
+        related_name="user_candidate",
+    )
     surname = models.CharField("Фамилия", max_length=20)
     name = models.CharField("Имя", max_length=20)
     otch = models.CharField("Отчество", max_length=20, null=True)
@@ -145,10 +163,15 @@ class CandidatePromotion(models.Model):
         (8, "Кадровый резерв"),
     ]
 
-    candidat_id = models.ForeignKey(Candidate, on_delete=models.PROTECT)
-    vacancy_id = models.ForeignKey(Vacancy, on_delete=models.PROTECT)
-
-    recruter_id = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.PROTECT)
+    candidat_id = models.ForeignKey(
+        Candidate, on_delete=models.PROTECT, related_name="candidat"
+    )
+    vacancy_id = models.ForeignKey(
+        Vacancy, on_delete=models.PROTECT, related_name="vacancy"
+    )
+    recruter_id = models.ForeignKey(
+        settings.AUTH_USER_MODEL, on_delete=models.PROTECT, related_name="recruter"
+    )
 
     status_change = models.IntegerField(
         "Текущий статус", choices=CANDIDATE_STATUS, default=1
@@ -168,6 +191,10 @@ class Message(models.Model):
     Класс, хранящий сведения о новых кандидатах и получателях сообщения
     """
 
-    user_id = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.PROTECT)
-    candidate_id = models.ForeignKey(Candidate, on_delete=models.PROTECT)
+    user_id = models.ForeignKey(
+        settings.AUTH_USER_MODEL, on_delete=models.PROTECT, related_name="user_messages"
+    )
+    candidate_id = models.ForeignKey(
+        Candidate, on_delete=models.PROTECT, related_name="candidate_messages"
+    )
     viewed = models.BooleanField("Просмотрено", default=False)
