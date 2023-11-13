@@ -28,7 +28,6 @@ class Customer(models.Model):
     inn = models.CharField("ИНН", max_length=10, null=True)
     checking_account = models.CharField("Расчетный счет", max_length=20, null=True)
     phone = models.CharField("Телефон", max_length=15)
-    email = models.EmailField("Электронная почта")
 
     def __str__(self):
         return f"customer: {self.name_customer}"
@@ -77,13 +76,8 @@ class Vacancy(models.Model):
 
     date_cust = models.DateTimeField("Дата поступления вакансии", auto_now_add=True)
     employer = models.ForeignKey(Customer, on_delete=models.PROTECT)
-
     recruter = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.PROTECT)
-
-    customer = models.ForeignKey(
-        Customer, on_delete=models.PROTECT, related_name="user_customer"
-    )
-
+    customer = models.ForeignKey(Customer, on_delete=models.PROTECT)
     name_vacancy = models.CharField("Название вакансии", max_length=250)
     description_vacancy = models.TextField("Описание вакансии")
     region = models.CharField("Место работы", max_length=250)
@@ -100,15 +94,11 @@ class Vacancy(models.Model):
     substitute = models.BooleanField("Подменный сотрудник", default=False)
     type_job = models.BooleanField("Удаленная работа", default=False)
     intern = models.IntegerField("Вид стажировки", choices=INTERN_TYPE, default=1)
-    schedule = models.CharField("График работы", max_length=30, null=True)
+    schedule = models.CharField("График работы", max_length=30)
     count_hours = models.IntegerField("Среднее количество часов в день")
     count_tt = models.IntegerField("Среднее количество ТТ в день")
-
-    responsibilities = models.ManyToManyField(
-        Responsibilities, related_name="vacancy_resp"
-    )
-
-    requirements = models.ManyToManyField(Requirements, related_name="vacancy_req")
+    responsibilities = models.ManyToManyField(Responsibilities)
+    requirements = models.ManyToManyField(Requirements)
     cause = models.CharField("Причина открытия вакансии", max_length=500)
 
     def __str__(self):
@@ -131,7 +121,7 @@ class Candidate(models.Model):
     tlg = models.CharField("Телеграм", max_length=15, null=True)
     ref = models.TextField("Кто привел кандидата")
     auto = models.BooleanField("Наличие автомобиля", default=False)
-    resume = models.FileField("Файл резюме", null=True)
+    resume = models.FileField("Файл резюме")
 
     def __str__(self):
         return f"id: {self.pk}, name: {self.name}, surname: {self.surname}"
