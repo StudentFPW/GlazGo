@@ -165,6 +165,10 @@ class CandidatePromotion(models.Model):
     candidat_id = models.ForeignKey(Candidate, on_delete=models.PROTECT)
     vacancy_id = models.ForeignKey(Vacancy, on_delete=models.PROTECT)
 
+    recruter_id = models.ForeignKey(
+        settings.AUTH_USER_MODEL, on_delete=models.PROTECT, related_name="user_recruter"
+    )
+
     status_change = models.IntegerField(
         "Текущий статус", choices=CANDIDATE_STATUS, default=1
     )
