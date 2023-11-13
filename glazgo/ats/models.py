@@ -10,12 +10,7 @@ class CPHistory(models.Model):
 
     candidat_id = models.ForeignKey("Candidate", on_delete=models.CASCADE)
     vacancy_id = models.ForeignKey("Vacancy", on_delete=models.CASCADE)
-
-    recruter_id = models.ForeignKey(
-        settings.AUTH_USER_MODEL,
-        on_delete=models.PROTECT,
-    )
-
+    recruter_id = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.PROTECT)
     status = models.IntegerField("Статус", default=0)
     datetime = models.DateTimeField("Зафиксированное время", auto_now_add=True)
 
@@ -83,9 +78,7 @@ class Vacancy(models.Model):
     date_cust = models.DateTimeField("Дата поступления вакансии", auto_now_add=True)
     employer = models.ForeignKey(Customer, on_delete=models.PROTECT)
 
-    recruter = models.ForeignKey(
-        settings.AUTH_USER_MODEL, on_delete=models.PROTECT, related_name="user_recruter"
-    )
+    recruter = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.PROTECT)
 
     customer = models.ForeignKey(
         Customer, on_delete=models.PROTECT, related_name="user_customer"
@@ -165,9 +158,7 @@ class CandidatePromotion(models.Model):
     candidat_id = models.ForeignKey(Candidate, on_delete=models.PROTECT)
     vacancy_id = models.ForeignKey(Vacancy, on_delete=models.PROTECT)
 
-    recruter_id = models.ForeignKey(
-        settings.AUTH_USER_MODEL, on_delete=models.PROTECT, related_name="user_recruter"
-    )
+    recruter_id = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.PROTECT)
 
     status_change = models.IntegerField(
         "Текущий статус", choices=CANDIDATE_STATUS, default=1
