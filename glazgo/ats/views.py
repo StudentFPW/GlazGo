@@ -28,7 +28,6 @@ class CustomerViewSet(viewsets.ModelViewSet):
         "company_name",
         "mailing_address",
         "phone",
-        "email",
     ]
 
 
