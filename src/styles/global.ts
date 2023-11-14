@@ -7,11 +7,8 @@ export default createGlobalStyle`
         box-sizing: border-box;
     }
 
-    button {
-        cursor: pointer;
+    body {
+        font-family: 'Inter', sans-serif;
     }
 
-    button:disabled {
-        cursor: default;
-    }
 `

@@ -1,10 +1,11 @@
 
 
 export interface IAuthData {
-    login: string,
+    email: string,
     password: string
 }
 
 export interface IAuthToken {
-    token: string
+    accessToken: string,
+    user: any
 }
