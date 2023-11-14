@@ -25,6 +25,7 @@ class CustomerViewSet(viewsets.ModelViewSet):
     filter_backends = [DjangoFilterBackend, filters.OrderingFilter]
     ordering_fields = "__all__"
     filterset_fields = [
+        "user_id",
         "company_name",
         "mailing_address",
         "phone",
@@ -60,8 +61,9 @@ class CandidateViewSet(viewsets.ModelViewSet):
     filter_backends = [DjangoFilterBackend, filters.OrderingFilter]
     ordering_fields = "__all__"
     filterset_fields = [
-        "user_id",
+        "email",
         "phone",
+        "birthday",
     ]
 
 
@@ -72,7 +74,10 @@ class CPromotionViewSet(viewsets.ModelViewSet):
     ordering_fields = "__all__"
     filterset_fields = [
         "candidat_id",
+        "vacancy_id",
+        "recruter_id",
         "status_change",
+        "status_change_date",
     ]
 
 
@@ -84,4 +89,5 @@ class MessageViewSet(viewsets.ModelViewSet):
     filterset_fields = [
         "user_id",
         "candidate_id",
+        "viewed",
     ]

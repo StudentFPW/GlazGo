@@ -17,18 +17,16 @@ def post_save_candidate_promotion(instance, **kwargs):
         вызвал сигнал post_save. Другими словами, он представляет конкретный объект, который был сохранен
         или обновлен
     """
-    # 1 соответствует статусу Новый в списке CANDIDATE_STATUS
     if instance.status_change == 1:
         Message.objects.create(
             user_id=instance.vacancy_id.customer,
             candidate_id=instance.candidat_id,
             viewed=False,
         )
-    else:
-        CPHistory.objects.create(
-            candidat_id=instance.candidat_id,
-            vacancy_id=instance.vacancy_id,
-            recruter_id=instance.recruter_id,
-            status=instance.status_change,
-            datetime=datetime.now(),  # TODO TEST THE TIME FORMAT
-        )
+    CPHistory.objects.create(
+        candidat_id=instance.candidat_id,
+        vacancy_id=instance.vacancy_id,
+        recruter_id=instance.recruter_id,
+        status=instance.status_change,
+        datetime=datetime.now(),
+    )

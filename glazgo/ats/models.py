@@ -17,8 +17,12 @@ class CPHistory(models.Model):
     recruter_id = models.ForeignKey(
         settings.AUTH_USER_MODEL, on_delete=models.PROTECT, related_name="CPHR"
     )
+
     status = models.IntegerField("Статус", default=0)
     datetime = models.DateTimeField("Зафиксированное время", auto_now_add=True)
+
+    def __str__(self):
+        return f"datetime: {self.datetime}"
 
 
 class Customer(models.Model):
@@ -26,6 +30,10 @@ class Customer(models.Model):
     Класс «Клиент» представляет клиента с различными атрибутами, такими как
     название компании, описание, адреса, ИНН, текущий счет, телефон и адрес электронной почты.
     """
+
+    user_id = models.ForeignKey(
+        settings.AUTH_USER_MODEL, on_delete=models.PROTECT, related_name="user_customer"
+    )
 
     company_name = models.CharField("Название организации", max_length=30)
     description = models.TextField("Описание организации")
@@ -36,7 +44,7 @@ class Customer(models.Model):
     phone = models.CharField("Телефон", max_length=15)
 
     def __str__(self):
-        return f"customer: {self.name_customer}"
+        return f"customer: {self.company_name}"
 
 
 class Responsibilities(models.Model):
@@ -47,7 +55,7 @@ class Responsibilities(models.Model):
     name_resp = models.CharField(max_length=250, unique=True)  # описание обязанности
 
     def __str__(self):
-        return f"name_resp: {self.name_resp}"
+        return f"responsibilities: {self.name_resp}"
 
 
 class Requirements(models.Model):
@@ -58,7 +66,7 @@ class Requirements(models.Model):
     name_req = models.CharField(max_length=250, unique=True)  # описание требований
 
     def __str__(self):
-        return f"name_req: {self.name_req}"
+        return f"requirements: {self.name_req}"
 
 
 class Vacancy(models.Model):
@@ -80,24 +88,24 @@ class Vacancy(models.Model):
         (4, "Удаленно"),
     ]
 
-    date_cust = models.DateTimeField("Дата поступления вакансии", auto_now_add=True)
-    employer = models.ForeignKey(
-        Customer, on_delete=models.PROTECT, related_name="employers"
-    )
     recruter = models.ForeignKey(
-        settings.AUTH_USER_MODEL, on_delete=models.PROTECT, related_name="reporters"
+        settings.AUTH_USER_MODEL, on_delete=models.PROTECT, related_name="recruters"
     )
     customer = models.ForeignKey(
         Customer, on_delete=models.PROTECT, related_name="customers"
     )
-    name_vacancy = models.CharField("Название вакансии", max_length=250)
-    description_vacancy = models.TextField("Описание вакансии")
-    region = models.CharField("Место работы", max_length=250)
-
     status_vacancy = models.IntegerField(
         "Статус вакансии", choices=VACANCY_STATUS, default=1
     )
+    responsibilities = models.ManyToManyField(
+        Responsibilities, related_name="responsibilities"
+    )
 
+    requirements = models.ManyToManyField(Requirements, related_name="requirements")
+    date_cust = models.DateTimeField("Дата поступления вакансии", auto_now_add=True)
+    name_vacancy = models.CharField("Название вакансии", max_length=250)
+    description_vacancy = models.TextField("Описание вакансии")
+    region = models.CharField("Место работы", max_length=250)
     salary1 = models.IntegerField("Зарплата (нижняя планка)", default=0)
     salary2 = models.IntegerField("Зарплата (верхняя планка)", default=0)
     motivation = models.IntegerField("Дополнительная мотивация (Сумма)", default=0)
@@ -109,14 +117,10 @@ class Vacancy(models.Model):
     schedule = models.CharField("График работы", max_length=30)
     count_hours = models.IntegerField("Среднее количество часов в день")
     count_tt = models.IntegerField("Среднее количество ТТ в день")
-    responsibilities = models.ManyToManyField(
-        Responsibilities, related_name="responsibilities"
-    )
-    requirements = models.ManyToManyField(Requirements, related_name="requirements")
     cause = models.CharField("Причина открытия вакансии", max_length=500)
 
     def __str__(self):
-        return f"id: {self.pk}, name_vacancy: {self.name_vacancy}"
+        return f"recruter: {self.recruter}, vacancy: {self.name_vacancy}, customer:{self.customer}"
 
 
 class Candidate(models.Model):
@@ -125,16 +129,11 @@ class Candidate(models.Model):
     фамилия, дата рождения, адрес электронной почты, номер телефона и т. д.
     """
 
-    user_id = models.ForeignKey(
-        settings.AUTH_USER_MODEL,
-        on_delete=models.PROTECT,
-        related_name="user_candidate",
-    )
     surname = models.CharField("Фамилия", max_length=20)
     name = models.CharField("Имя", max_length=20)
     otch = models.CharField("Отчество", max_length=20, null=True)
     birthday = models.DateField("Дата рождения")
-    mail = models.EmailField("Почта")
+    email = models.EmailField("Почта")
     phone = models.CharField("Телефон", max_length=15)
     tlg = models.CharField("Телеграм", max_length=15, null=True)
     ref = models.TextField("Кто привел кандидата")
@@ -142,7 +141,7 @@ class Candidate(models.Model):
     resume = models.FileField("Файл резюме")
 
     def __str__(self):
-        return f"id: {self.pk}, name: {self.name}, surname: {self.surname}"
+        return f"name: {self.name}, surname: {self.surname}, email: {self.email}"
 
 
 class CandidatePromotion(models.Model):
@@ -172,11 +171,9 @@ class CandidatePromotion(models.Model):
     recruter_id = models.ForeignKey(
         settings.AUTH_USER_MODEL, on_delete=models.PROTECT, related_name="recruter"
     )
-
     status_change = models.IntegerField(
         "Текущий статус", choices=CANDIDATE_STATUS, default=1
     )
-
     status_change_date = models.DateTimeField(
         "Дата изменения статуса", auto_now_add=True
     )
@@ -184,6 +181,9 @@ class CandidatePromotion(models.Model):
     appointment_date = models.DateField("Назначенная дата")
     event = models.BooleanField("Состоялось событие", default=False)
     comment = models.TextField("Коментарий")
+
+    def __str__(self):
+        return f"candidat_id: {self.candidat_id}, vacancy_id: {self.vacancy_id}, recruter_id: {self.recruter_id}, status: {self.status_change}, date: {self.status_change_date}"
 
 
 class Message(models.Model):
@@ -197,4 +197,8 @@ class Message(models.Model):
     candidate_id = models.ForeignKey(
         Candidate, on_delete=models.PROTECT, related_name="candidate_messages"
     )
+
     viewed = models.BooleanField("Просмотрено", default=False)
+
+    def __str__(self):
+        return f"user_id: {self.user_id}, candidate_id: {self.candidate_id}, viewed: {self.viewed}"
