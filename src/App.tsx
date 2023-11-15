@@ -7,6 +7,8 @@ import { Route, Routes } from "react-router-dom";
 import Chat from "./components/chat/Chat";
 import Vacancies from "./components/vacancies/Vacancies";
 import NotFound from "./components/NotFound";
+import Zayavka from "./components/zayavka/Zayavka";
+import Rf from "./components/zayavka/Rf";
 
 
 function App() {
@@ -18,8 +20,10 @@ function App() {
             <header></header>
             <main>
               <Routes>
-                <Route path="/" element={<Vacancies/>}/>
+                <Route path="/" element={<Rf/>}/>
                 <Route path="/authorization" element={<Authorization/>}/>
+                <Route path="/vacancies" element={<Vacancies/>}/>
+                <Route path="/zayavka" element={<Zayavka/>}/>
                 <Route path="/chat" element={<Chat/>}/>
                 <Route path="*" element={<NotFound />} />
               </Routes>
