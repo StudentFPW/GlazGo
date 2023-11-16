@@ -50,6 +50,14 @@ class MessageSerializer(serializers.ModelSerializer):
         model = Message
         fields = "__all__"
 
+class WaitingCandidateSerializer(serializers.ModelSerializer):
+    candidat = CandidateSerializer(required=False)
+    vacancy = VacancySerializer(required=False)
+    class Meta:
+        model = CandidatePromotion
+        fields = "__all__"
+        # fields = ('status_change', 'status_change_date', 'agreed', 'candidat', 'vacancy', 'candidat_id', 'vacancy_id')
+
 
 # class MyMessageSerializer(serializers.ModelSerializer):
 #     class Meta:

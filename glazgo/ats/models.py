@@ -36,7 +36,7 @@ class Customer(models.Model):
     email = models.EmailField("Электронная почта")
 
     def __str__(self):
-        return f"customer: {self.name_customer}"
+        return f"customer: {self.company_name}"
 
 
 class Responsibilities(models.Model):
@@ -88,7 +88,7 @@ class Vacancy(models.Model):
     )
 
     customer = models.ForeignKey(
-        Customer, on_delete=models.PROTECT, related_name="user_customer"
+        settings.AUTH_USER_MODEL, on_delete=models.PROTECT, related_name="user_customer"
     )
 
     name_vacancy = models.CharField("Название вакансии", max_length=250)
@@ -141,7 +141,7 @@ class Candidate(models.Model):
     resume = models.FileField("Файл резюме", null=True)
 
     def __str__(self):
-        return f"id: {self.pk}, name: {self.name}, surname: {self.surname}"
+        return "candidate: {" + f"id: {self.pk}, name: {self.name}, surname: {self.surname}" + "}"
 
 
 class CandidatePromotion(models.Model):
@@ -176,6 +176,7 @@ class CandidatePromotion(models.Model):
     appointment_date = models.DateField("Назначенная дата")
     event = models.BooleanField("Состоялось событие", default=False)
     comment = models.TextField("Коментарий")
+    agreed = models.BooleanField("Согласован", default=False)
 
 
 class Message(models.Model):
@@ -186,3 +187,15 @@ class Message(models.Model):
     user_id = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.PROTECT)
     candidate_id = models.ForeignKey(Candidate, on_delete=models.PROTECT)
     viewed = models.BooleanField("Просмотрено", default=False)
+
+
+class CallCandidate(models.Model):
+    """
+    Класс, хранящий сведения о результатах созвона с кандидатом
+    """
+
+    candidate_id = models.ForeignKey(Candidate, on_delete=models.CASCADE) #ссылка на кандидата
+    vacancy_id = models.ForeignKey(Vacancy, on_delete=models.CASCADE) #ссылка на вакансию
+    result = models.BooleanField('Разговор состоялся', default=False) #Результат звонка True - дозвонился, False - не дозвонился
+    comment = models.CharField('Комментарий сотрудника', max_length=250, null=True)
+    date_call = models.DateTimeField('Дата и время звонка', auto_now_add=True) #дата и время созвона (автоматически)
