@@ -10,7 +10,7 @@ class Users(AbstractUser):
         (4, "Заказчик-администратор"),
     ]
 
-    role = models.IntegerField("Права", choices=RULES, default=1)
+    role = models.IntegerField("Права", choices=ROLES, default=1)
     name = models.CharField("Имя", max_length=20)
     surname = models.CharField("Фамилия", max_length=20)
     birthday = models.DateField("Дата рождения", null=True, blank=True)
