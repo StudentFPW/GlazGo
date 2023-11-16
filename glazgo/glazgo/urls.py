@@ -56,7 +56,7 @@ schema_view = get_schema_view(
 )
 
 urlpatterns = [
-    path("?api=", include(router.urls)),
+    path("api/", include(router.urls)),
     path("admin/", admin.site.urls),
     path("auth/", include("dj_rest_auth.urls")),
     path("auth/reg/", include("dj_rest_auth.registration.urls")),
@@ -65,19 +65,11 @@ urlpatterns = [
     path("api/token/verify/", TokenVerifyView.as_view(), name="token_verify"),
     path("conv/", include("chat.urls")),
     path("u-l/", include("users.urls")),
-    path(
-        "swag<format>/",
-        schema_view.without_ui(cache_timeout=0),
-        name="schema-json"
-    ),
+    path("swag<format>/", schema_view.without_ui(cache_timeout=0), name="schema-json"),
     path(
         "swag/",
         schema_view.with_ui("swagger", cache_timeout=0),
         name="schema-swagger-ui",
     ),
-    path(
-        "rd/",
-        schema_view.with_ui("redoc", cache_timeout=0),
-        name="schema-redoc"
-    ),
+    path("rd/", schema_view.with_ui("redoc", cache_timeout=0), name="schema-redoc"),
 ]
