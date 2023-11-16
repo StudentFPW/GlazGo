@@ -1,11 +1,31 @@
 import React from 'react'
+import notFound from '../images/not-found.svg'
+import NotFound from '../images/NotFound'
+import { styled } from 'styled-components'
 
-const NotFound = () => {
-  return (
-    <div>
-      страница не найдена
-    </div>
-  )
+const NotFoundPage = () => {
+    return (
+        <div>
+            <Title>Страница не найдена</Title>
+            <Container>
+                <Img src={notFound} alt="not found" />
+            </Container>
+        </div>
+
+    )
 }
 
-export default NotFound
+export default NotFoundPage
+
+const Container = styled.div`
+    height: 100svh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+`
+const Title = styled.h1`
+    margin: 15px 0;
+`
+const Img = styled.img`
+    width: 100%;
+`

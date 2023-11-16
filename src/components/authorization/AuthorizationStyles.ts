@@ -13,14 +13,3 @@ export const Input = styled.input`
     padding: 11px 16px;
     border-radius: 8px;
 `
-export const Button = styled.button`
-    height: 46px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 8px;
-    background-color: ${({ theme }) => theme.colors.primary};
-    &&[disabled] {
-        background-color: ${({ theme }) => theme.colors.inactive};
-    }
-`

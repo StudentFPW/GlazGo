@@ -34,7 +34,7 @@ const Authorization:FC = () => {
         <S.Label htmlFor="password">Пароль</S.Label>
         <S.Input id='password' type="password" {...register('password', {required: 'Поле обязательно к заполнению'})} />
         {(errors?.password || error) && <p>{errors?.password?.message || 'Ошибка от апи'}</p>}
-        <S.Button disabled={!isValid}>Продолжить</S.Button>
+        <C.FButton disabled={!isValid}>Продолжить</C.FButton>
       </S.Form>
     </div>
   )

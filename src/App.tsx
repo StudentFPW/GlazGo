@@ -9,6 +9,7 @@ import Vacancies from "./components/vacancies/Vacancies";
 import NotFound from "./components/NotFound";
 import Zayavka from "./components/zayavka/Zayavka";
 import Rf from "./components/zayavka/Rf";
+import Vacancy from "./components/vacancy/Vacancy";
 
 
 function App() {
@@ -23,6 +24,7 @@ function App() {
                 <Route path="/" element={<Rf/>}/>
                 <Route path="/authorization" element={<Authorization/>}/>
                 <Route path="/vacancies" element={<Vacancies/>}/>
+                <Route path="/vacancy" element={<Vacancy/>}/>
                 <Route path="/zayavka" element={<Zayavka/>}/>
                 <Route path="/chat" element={<Chat/>}/>
                 <Route path="*" element={<NotFound />} />
