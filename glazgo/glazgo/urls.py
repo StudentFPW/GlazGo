@@ -17,14 +17,20 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 
-from rest_framework import routers
-from rest_framework import permissions
+from rest_framework_simplejwt.views import (
+    TokenObtainPairView,
+    TokenRefreshView,
+    TokenVerifyView,
+)
+
+from rest_framework import routers, permissions
 from drf_yasg.views import get_schema_view
 from drf_yasg import openapi
 
 from ats.views import *
 
 router = routers.DefaultRouter()
+router.register(r"cph", CPHistoryViewSet)
 router.register(r"cust", CustomerViewSet)
 router.register(r"resp", ResponsibilitiesViewSet)
 router.register(r"req", RequirementsViewSet)
@@ -32,7 +38,6 @@ router.register(r"vac", VacancyViewSet)
 router.register(r"cand", CandidateViewSet)
 router.register(r"c-p", CPromotionViewSet)
 router.register(r"mes", MessageViewSet)
-router.register(r"cph", CPHistoryViewSet)
 router.register(r"w-cand", WaitingCandidateViewSet)
 
 schema_view = get_schema_view(
@@ -53,6 +58,9 @@ urlpatterns = [
     path("admin/", admin.site.urls),
     path("auth/", include("dj_rest_auth.urls")),
     path("auth/registration/", include("dj_rest_auth.registration.urls")),
+    path("api/token/", TokenObtainPairView.as_view(), name="token_obtain_pair"),
+    path("api/token/refresh/", TokenRefreshView.as_view(), name="token_refresh"),
+    path("api/token/verify/", TokenVerifyView.as_view(), name="token_verify"),
     path("conversations/", include("chat.urls")),
     path("users/", include("users.urls")),
     path("swagger<format>/", schema_view.without_ui(cache_timeout=0), name="schema-json"),

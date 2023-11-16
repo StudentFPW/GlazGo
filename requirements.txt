@@ -12,5 +12,6 @@ dj-rest-auth[with_social]
 redis
 djangorestframework-simplejwt
 drf-yasg
+Pillow
 
 pywhatkit
