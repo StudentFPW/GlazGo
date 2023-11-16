@@ -1,8 +1,21 @@
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
+from django_filters.rest_framework import DjangoFilterBackend
+from rest_framework import viewsets, filters
 
-from .serializers import UserSerializer
+from .serializers import UserSerializer, UsersSerializer
 from .models import Users
+
+
+class UserViewSet(viewsets.ModelViewSet):
+    serializer_class = UsersSerializer
+    queryset = Users.objects.all()
+    filter_backends = [DjangoFilterBackend, filters.OrderingFilter]
+    ordering_fields = "__all__"
+    filterset_fields = [
+        "role",
+        "phone",
+    ]
 
 
 @api_view(["GET"])

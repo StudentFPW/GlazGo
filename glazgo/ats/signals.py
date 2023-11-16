@@ -1,4 +1,3 @@
-import os
 import pywhatkit
 
 from datetime import datetime
@@ -7,7 +6,7 @@ from django.db.models.signals import post_save
 from django.dispatch import receiver
 from dotenv import load_dotenv
 
-from .models import Message, CandidatePromotion, CPHistory, Vacancy, CallCandidate
+from .models import Message, CandidatePromotion, CPHistory, CallCandidate
 
 load_dotenv()
 

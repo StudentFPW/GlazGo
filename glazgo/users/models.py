@@ -1,12 +1,16 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 
-from ats.models import Customer
-
 
 class Users(AbstractUser):
-    # customer = models.ForeignKey(Customer, on_delete=models.PROTECT)  # FIXME NOT WORKING OR REGISTRATION
+    ROLES = [
+        (1, "Рекрутер"),
+        (2, "Рекрутер-администратор"),
+        (3, "Заказчик"),
+        (4, "Заказчик-администратор"),
+    ]
 
+    role = models.IntegerField("Права", choices=RULES, default=1)
     name = models.CharField("Имя", max_length=20)
     surname = models.CharField("Фамилия", max_length=20)
     birthday = models.DateField("Дата рождения", null=True, blank=True)

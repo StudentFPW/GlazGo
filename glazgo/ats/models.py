@@ -41,7 +41,6 @@ class Customer(models.Model):
     mailing_address = models.CharField("Почтовый адрес", max_length=250)
     inn = models.CharField("ИНН", max_length=10, null=True)
     checking_account = models.CharField("Расчетный счет", max_length=20, null=True)
-    phone = models.CharField("Телефон", max_length=15)
 
     def __str__(self):
         return f"customer: {self.company_name}"
@@ -135,7 +134,6 @@ class Candidate(models.Model):
     birthday = models.DateField("Дата рождения")
     email = models.EmailField("Почта")
     phone = models.CharField("Телефон", max_length=15)
-    tlg = models.CharField("Телеграм", max_length=15, null=True)
     ref = models.TextField("Кто привел кандидата")
     auto = models.BooleanField("Наличие автомобиля", default=False)
     resume = models.FileField("Файл резюме")

@@ -84,18 +84,6 @@ class CPromotionViewSet(viewsets.ModelViewSet):
     ]
 
 
-class MessageViewSet(viewsets.ModelViewSet):
-    serializer_class = MessageSerializer
-    queryset = Message.objects.all()
-    filter_backends = [DjangoFilterBackend, filters.OrderingFilter]
-    ordering_fields = "__all__"
-    filterset_fields = [
-        "user_id",
-        "candidate_id",
-        "viewed",
-    ]
-
-
 def get_message(user):
     """
     функция получения кверисета непрочтенных сообщений адресованных текущему пользователю
@@ -111,6 +99,7 @@ class MessageViewSet(viewsets.ModelViewSet):
     filterset_fields = [
         "user_id",
         "candidate_id",
+        "viewed",
     ]
 
     def get_queryset(self):
