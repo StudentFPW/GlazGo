@@ -80,9 +80,11 @@ const Vacancy = () => {
                     </S.Select>
                     <C.FButton>Изменить вакансию</C.FButton>
                 </S.Form>
-                <C.FButton>Закрыть вакансию</C.FButton>
-                <C.LButton>Кандидаты</C.LButton>
-                <C.LButton>Чат с рекрутером</C.LButton>
+                <S.Buttons>
+                    <C.FButton>Закрыть вакансию</C.FButton>
+                    <C.LButton>Кандидаты</C.LButton>
+                    <C.LButton>Чат с рекрутером</C.LButton>
+                </S.Buttons>
             </S.Container>
         </div>
     )

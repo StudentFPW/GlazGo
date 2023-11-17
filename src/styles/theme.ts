@@ -16,7 +16,10 @@ export const baseTheme: ITheme = {
     // in ms
     // durations: {},
 
-    // // z-index
-    // order: {}
+    // z-index
+    order: {
+        header: 10,
+        headerAbove: 11
+    }
 
 }

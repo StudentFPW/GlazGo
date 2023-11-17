@@ -6,5 +6,8 @@ export interface ITheme {
   sizes: {
     container: { width: number }
   },
-
+  order: {
+    header: number
+    headerAbove: number
+}
 }

@@ -1,6 +1,11 @@
 import { css, styled } from "styled-components";
 
-
+export const Container = styled.div`
+  max-width: ${({ theme }) => theme.sizes.container.width + 30}px;
+  padding: 0 15px;
+  margin: 0 auto;
+  width: 100%;
+`
 export const button = css`
     height: 46px;
     width: 100%;
@@ -12,6 +17,7 @@ export const button = css`
 `
 export const FButton = styled.button`
     ${button}
+    color: #fff;
     background-color: ${({ theme }) => theme.colors.primary};
     &&[disabled] {
         background-color: ${({ theme }) => theme.colors.inactive};
@@ -20,7 +26,7 @@ export const FButton = styled.button`
 export const LButton = styled.button`
     ${button}
     background-color: #fff;
-    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+    border: 0.5px solid #BEBEBE;
     &&[disabled] {
         background-color: ${({ theme }) => theme.colors.inactive};
     }

@@ -10,6 +10,8 @@ import NotFound from "./components/NotFound";
 import Zayavka from "./components/zayavka/Zayavka";
 import Rf from "./components/zayavka/Rf";
 import Vacancy from "./components/vacancy/Vacancy";
+import Header from "./components/header/Header";
+import * as C from "./styles/components";
 
 
 function App() {
@@ -17,9 +19,9 @@ function App() {
     <div>
       <ThemeProvider theme={baseTheme}>
         <Wrapper>
-          <Container>
-            <header></header>
-            <main>
+          <Header/>
+          <C.Container>
+            <Main>
               <Routes>
                 <Route path="/" element={<Rf/>}/>
                 <Route path="/authorization" element={<Authorization/>}/>
@@ -29,10 +31,10 @@ function App() {
                 <Route path="/chat" element={<Chat/>}/>
                 <Route path="*" element={<NotFound />} />
               </Routes>
-            </main>
+            </Main>
             <footer></footer>
             <GlobalStyles />
-          </Container>
+          </C.Container>
         </Wrapper>
       </ThemeProvider>
     </div>
@@ -45,9 +47,6 @@ const Wrapper = styled.div`
   width: 390px;
   margin: 0 auto;
 `
-const Container = styled.div`
-  max-width: ${({ theme }) => theme.sizes.container.width + 30}px;
-  padding: 0 15px;
-  margin: 0 auto;
-  width: 100%;
+const Main = styled.div`
+  padding-top: 64px;
 `

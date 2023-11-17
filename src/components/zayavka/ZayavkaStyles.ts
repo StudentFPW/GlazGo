@@ -1,7 +1,7 @@
 import styled, { css } from "styled-components";
 
 export const Container = styled.div`
-    /* width: 100%; */
+    margin: 20px 0; 
 `
 export const Title = styled.div`
     display: flex;
@@ -32,19 +32,13 @@ export const VacancyName = styled.div`
     text-align: center;
     margin: 4px 0 10px;
 `
-export const TitleContent = styled.div`
-    display: flex;
-    justify-content: space-between;
-    /* column-gap: 47px; */
-    width: 100%;
-`
 export const Head = styled.div`
     display: flex;
     justify-content: space-between;
     margin-bottom: 26px;
 `
 export const Info = styled.div`
-    margin-bottom: 26px;
+    /* margin-bottom: 26px; */
 `
 export const AutoItem = styled.div`
     margin-bottom: 10px;
@@ -53,6 +47,7 @@ export const Form = styled.form`
     display: flex;
     flex-direction: column;
     justify-content: stretch;
+    margin: 20px 0;
 `
 export const input = css`
     height: 40px;
@@ -66,4 +61,9 @@ export const Select = styled.select`
 `
 export const Input = styled.input`
     ${input}
+`
+export const Buttons = styled.div`
+    display: flex;
+    flex-direction: column;
+    row-gap: 16px;
 `

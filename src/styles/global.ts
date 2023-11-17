@@ -11,4 +11,13 @@ export default createGlobalStyle`
         font-family: 'Inter', sans-serif;
     }
 
+    li {
+        list-style: none;
+    }
+
+    a {
+        text-decoration: none;
+        color: inherit;
+    }
+
 `
