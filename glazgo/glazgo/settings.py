@@ -170,9 +170,7 @@ ACCOUNT_EMAIL_VERIFICATION = "none"
 
 SITE_ID = 1
 
-CORS_ALLOW_ALL_ORIGINS = (
-    True  # TODO Switch to specific urls <<<<<<<<<<<<<<<<<<<<<<<<<<<<<
-)
+CORS_ALLOW_ALL_ORIGINS = True  # TODO Switch to specific urls <<<<<<<<<<<<<<<<<<<<
 
 REST_FRAMEWORK = {
     "DEFAULT_PERMISSION_CLASSES": [
