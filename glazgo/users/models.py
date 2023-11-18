@@ -4,6 +4,7 @@ from django.contrib.auth.models import AbstractUser
 
 class Users(AbstractUser):
     ROLES = [
+        (0, "Администратор"),
         (1, "Рекрутер"),
         (2, "Рекрутер-администратор"),
         (3, "Заказчик"),
@@ -25,3 +26,4 @@ class Users(AbstractUser):
     mailing_address = models.CharField("Почтовый адрес", max_length=250, null=True)
     inn = models.CharField("ИНН", max_length=10, null=True)
     checking_account = models.CharField("Расчетный счет", max_length=20, null=True)
+    date_joined = models.DateTimeField("Дата регистрации", auto_now_add=True)
