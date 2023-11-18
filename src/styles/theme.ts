@@ -3,7 +3,11 @@ import { ITheme } from "../modules/styled";
 export const baseTheme: ITheme = {
     colors: {
         primary: '#2255EA',
-        inactive: '#B0B0B0'
+        inactive: 'rgba(34, 85, 234, 0.50)',
+        black: '#121212',
+        white: '#fff',
+        gray:  '#BEBEBE',
+        lightGray: '#F0F0F0'
     },
 
     // media: {},
@@ -19,7 +23,7 @@ export const baseTheme: ITheme = {
     // z-index
     order: {
         header: 10,
-        headerAbove: 11
+        burger: 11
     }
 
 }

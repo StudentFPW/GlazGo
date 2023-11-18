@@ -1,13 +1,15 @@
 import React from 'react'
-import VacanciesTable from './table/VacanciesTable'
 import Options from './Options'
 import Pagination from './Pagination'
+import * as C from '../../styles/components'
+import VTable from './table/VTable'
 
 const Vacancies = () => {
   return (
     <div>
-        <Options/>
-        <VacanciesTable />
+        <C.H2>Вакансии</C.H2>
+        <Options path={'/zayavka'}/>
+        <VTable />
         <Pagination />
     </div>
   )

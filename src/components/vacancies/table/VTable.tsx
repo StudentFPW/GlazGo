@@ -1,10 +1,10 @@
 import React, { FC } from 'react'
-import TableHeader from './TableHeader'
+import TableHeader from './VTableHeader'
 import { styled } from 'styled-components'
-import data from '../../../stubbing.json'
-import TableRow from './TableRow'
+import data from '../../../vacancies.json'
+import VTableRow from './VTableRow'
 
-const VacanciesTable: FC = () => {
+const VTable: FC = () => {
 
     const vacansies = data
     return (
@@ -12,7 +12,7 @@ const VacanciesTable: FC = () => {
             <Table>
                 <TableHeader />
                 <tbody>
-                    {vacansies.map(vacancy => <TableRow key={vacancy.id} vacancyItem={vacancy} />)}
+                    {vacansies.map(vacancy => <VTableRow key={vacancy.id} vacancyItem={vacancy} />)}
                 </tbody>
             </Table>
         </TableContainer>
@@ -20,7 +20,7 @@ const VacanciesTable: FC = () => {
   )
 }
 
-export default VacanciesTable
+export default VTable
 
 const TableContainer = styled.div`
     max-width: 100%;

@@ -1,32 +1,39 @@
 import styled, { css } from "styled-components";
+import { input } from "../../styles/components";
 
 export const Container = styled.div`
-    margin: 20px 0; 
+    /* margin: 20px 0; */
 `
 export const Title = styled.div`
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
     width: 100%;
-    margin-bottom: 32px;
-    position: relative;
+    /* margin-bottom: 32px; */
+    /* position: relative; */
 `
 export const Header = styled.div`
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
     width: 100%;
     position: relative;
 `
 export const Status = styled.div`
-    position: absolute;
+    /* position: absolute;
     left: 0;
-    font-size: 12px;
+    font-size: 12px; */
 
 `
-export const Close = styled.button`
-    position: absolute;
-    right: 0;
+export const Close = styled.div`
+    height: 24px;
+    svg {
+        g {
+            path {
+            fill:  ${({ theme }) => theme.colors.black};
+            }
+        }
+    }
 `
 export const VacancyName = styled.div`
     text-align: center;
@@ -49,18 +56,15 @@ export const Form = styled.form`
     justify-content: stretch;
     margin: 20px 0;
 `
-export const input = css`
-    height: 40px;
-    background: #F0F0F0;
-    border: none;
+export const inputS = css`
+    ${input}
     margin: 2px 0 14px;
-    padding: 10px;
 `
 export const Select = styled.select`
-    ${input}
+    ${inputS}
 `
 export const Input = styled.input`
-    ${input}
+    ${inputS}
 `
 export const Buttons = styled.div`
     display: flex;

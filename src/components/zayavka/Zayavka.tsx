@@ -1,13 +1,19 @@
 import React from 'react'
 import * as S from './ZayavkaStyles'
 import * as C from '../../styles/components'
+import Close from '../../images/icons/Close'
+import { Link } from 'react-router-dom'
 
 const Zayavka = () => {
   return (
     <S.Container>
         <S.Title>
-            <p>Заявка на подбор</p>
-            <S.Close>Закрыть</S.Close>
+            <C.H2>Заявка на подбор</C.H2>
+            <Link to="/vacancies">
+                <C.NButton>
+                    <S.Close><Close/></S.Close>
+                </C.NButton>
+            </Link>
         </S.Title>
         <S.Head>
             <div>

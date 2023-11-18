@@ -1,7 +1,7 @@
 import React, { FC, useState } from 'react'
 import { NavLink } from 'react-router-dom'
 import { styled } from 'styled-components'
-import Burger from '../../images/Burger'
+import Burger from '../../images/icons/Burger'
 import Close from '../../images/icons/Close'
 import Logo from '../../images/icons/Logo'
 import * as C from '../../styles/components'
@@ -33,6 +33,8 @@ const MenuBurger: FC = () => {
                                     <li><NavLink to="/vacancies" onClick={toggleNav}>Вакансии</NavLink></li>
                                     <li><NavLink to="/vacancy" onClick={toggleNav}>Вакансия</NavLink></li>
                                     <li><NavLink to="/zayavka" onClick={toggleNav}>Заявка</NavLink></li>
+                                    <li><NavLink to="/candidates" onClick={toggleNav}>Кандидаты</NavLink></li>
+                                    <li><NavLink to="/candidate" onClick={toggleNav}>Кандидат</NavLink></li>
                                     <li><NavLink to="/chat" onClick={toggleNav}>Чат</NavLink></li>
                                 </ul>
                             </nav>
@@ -57,13 +59,13 @@ const SLogo = styled.div`
         height: 18px;
         g {
             path {
-                fill: #fff;
+                fill:  ${({ theme }) => theme.colors.white};
             }
-    }
+        }
     }
 `
 const NavWrapper = styled.div`
-    color: #fff;
+    color: ${({ theme }) => theme.colors.white};
     position: fixed;
     left: 0;
     width: 100%;
@@ -80,5 +82,5 @@ const NavWrapper = styled.div`
     }
 `
 const Btn = styled.div`
-    z-index: ${({ theme }) => theme.order.headerAbove};
+    z-index: ${({ theme }) => theme.order.burger};
 `

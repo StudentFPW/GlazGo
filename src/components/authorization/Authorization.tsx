@@ -1,15 +1,22 @@
-import React, { FC } from 'react'
+import React, { FC, useEffect } from 'react'
 import * as C from '../../styles/components'
 import * as S from './AuthorizationStyles'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import userApi from '../../services/UserService'
 import { IAuthData } from '../../modules/IAuth'
+import { useNavigate } from 'react-router-dom'
 const Authorization:FC = () => {
 
   // const [fetchReg, {data: auth, error}] = userApi.useFetchRegMutation()
-  const [fetchAuth, {data: auth, error}] = userApi.useFetchAuthMutation()
+  const [fetchAuth, { data: auth, error, isSuccess }] = userApi.useFetchAuthMutation()
 
   if (auth?.accessToken) localStorage.setItem('accessToken', auth?.accessToken)
+
+  const navigate = useNavigate()
+
+  useEffect(() => {
+    if (isSuccess) navigate('/vacancies')
+  }, [isSuccess, navigate])
 
   const {
     register,
@@ -26,7 +33,7 @@ const Authorization:FC = () => {
 
   return (
     <div>
-      <p>Войти</p>
+      <C.H2>Войти</C.H2>
       <S.Form onSubmit={handleSubmit(onSubmit)}>
         <S.Label htmlFor="login">Логин</S.Label>
         <S.Input id='login' {...register('email', {required: 'Поле обязательно к заполнению'})}/>

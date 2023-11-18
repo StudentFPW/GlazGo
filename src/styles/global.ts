@@ -9,6 +9,7 @@ export default createGlobalStyle`
 
     body {
         font-family: 'Inter', sans-serif;
+        color: ${({ theme }) => theme.colors.black};
     }
 
     li {

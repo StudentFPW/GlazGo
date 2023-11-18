@@ -1,4 +1,5 @@
 import { styled } from "styled-components";
+import { input } from "../../styles/components";
 
 export const Form = styled.form`
     display: flex;
@@ -9,7 +10,5 @@ export const Label = styled.label`
 `
 export const Input = styled.input`
     margin-bottom: 8px;
-    height: 48px;
-    padding: 11px 16px;
-    border-radius: 8px;
+    ${input}
 `

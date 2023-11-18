@@ -2,7 +2,7 @@ import React from 'react'
 import { styled } from 'styled-components'
 import Filter from '../../../images/icons/Filter'
 
-const TableHeader = () => {
+const VTableHeader = () => {
     const titles = ['Вакансия', 'Статус', 'Город', 'З/п', 'ID']
 
     return (
@@ -26,14 +26,14 @@ const TableHeader = () => {
     )
 }
 
-export default TableHeader
+export default VTableHeader
 
 const Header = styled.thead`
     font-size: 14px;
     font-weight: 500;
     line-height: 18px; /* 128.571% */
     letter-spacing: -0.07px;
-    background-color: #F4F4F5;
+    background-color: ${({ theme }) => theme.colors.lightGray};
     th {
         padding: 10px 16px;
         white-space: nowrap;
@@ -41,7 +41,7 @@ const Header = styled.thead`
     }
     tr {
         > th:nth-child(1) {
-        width: 200px;
+            width: 200px;
         }
 
         > th:nth-child(2) {

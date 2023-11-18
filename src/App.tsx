@@ -12,6 +12,8 @@ import Rf from "./components/zayavka/Rf";
 import Vacancy from "./components/vacancy/Vacancy";
 import Header from "./components/header/Header";
 import * as C from "./styles/components";
+import Candidates from "./components/candidates/Candidates";
+import Candidate from "./components/candidate/Candidate";
 
 
 function App() {
@@ -28,6 +30,8 @@ function App() {
                 <Route path="/vacancies" element={<Vacancies/>}/>
                 <Route path="/vacancy" element={<Vacancy/>}/>
                 <Route path="/zayavka" element={<Zayavka/>}/>
+                <Route path="/candidates" element={<Candidates/>}/>
+                <Route path="/candidate" element={<Candidate/>}/>
                 <Route path="/chat" element={<Chat/>}/>
                 <Route path="*" element={<NotFound />} />
               </Routes>

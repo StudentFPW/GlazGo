@@ -5,7 +5,7 @@ import styled from 'styled-components'
 interface VacancyItemProps {
     vacancyItem: IVacancyItem
 }
-const TableRow: FC<VacancyItemProps> = ({vacancyItem}) => {
+const VTableRow: FC<VacancyItemProps> = ({vacancyItem}) => {
     const {vacancy, status, city, salary, id} = vacancyItem
 
     return (
@@ -19,7 +19,7 @@ const TableRow: FC<VacancyItemProps> = ({vacancyItem}) => {
     )
 }
 
-export default TableRow
+export default VTableRow
 
 const Td = styled.td`
     padding: 10px 16px;
