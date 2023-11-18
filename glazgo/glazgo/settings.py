@@ -28,9 +28,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.getenv("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = True  # TODO Turn on false <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 
-ALLOWED_HOSTS = ["*"]
+ALLOWED_HOSTS = ["*"]  # TODO Switch to your domain <<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 
 # Application definition
 INSTALLED_APPS = [
@@ -101,8 +101,7 @@ DATABASES = {
     }
 }
 
-# В проекте используется Postgresql, настройки БД в .env
-# DATABASES = {
+# DATABASES = {  # TODO Switch to product db <<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 #     "default": {
 #         "ENGINE": "django.db.backends.postgresql",
 #         "NAME": os.getenv("DB_NAME"),
@@ -170,12 +169,14 @@ ACCOUNT_EMAIL_VERIFICATION = "none"
 
 SITE_ID = 1
 
-CORS_ALLOW_ALL_ORIGINS = True
+CORS_ALLOW_ALL_ORIGINS = (
+    True  # TODO Switch to specific urls <<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+)
 
 REST_FRAMEWORK = {
     "DEFAULT_PERMISSION_CLASSES": [
         # "rest_framework.permissions.AllowAny",
-        "rest_framework.permissions.IsAuthenticated",
+        "rest_framework.permissions.IsAuthenticated",  # TODO Switch on product mode <<<<<<<<<<
     ],
     "DEFAULT_AUTHENTICATION_CLASSES": [
         "dj_rest_auth.jwt_auth.JWTCookieAuthentication",
