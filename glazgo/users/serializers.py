@@ -5,11 +5,11 @@ from .models import *
 
 class ULFSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Users
+        model = User
         fields = "__all__"
 
 
 class ULUSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Users
+        model = User
         fields = ["username"]

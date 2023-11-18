@@ -5,7 +5,7 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 
 from .models import Conversation
-from users.models import Users
+from users.models import User
 from .serializers import ConversationListSerializer, ConversationSerializer
 
 
@@ -29,8 +29,8 @@ def start_convo(request):
     username = data.pop("username")
 
     try:
-        participant = Users.objects.get(username=username)
-    except Users.DoesNotExist:
+        participant = User.objects.get(username=username)
+    except User.DoesNotExist:
         return Response({"message": "You cannot chat with a non existent user"})
 
     conversation = Conversation.objects.filter(

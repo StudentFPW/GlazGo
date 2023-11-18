@@ -2,7 +2,7 @@ from django.db import models
 from django.contrib.auth.models import AbstractUser
 
 
-class Users(AbstractUser):
+class User(AbstractUser):
     ROLES = [
         (0, "Администратор"),
         (1, "Рекрутер"),

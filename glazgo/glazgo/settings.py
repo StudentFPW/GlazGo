@@ -189,7 +189,7 @@ REST_AUTH = {
     "JWT_AUTH_REFRESH_COOKIE": "jwt-refresh-token",
 }
 
-AUTH_USER_MODEL = "users.Users"
+AUTH_USER_MODEL = "users.User"
 
 CHANNEL_LAYERS = {
     "default": {
