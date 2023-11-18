@@ -13,6 +13,7 @@ redis
 djangorestframework-simplejwt
 drf-yasg
 Pillow
-django-csp
+
+# django-csp # TODO uncomment for production mode
 
 # pip install pywhatkit
