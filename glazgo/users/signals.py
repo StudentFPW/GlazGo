@@ -9,12 +9,12 @@ from .models import Users
 def RoleRecognizer(instance, created, **kwargs):
     user = Users.objects.get(username=instance.username)
     if instance.role == 1:
-        group = Group.objects.get(name="")
+        group = Group.objects.get(name="UR")
     if instance.role == 2:
-        group = Group.objects.get(name="")
+        group = Group.objects.get(name="URA")
     if instance.role == 3:
-        group = Group.objects.get(name="")
+        group = Group.objects.get(name="UC")
     if instance.role == 4:
-        group = Group.objects.get(name="")
-    else:
-        user.groups.add(group)
+        group = Group.objects.get(name="UCA")
+    user.groups.add(group)
+    user.save()

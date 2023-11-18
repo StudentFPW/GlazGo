@@ -17,7 +17,7 @@ class Users(AbstractUser):
 
     birthday = models.DateField("Дата рождения", null=True)
     phone = models.CharField("Телефон", max_length=15)
-    bio = models.CharField(max_length=255, null=True)
+    bio = models.CharField("Биография", max_length=255, null=True)
     cover_photo = models.ImageField(upload_to="covers/", null=True)
     company_name = models.CharField("Название организации", max_length=30, null=True)
     description = models.TextField("Описание организации", null=True)
