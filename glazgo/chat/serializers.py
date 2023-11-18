@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from users.serializers import UserSerializer
+from users.serializers import ULUSerializer
 from .models import Conversation, Message
 
 
@@ -20,8 +20,8 @@ class ConversationListSerializer(serializers.ModelSerializer):
     включая инициатора, получателя и последнее сообщение.
     """
 
-    initiator = UserSerializer()
-    receiver = UserSerializer()
+    initiator = ULUSerializer()
+    receiver = ULUSerializer()
     last_message = serializers.SerializerMethodField()
 
     class Meta:
@@ -42,8 +42,8 @@ class ConversationSerializer(serializers.ModelSerializer):
     инициатора, получателя и список сообщений.
     """
 
-    initiator = UserSerializer()
-    receiver = UserSerializer()
+    initiator = ULUSerializer()
+    receiver = ULUSerializer()
     message_set = MessageSerializer(many=True)
 
     class Meta:

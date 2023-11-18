@@ -11,9 +11,17 @@ class Users(AbstractUser):
     ]
 
     role = models.IntegerField("Права", choices=ROLES, default=1)
-    name = models.CharField("Имя", max_length=20)
-    surname = models.CharField("Фамилия", max_length=20)
-    birthday = models.DateField("Дата рождения", null=True, blank=True)
+    first_name = models.CharField("Имя", max_length=30)
+    last_name = models.CharField("Фамилия", max_length=150)
+    email = models.EmailField("Электронная Почта")
+
+    birthday = models.DateField("Дата рождения", null=True)
     phone = models.CharField("Телефон", max_length=15)
-    bio = models.CharField(max_length=255, null=True, blank=True)
-    cover_photo = models.ImageField(upload_to="covers/", null=True, blank=True)
+    bio = models.CharField(max_length=255, null=True)
+    cover_photo = models.ImageField(upload_to="covers/", null=True)
+    company_name = models.CharField("Название организации", max_length=30, null=True)
+    description = models.TextField("Описание организации", null=True)
+    legal_address = models.CharField("Юридический адрес", max_length=250, null=True)
+    mailing_address = models.CharField("Почтовый адрес", max_length=250, null=True)
+    inn = models.CharField("ИНН", max_length=10, null=True)
+    checking_account = models.CharField("Расчетный счет", max_length=20, null=True)

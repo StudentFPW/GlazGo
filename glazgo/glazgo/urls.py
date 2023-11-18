@@ -28,11 +28,10 @@ from drf_yasg.views import get_schema_view
 from drf_yasg import openapi
 
 from ats.views import *
-from users.views import UserViewSet
+from users.views import ULFViewSet
 
 router = routers.DefaultRouter()
 router.register(r"cph", CPHistoryViewSet)
-router.register(r"cust", CustomerViewSet)
 router.register(r"resp", ResponsibilitiesViewSet)
 router.register(r"req", RequirementsViewSet)
 router.register(r"vac", VacancyViewSet)
@@ -40,7 +39,7 @@ router.register(r"cand", CandidateViewSet)
 router.register(r"c-p", CPromotionViewSet)
 router.register(r"mes", MessageViewSet)
 router.register(r"w-cand", WaitingCandidateViewSet)
-router.register(r"users", UserViewSet)
+router.register(r"ulf", ULFViewSet)
 
 schema_view = get_schema_view(
     openapi.Info(
@@ -66,10 +65,10 @@ urlpatterns = [
     path("conv/", include("chat.urls")),
     path("u-l/", include("users.urls")),
     path("swag<format>/", schema_view.without_ui(cache_timeout=0), name="schema-json"),
+    path("rd/", schema_view.with_ui("redoc", cache_timeout=0), name="schema-redoc"),
     path(
         "swag/",
         schema_view.with_ui("swagger", cache_timeout=0),
         name="schema-swagger-ui",
     ),
-    path("rd/", schema_view.with_ui("redoc", cache_timeout=0), name="schema-redoc"),
 ]

@@ -7,14 +7,14 @@ from .models import Users
 
 @receiver(post_save, sender=Users)
 def RoleRecognizer(instance, created, **kwargs):
-    if not created:
-        return
-
+    user = Users.objects.get(username=instance.username)
     if instance.role == 1:
-        pass
+        group = Group.objects.get(name="")
     if instance.role == 2:
-        pass
+        group = Group.objects.get(name="")
     if instance.role == 3:
-        pass
+        group = Group.objects.get(name="")
     if instance.role == 4:
-        pass
+        group = Group.objects.get(name="")
+    else:
+        user.groups.add(group)

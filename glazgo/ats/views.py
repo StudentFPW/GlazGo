@@ -1,7 +1,7 @@
 from datetime import timedelta
 
 from django.utils.timezone import now
-from rest_framework import viewsets, generics, filters, mixins
+from rest_framework import viewsets, filters
 from django_filters.rest_framework import DjangoFilterBackend
 
 from .models import *
@@ -19,19 +19,6 @@ class CPHistoryViewSet(viewsets.ModelViewSet):
         "recruter_id",
         "status",
         "datetime",
-    ]
-
-
-class CustomerViewSet(viewsets.ModelViewSet):
-    serializer_class = CustomerSerializer
-    queryset = Customer.objects.all()
-    filter_backends = [DjangoFilterBackend, filters.OrderingFilter]
-    ordering_fields = "__all__"
-    filterset_fields = [
-        "user_id",
-        "company_name",
-        "mailing_address",
-        "phone",
     ]
 
 

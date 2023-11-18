@@ -25,27 +25,6 @@ class CPHistory(models.Model):
         return f"datetime: {self.datetime}"
 
 
-class Customer(models.Model):
-    """
-    Класс «Клиент» представляет клиента с различными атрибутами, такими как
-    название компании, описание, адреса, ИНН, текущий счет, телефон и адрес электронной почты.
-    """
-
-    user_id = models.ForeignKey(
-        settings.AUTH_USER_MODEL, on_delete=models.PROTECT, related_name="user_customer"
-    )
-
-    company_name = models.CharField("Название организации", max_length=30)
-    description = models.TextField("Описание организации")
-    legal_address = models.CharField("Юридический адрес", max_length=250)
-    mailing_address = models.CharField("Почтовый адрес", max_length=250)
-    inn = models.CharField("ИНН", max_length=10, null=True)
-    checking_account = models.CharField("Расчетный счет", max_length=20, null=True)
-
-    def __str__(self):
-        return f"customer: {self.company_name}"
-
-
 class Responsibilities(models.Model):
     """
     Класс Responsibilities представляет собой модель хранения описаний обязанностей и управления ими.
@@ -91,7 +70,7 @@ class Vacancy(models.Model):
         settings.AUTH_USER_MODEL, on_delete=models.PROTECT, related_name="recruters"
     )
     customer = models.ForeignKey(
-        Customer, on_delete=models.PROTECT, related_name="customers"
+        settings.AUTH_USER_MODEL, on_delete=models.PROTECT, related_name="customers"
     )
     status_vacancy = models.IntegerField(
         "Статус вакансии", choices=VACANCY_STATUS, default=1

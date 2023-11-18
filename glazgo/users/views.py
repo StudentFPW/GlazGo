@@ -3,12 +3,12 @@ from rest_framework.decorators import api_view
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import viewsets, filters
 
-from .serializers import UserSerializer, UsersSerializer
+from .serializers import ULUSerializer, ULFSerializer
 from .models import Users
 
 
-class UserViewSet(viewsets.ModelViewSet):
-    serializer_class = UsersSerializer
+class ULFViewSet(viewsets.ModelViewSet):
+    serializer_class = ULFSerializer
     queryset = Users.objects.all()
     filter_backends = [DjangoFilterBackend, filters.OrderingFilter]
     ordering_fields = "__all__"
@@ -33,5 +33,5 @@ def user_list(request):
         объект ответа, содержащий сериализованные данные всех пользователей в базе данных.
     """
     users = Users.objects.all().order_by("username")
-    serializer = UserSerializer(instance=users, many=True)
+    serializer = ULUSerializer(instance=users, many=True)
     return Response(serializer.data)
