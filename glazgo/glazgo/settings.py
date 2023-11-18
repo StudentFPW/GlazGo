@@ -28,7 +28,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.getenv("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True  # TODO Turn on false <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+DEBUG = True  # TODO Turn off on production mode <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 
 ALLOWED_HOSTS = ["*"]  # TODO Switch to your domain <<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 
@@ -60,6 +60,7 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+    # "csp.middleware.CSPMiddleware",
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "corsheaders.middleware.CorsMiddleware",
@@ -101,7 +102,7 @@ DATABASES = {
     }
 }
 
-# DATABASES = {  # TODO Switch to product db <<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+# DATABASES = {  # TODO Switch to production db <<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 #     "default": {
 #         "ENGINE": "django.db.backends.postgresql",
 #         "NAME": os.getenv("DB_NAME"),
@@ -176,7 +177,7 @@ CORS_ALLOW_ALL_ORIGINS = (
 REST_FRAMEWORK = {
     "DEFAULT_PERMISSION_CLASSES": [
         # "rest_framework.permissions.AllowAny",
-        "rest_framework.permissions.IsAuthenticated",  # TODO Switch on product mode <<<<<<<<<<
+        "rest_framework.permissions.IsAuthenticated",  # TODO Switch on production mode <<<<<<<<<<
     ],
     "DEFAULT_AUTHENTICATION_CLASSES": [
         "dj_rest_auth.jwt_auth.JWTCookieAuthentication",
@@ -236,3 +237,21 @@ SIMPLE_JWT = {
     "SLIDING_TOKEN_OBTAIN_SERIALIZER": "rest_framework_simplejwt.serializers.TokenObtainSlidingSerializer",
     "SLIDING_TOKEN_REFRESH_SERIALIZER": "rest_framework_simplejwt.serializers.TokenRefreshSlidingSerializer",
 }
+
+# TODO uncomment on production mode !!!
+# SECURE_BROWSER_XSS_FILTER = True
+# SECURE_CONTENT_TYPE_NOSNIFF = True
+# SECURE_SSL_REDIRECT = True
+# SECURE_HSTS_SECONDS = 86400
+# SECURE_HSTS_PRELOAD = True
+# SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+# SESSION_COOKIE_SECURE = True
+# CSRF_COOKIE_SECURE = True
+# CSP_DEFAULT_SRC = ("'none'",)
+# CSP_BASE_URI = ("'none'",)
+# CSP_FRAME_ANCESTORS = ("'none'",)
+# CSP_FORM_ACTION = ("'self'",)
+# CSP_STYLE_SRC = ("'self'",)
+# CSP_SCRIPT_SRC = ("'self'",)
+# CSP_IMG_SRC = ("'self'",)
+# CSP_FONT_SRC = ("'self'",)

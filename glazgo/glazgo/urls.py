@@ -56,7 +56,7 @@ schema_view = get_schema_view(
 
 urlpatterns = [
     path("api/", include(router.urls)),
-    path("k6F873rbHG/", admin.site.urls),
+    path("secret-k6F8-admin-73rbHG/", admin.site.urls),
     path("auth/", include("dj_rest_auth.urls")),
     path("auth/reg/", include("dj_rest_auth.registration.urls")),
     path("api/token/", TokenObtainPairView.as_view(), name="token_obtain_pair"),

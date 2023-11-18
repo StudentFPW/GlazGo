@@ -13,5 +13,6 @@ redis
 djangorestframework-simplejwt
 drf-yasg
 Pillow
+django-csp
 
 # pip install pywhatkit
