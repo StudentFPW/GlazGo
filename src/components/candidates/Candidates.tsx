@@ -8,7 +8,7 @@ const Candidates = () => {
   return (
     <div>
         <C.H2>Кандидаты</C.H2>
-        <Options path={'/zayavka'}/>
+        <Options path={'/new-candidate'}/>
         <CTable />
         <Pagination />
     </div>

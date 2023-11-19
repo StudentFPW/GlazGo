@@ -1,6 +1,6 @@
 import React, { FC, useState } from 'react'
 import { NavLink } from 'react-router-dom'
-import { styled } from 'styled-components'
+import { css, styled } from 'styled-components'
 import Burger from '../../images/icons/Burger'
 import Close from '../../images/icons/Close'
 import Logo from '../../images/icons/Logo'
@@ -18,7 +18,7 @@ const MenuBurger: FC = () => {
             <div>
                 <Icons>
                     <Btn onClick={toggleNav}>
-                        {nav ? <Close/> : <Burger/>}
+                        {nav ? <SClose><Close/></SClose> : <Burger/>}
                     </Btn>
                     <SLogo>
                         <Logo/>
@@ -35,6 +35,7 @@ const MenuBurger: FC = () => {
                                     <li><NavLink to="/zayavka" onClick={toggleNav}>Заявка</NavLink></li>
                                     <li><NavLink to="/candidates" onClick={toggleNav}>Кандидаты</NavLink></li>
                                     <li><NavLink to="/candidate" onClick={toggleNav}>Кандидат</NavLink></li>
+                                    <li><NavLink to="/new-candidate" onClick={toggleNav}>Новый кандидат</NavLink></li>
                                     <li><NavLink to="/chat" onClick={toggleNav}>Чат</NavLink></li>
                                 </ul>
                             </nav>
@@ -53,15 +54,24 @@ const Icons = styled.div`
     column-gap: 14px;
     align-items: center;
 `
+const Btn = styled.div`
+    z-index: ${({ theme }) => theme.order.burger};
+`
+const whiteSvgIcon = css`
+    g {
+        path {
+            fill:  ${({ theme }) => theme.colors.white};
+        }
+    }
+`
+const SClose = styled.div`
+    ${whiteSvgIcon}
+`
 const SLogo = styled.div`
     svg {
         width: 78px;
         height: 18px;
-        g {
-            path {
-                fill:  ${({ theme }) => theme.colors.white};
-            }
-        }
+        ${whiteSvgIcon}
     }
 `
 const NavWrapper = styled.div`
@@ -80,7 +90,4 @@ const NavWrapper = styled.div`
         row-gap: 20px;
         margin: 24px 0;
     }
-`
-const Btn = styled.div`
-    z-index: ${({ theme }) => theme.order.burger};
 `

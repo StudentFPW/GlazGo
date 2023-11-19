@@ -6,12 +6,12 @@ import { Link } from 'react-router-dom'
 
 const Zayavka = () => {
   return (
-    <S.Container>
+    <div>
         <S.Title>
             <C.H2>Заявка на подбор</C.H2>
             <Link to="/vacancies">
                 <C.NButton>
-                    <S.Close><Close/></S.Close>
+                    <C.SvgIconWrapper><Close/></C.SvgIconWrapper>
                 </C.NButton>
             </Link>
         </S.Title>
@@ -76,7 +76,7 @@ const Zayavka = () => {
             <S.Input type="text" />
             <C.FButton>Создать вакансию</C.FButton>
         </S.Form>
-    </S.Container>
+    </div>
   )
 }
 

@@ -14,6 +14,7 @@ import Header from "./components/header/Header";
 import * as C from "./styles/components";
 import Candidates from "./components/candidates/Candidates";
 import Candidate from "./components/candidate/Candidate";
+import NewCandidate from "./components/candidate/NewCandidate";
 
 
 function App() {
@@ -32,6 +33,7 @@ function App() {
                 <Route path="/zayavka" element={<Zayavka/>}/>
                 <Route path="/candidates" element={<Candidates/>}/>
                 <Route path="/candidate" element={<Candidate/>}/>
+                <Route path="/new-candidate" element={<NewCandidate/>}/>
                 <Route path="/chat" element={<Chat/>}/>
                 <Route path="*" element={<NotFound />} />
               </Routes>

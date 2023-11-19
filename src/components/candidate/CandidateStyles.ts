@@ -50,8 +50,9 @@ export const inputS = css`
 export const Select = styled.select`
     ${inputS}
 `
-export const Input = styled.input`
+export const ItemValue = styled.div`
     ${inputS}
+    border: none;
 `
 export const Buttons = styled.div`
     display: flex;
