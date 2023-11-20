@@ -6,9 +6,9 @@ from .models import User
 
 
 @receiver(post_save, sender=User)
-def RoleRecognizer(instance, created, **kwargs):
+def RoleRecognizer(instance, **kwargs):
     if not instance.is_superuser:
-        user = User.objects.get(username=instance.username)
+        user = User.objects.get(id=instance.pk)
         if instance.role == 1:
             group = Group.objects.get(name="UR")
         if instance.role == 2:

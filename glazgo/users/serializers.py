@@ -3,10 +3,24 @@ from rest_framework import serializers
 from .models import *
 
 
-class ULFSerializer(serializers.ModelSerializer):
+class RegisterSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = "__all__"
+        fields = [
+            "username",
+            "role",
+            "first_name",
+            "last_name",
+            "email",
+            "phone",
+            "password",
+        ]
+
+
+# class ULFSerializer(serializers.ModelSerializer):
+#     class Meta:
+#         model = User
+#         fields = "__all__"
 
 
 class ULUSerializer(serializers.ModelSerializer):

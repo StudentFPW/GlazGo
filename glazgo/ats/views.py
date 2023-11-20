@@ -7,8 +7,11 @@ from django_filters.rest_framework import DjangoFilterBackend
 from .models import *
 from .serializer import *
 
+# from users.permissions import UserRecruiter
+
 
 class CPHistoryViewSet(viewsets.ModelViewSet):
+    # permission_classes = [UserRecruiter]
     serializer_class = CPHistorySerializer
     queryset = CPHistory.objects.all()
     filter_backends = [DjangoFilterBackend, filters.OrderingFilter]

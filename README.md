@@ -11,3 +11,31 @@ ATS (Applicant Tracking System — дословно: «система отсле
     4. Пожалуйста, оставьте комментарий к вашему коду.
     5. Пожалуйста не добавляйте файлы виртуального окружения (Используйте gitignore https://www.toptal.com/developers/gitignore).
 ```
+
+```bash
+
+First create an administrator after creating groups and add permissions.
+
+Is User Recrouter
+group name = UR:
+    permissions...
+
+
+Is User Recrouter Admin
+group name = URA:
+    permissions...
+
+
+Is User Costumer
+group name = UC:
+    permissions...
+ 
+
+Is User Costumer Admin
+group name = UCA:
+    permissions...
+
+
+IF YOU FIND ANY CONFLICTS IN PERMISSIONS ADD THEM AND ADD COMMENTS FOR OTHER DEPARTMENT.🌚
+
+```

@@ -187,6 +187,7 @@ REST_AUTH = {
     "USE_JWT": True,
     "JWT_AUTH_COOKIE": "jwt-auth",
     "JWT_AUTH_REFRESH_COOKIE": "jwt-refresh-token",
+    "REGISTER_SERIALIZER": "users.serializers.RegisterSerializer",
 }
 
 AUTH_USER_MODEL = "users.User"
