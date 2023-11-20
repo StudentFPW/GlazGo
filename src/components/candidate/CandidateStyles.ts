@@ -53,9 +53,26 @@ export const Select = styled.select`
 export const ItemValue = styled.div`
     ${inputS}
     border: none;
+    display: flex;
+`
+export const MessengerWrapper = styled.div`
+    display: flex;
+    /* justify-content: center; */
+    margin-bottom: 14px;
+    column-gap: 30px;
+`
+export const Messenger = styled.div`
+    height: 40px;
+    border-radius: 8px;
+    overflow: hidden;
+`
+export const Textarea = styled.textarea`
+    ${inputS}
+    height: auto;
 `
 export const Buttons = styled.div`
     display: flex;
     flex-direction: column;
     row-gap: 16px;
 `
+

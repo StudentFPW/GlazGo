@@ -15,6 +15,7 @@ import * as C from "./styles/components";
 import Candidates from "./components/candidates/Candidates";
 import Candidate from "./components/candidate/Candidate";
 import NewCandidate from "./components/candidate/NewCandidate";
+import VacancyClosed from "./components/VacancyClosed";
 
 
 function App() {
@@ -35,6 +36,7 @@ function App() {
                 <Route path="/candidate" element={<Candidate/>}/>
                 <Route path="/new-candidate" element={<NewCandidate/>}/>
                 <Route path="/chat" element={<Chat/>}/>
+                <Route path="/vacancy-closed" element={<VacancyClosed/>}/>
                 <Route path="*" element={<NotFound />} />
               </Routes>
             </Main>

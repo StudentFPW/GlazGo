@@ -29,8 +29,11 @@ const NewCandidate = () => {
                 <S.Input />
                 <label htmlFor="">Источник</label>
                 <S.Input />
-                <label htmlFor=""><S.Input type='checkbox'/>Реферальная программа</label>
-                <label htmlFor="">ФИО реферера</label>
+                <S.RefProgramm htmlFor="">
+                    <S.Checkbox type='checkbox'/>
+                    Реферальная программа
+                </S.RefProgramm>
+                <label htmlFor="">Реферер</label>
                 <S.Input />
                 <label htmlFor="">Статус</label>
                 <S.Select name="" id="">
@@ -39,7 +42,7 @@ const NewCandidate = () => {
                     <option value="3">стажировка</option>
                 </S.Select>
                 <label htmlFor="">Комментарии</label>
-                <textarea name="" id="" cols={30} rows={10}></textarea>
+                <S.Textarea name="" id="" cols={30} rows={8}></S.Textarea>
                 <C.FButton>Добавить кандидата</C.FButton>
             </S.Form>
         </div>

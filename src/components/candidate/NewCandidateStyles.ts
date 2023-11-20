@@ -53,8 +53,23 @@ export const Select = styled.select`
 export const Input = styled.input`
     ${inputS}
 `
+export const Checkbox = styled.input`
+    ${inputS}
+    margin: 0;
+    height: auto;
+`
+export const Textarea = styled.textarea`
+    ${inputS}
+    height: auto;
+`
 export const Buttons = styled.div`
     display: flex;
     flex-direction: column;
     row-gap: 16px;
+`
+export const RefProgramm = styled.label`
+    display: flex;
+    align-items: center;
+    column-gap: 8px;
+    margin-bottom: 6px;
 `

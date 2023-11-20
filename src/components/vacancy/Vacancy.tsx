@@ -3,8 +3,11 @@ import * as S from '../zayavka/ZayavkaStyles'
 import * as C from '../../styles/components'
 import Close from '../../images/icons/Close'
 import { Link } from 'react-router-dom'
+import VacancyApi from '../../services/VacancyService'
 
 const Vacancy = () => {
+
+
     return (
         <div>
             <div>
@@ -17,6 +20,7 @@ const Vacancy = () => {
                     </Link>
                 </S.Title>
                 <S.VacancyName>Наименование вакансии</S.VacancyName>
+                <S.VacancyName>Открыта</S.VacancyName>
             </div>
             <S.Head>
                 <div>

@@ -2,16 +2,14 @@ import React from 'react'
 import notFound from '../images/not-found.svg'
 import NotFound from '../images/NotFound'
 import { styled } from 'styled-components'
+import * as C from '../styles/components'
 
 const NotFoundPage = () => {
     return (
-        <div>
-            <Title>Страница не найдена</Title>
-            <Container>
-                <Img src={notFound} alt="not found" />
-            </Container>
-        </div>
-
+        <Container>
+            <C.H1>Страница не найдена</C.H1>
+            <Img src={notFound} alt="not found" />
+        </Container>
     )
 }
 

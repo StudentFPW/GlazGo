@@ -57,4 +57,5 @@ export const Buttons = styled.div`
     display: flex;
     flex-direction: column;
     row-gap: 16px;
+    margin-bottom: 50px;
 `

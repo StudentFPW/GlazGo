@@ -13,12 +13,12 @@ const Options: FC<OptionsProps> = ({path}) => {
     return (
         <div>
             <BtnContainer>
-            <Link to={path}>
-                <C.TFButton>
-                    <SPlus><Plus/></SPlus>
-                    Добавить
-                </C.TFButton>
-            </Link>
+                <Link to={path}>
+                    <C.TFButton>
+                        <SPlus><Plus/></SPlus>
+                        Добавить
+                    </C.TFButton>
+                </Link>
                 <C.TButton>
                     <SFunnel><Funnel/></SFunnel>
                     Фильтры
@@ -33,6 +33,7 @@ export default Options
 const BtnContainer = styled.div`
     display: flex;
     column-gap: 12px;
+    margin-bottom: 24px;
 `
 const SPlus = styled.div`
     width: 20px;

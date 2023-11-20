@@ -36,6 +36,7 @@ const MenuBurger: FC = () => {
                                     <li><NavLink to="/candidates" onClick={toggleNav}>Кандидаты</NavLink></li>
                                     <li><NavLink to="/candidate" onClick={toggleNav}>Кандидат</NavLink></li>
                                     <li><NavLink to="/new-candidate" onClick={toggleNav}>Новый кандидат</NavLink></li>
+                                    <li><NavLink to="/vacancy-closed" onClick={toggleNav}>Вакансия закрыта</NavLink></li>
                                     <li><NavLink to="/chat" onClick={toggleNav}>Чат</NavLink></li>
                                 </ul>
                             </nav>

@@ -27,6 +27,7 @@ const PContainer = styled.div`
     font-weight: 400;
     line-height: 20px; /* 125% */
     letter-spacing: -0.08px;
+    margin-top: 24px;
 `
 const Arrows = styled.div`
     display: flex;

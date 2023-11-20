@@ -49,11 +49,17 @@ export const TButton = styled(LButton)`
 export const TFButton = styled(FButton)`
     ${tButton}
 `
-export const H2 = styled.h2`
-    font-size: 26px;
+export const H1 = styled.h1`
+    font-size: 30px;
     font-weight: 700;
-    line-height: 32px; /* 123.077% */
-    letter-spacing: -0.13px;
+    line-height: 38px; /* 126.667% */
+    letter-spacing: -0.15px;
+`
+export const H2 = styled.h2`
+    font-size: 24px;
+    font-weight: 700;
+    line-height: 30px; /* 125% */
+    letter-spacing: -0.12px;
     margin: 24px 0;
 `
 export const input = css`

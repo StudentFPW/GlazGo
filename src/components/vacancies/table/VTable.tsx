@@ -1,23 +1,22 @@
 import React, { FC } from 'react'
 import TableHeader from './VTableHeader'
 import { styled } from 'styled-components'
-import data from '../../../vacancies.json'
 import VTableRow from './VTableRow'
+import vacancyApi from '../../../services/VacancyService'
 
 const VTable: FC = () => {
+    const {data: vacancies} = vacancyApi.useGetVacanciesQuery(10)
 
-    const vacansies = data
     return (
         <TableContainer>
             <Table>
                 <TableHeader />
                 <tbody>
-                    {vacansies.map(vacancy => <VTableRow key={vacancy.id} vacancyItem={vacancy} />)}
+                    {vacancies && vacancies.map(vacancy => <VTableRow key={vacancy.id} vacancyItem={vacancy} />)}
                 </tbody>
             </Table>
         </TableContainer>
-
-  )
+    )
 }
 
 export default VTable
@@ -33,5 +32,4 @@ const Table = styled.table`
     max-width: 600px;
     border-collapse: collapse;
     border: 1px solid #D7D7D7;
-    margin: 20px 0;
 `
