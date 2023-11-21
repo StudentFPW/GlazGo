@@ -17,12 +17,6 @@ class RegisterSerializer(serializers.ModelSerializer):
         ]
 
 
-# class ULFSerializer(serializers.ModelSerializer):
-#     class Meta:
-#         model = User
-#         fields = "__all__"
-
-
 class ULUSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
