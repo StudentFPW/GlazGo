@@ -2,6 +2,7 @@ from datetime import timedelta
 
 from django.utils.timezone import now
 from rest_framework import viewsets, filters
+from rest_framework_rules.mixins import PermissionRequiredMixin
 from django_filters.rest_framework import DjangoFilterBackend
 
 from .models import *
@@ -10,7 +11,7 @@ from .serializer import *
 # from users.permissions import UserRecruiter
 
 
-class CPHistoryViewSet(viewsets.ModelViewSet):
+class CPHistoryViewSet(PermissionRequiredMixin, viewsets.ModelViewSet):
     # permission_classes = [UserRecruiter]
     serializer_class = CPHistorySerializer
     queryset = CPHistory.objects.all()
@@ -44,7 +45,7 @@ class VacancyViewSet(viewsets.ModelViewSet):
         "recruter",
         "customer",
         "status_vacancy",
-        "salary2",
+        "salary",
     ]
 
 
@@ -81,46 +82,46 @@ def get_message(user):
     return Message.objects.filter(user_id__username=user, viewed=False)
 
 
-class MessageViewSet(viewsets.ModelViewSet):
-    serializer_class = MessageSerializer
-    queryset = Message.objects.all()
-    filter_backends = [DjangoFilterBackend, filters.OrderingFilter]
-    ordering_fields = "__all__"
-    filterset_fields = [
-        "user_id",
-        "candidate_id",
-        "viewed",
-    ]
+# class MessageViewSet(viewsets.ModelViewSet):
+#     serializer_class = MessageSerializer
+#     queryset = Message.objects.all()
+#     filter_backends = [DjangoFilterBackend, filters.OrderingFilter]
+#     ordering_fields = "__all__"
+#     filterset_fields = [
+#         "user_id",
+#         "candidate_id",
+#         "viewed",
+#     ]
 
-    def get_queryset(self):
-        print(f"Test: User {self.request.user}")
+#     def get_queryset(self):
+#         print(f"Test: User {self.request.user}")
 
-        qs = get_message(self.request.user)
+#         qs = get_message(self.request.user)
 
-        print(f"Test: Message {qs}")
+#         print(f"Test: Message {qs}")
 
-        return qs
+#         return qs
 
 
-class WaitingCandidateViewSet(viewsets.ModelViewSet):
-    serializer_class = WaitingCandidateSerializer
-    queryset = CandidatePromotion.objects.all()
-    filter_backends = [DjangoFilterBackend, filters.OrderingFilter]
-    ordering_fields = "__all__"
-    filterset_fields = [
-        "candidat_id",
-        "status_change",
-    ]
+# class WaitingCandidateViewSet(viewsets.ModelViewSet):
+#     serializer_class = WaitingCandidateSerializer
+#     queryset = CandidatePromotion.objects.all()
+#     filter_backends = [DjangoFilterBackend, filters.OrderingFilter]
+#     ordering_fields = "__all__"
+#     filterset_fields = [
+#         "candidat_id",
+#         "status_change",
+#     ]
 
-    def get_queryset(self):
-        print(f"Test: User {self.request.user}")
+#     def get_queryset(self):
+#         print(f"Test: User {self.request.user}")
 
-        qs = CandidatePromotion.objects.filter(
-            vacancy_id__customer__username=self.request.user,
-            agreed=False,
-            status_change_date__lt=now() - timedelta(days=1),
-        )
+#         qs = CandidatePromotion.objects.filter(
+#             vacancy_id__customer__username=self.request.user,
+#             agreed=False,
+#             status_change_date__lt=now() - timedelta(days=1),
+#         )
 
-        print(f"Test: Message {qs}")
+#         print(f"Test: Message {qs}")
 
-        return qs
+#         return qs

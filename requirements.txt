@@ -12,6 +12,9 @@ dj-rest-auth[with_social]
 djangorestframework-simplejwt
 drf-yasg
 Pillow
-django-csp
 
-# pip install pywhatkit
+django-csp
+django-rest-framework-rules==0.1.1
+six
+
+# pywhatkit

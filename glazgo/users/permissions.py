@@ -12,10 +12,17 @@ class UserRecruiter(permissions.BasePermission):
     # SAFE_METHODS = ("GET", "HEAD", "OPTIONS")
 
     def has_permission(self, request, view):
+        """
+        Функция проверяет, аутентифицирован ли пользователь, делающий запрос.
+        """
         if request.user.is_authenticated:
             return True
 
     def has_object_permission(self, request, view, obj):
+        """
+        Функция проверяет, имеет ли пользователь разрешение на доступ к объекту на основе его роли или
+        членства в группе.
+        """
         if request.user.is_superuser:
             return True
         if request.user.groups.filter(name="UR").exists():
