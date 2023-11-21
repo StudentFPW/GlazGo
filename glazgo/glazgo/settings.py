@@ -28,9 +28,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.getenv("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True  # TODO Turn off on production mode <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+DEBUG = True  # Режим продукции
 
-ALLOWED_HOSTS = ["*"]  # TODO Switch to your domain <<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+ALLOWED_HOSTS = ["*"]  # Режим продукции
 
 # Application definition
 INSTALLED_APPS = [
@@ -60,7 +60,7 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
-    # "csp.middleware.CSPMiddleware",  # TODO uncomment for production mode <<<<<<<<<<<<<<<<<
+    # "csp.middleware.CSPMiddleware",  # Режим продукции
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "corsheaders.middleware.CorsMiddleware",
@@ -102,7 +102,7 @@ DATABASES = {
     }
 }
 
-# DATABASES = {  # TODO Switch to production db <<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+# DATABASES = {  # Режим продукции
 #     "default": {
 #         "ENGINE": "django.db.backends.postgresql",
 #         "NAME": os.getenv("DB_NAME"),
@@ -170,12 +170,12 @@ ACCOUNT_EMAIL_VERIFICATION = "none"
 
 SITE_ID = 1
 
-CORS_ALLOW_ALL_ORIGINS = True  # TODO Switch to specific urls <<<<<<<<<<<<<<<<<<<<
+CORS_ALLOW_ALL_ORIGINS = True  # Режим продукции
 
 REST_FRAMEWORK = {
     "DEFAULT_PERMISSION_CLASSES": [
         # "rest_framework.permissions.AllowAny",
-        "rest_framework.permissions.IsAuthenticated",  # TODO Switch on production mode <<<<<<<<<<
+        "rest_framework.permissions.IsAuthenticated",  # Режим продукции
     ],
     "DEFAULT_AUTHENTICATION_CLASSES": [
         "dj_rest_auth.jwt_auth.JWTCookieAuthentication",
@@ -237,20 +237,43 @@ SIMPLE_JWT = {
     "SLIDING_TOKEN_REFRESH_SERIALIZER": "rest_framework_simplejwt.serializers.TokenRefreshSlidingSerializer",
 }
 
-# TODO uncomment on production mode !!! <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+################################################################
+
+# Разкомментируйте эти переменные в режиме продукции !!!
+
+# Контрольный список безопасности !!!
+
+# Чтобы сообщить браузеру, что он никогда не должен загружать сайт
+# с использованием HTTP и вместо этого должен автоматически преобразовывать
+# все попытки доступа к сайту с использованием HTTP в запросы HTTPS.
+# SECURE_HSTS_SECONDS = 15780000
+# SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+# SECURE_HSTS_PRELOAD = True
+
+# Чтобы заблокировать загрузку страниц при обнаружении отраженных XSS-атак
 # SECURE_BROWSER_XSS_FILTER = True
 # SECURE_CONTENT_TYPE_NOSNIFF = True
-# SECURE_SSL_REDIRECT = True
-# SECURE_HSTS_SECONDS = 86400
-# SECURE_HSTS_PRELOAD = True
-# SECURE_HSTS_INCLUDE_SUBDOMAINS = True
-# SESSION_COOKIE_SECURE = True
+
+# Чтобы избежать случайной передачи файла cookie CSRF по HTTP.
 # CSRF_COOKIE_SECURE = True
-# CSP_DEFAULT_SRC = ("'none'",)
-# CSP_BASE_URI = ("'none'",)
-# CSP_FRAME_ANCESTORS = ("'none'",)
-# CSP_FORM_ACTION = ("'self'",)
-# CSP_STYLE_SRC = ("'self'",)
-# CSP_SCRIPT_SRC = ("'self'",)
-# CSP_IMG_SRC = ("'self'",)
-# CSP_FONT_SRC = ("'self'",)
+
+# Чтобы избежать случайной передачи файла cookie сеанса по HTTP.
+# SESSION_COOKIE_SECURE = True
+
+# Чтобы Django перенаправлял все запросы, отличные от HTTPS, на HTTPS.
+# SECURE_SSL_REDIRECT = True
+
+# Политика безопасности контента (CSP)
+# CSP_DEFAULT_SRC = ("'none'", )
+# CSP_BASE_URI = ("'none'", )
+# CSP_FRAME_ANCESTORS = ("'none'", )
+# CSP_FORM_ACTION = ("'self'", )
+# CSP_STYLE_SRC = ("'self'", )
+# CSP_SCRIPT_SRC = ("'self'", )
+# CSP_IMG_SRC = ("'self'", )
+# CSP_FONT_SRC = ("'self'", )
+
+# Чтобы проверить соответствует ли приложение списку безопасности
+# python manage.py check --deploy
+
+################################################################

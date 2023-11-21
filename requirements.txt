@@ -12,7 +12,6 @@ dj-rest-auth[with_social]
 djangorestframework-simplejwt
 drf-yasg
 Pillow
-
-# django-csp # TODO uncomment for production mode
+django-csp
 
 # pip install pywhatkit
