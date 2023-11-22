@@ -12,7 +12,7 @@ const VTable: FC = () => {
             <Table>
                 <TableHeader />
                 <tbody>
-                    {vacancies && vacancies.map(vacancy => <VTableRow key={vacancy.id} vacancyItem={vacancy} />)}
+                    {vacancies && vacancies.map(vacancy => <VTableRow key={vacancy.id} vacancy={vacancy} />)}
                 </tbody>
             </Table>
         </TableContainer>

@@ -1,5 +1,6 @@
 import {createApi, fetchBaseQuery} from '@reduxjs/toolkit/dist/query/react'
-import { IVacancyItem } from '../modules/IVacancyItem'
+import { IVacancy } from '../modules/IVacancy'
+import camelcaseKeys from 'camelcase-keys'
 
 const vacancyApi = createApi({
     reducerPath: 'vacancyApi',
@@ -12,21 +13,23 @@ const vacancyApi = createApi({
         }
     }),
     endpoints: (build) => ({
-        getVacancies: build.query<IVacancyItem[], number>({
+        getVacancies: build.query<IVacancy[], number>({
             query: (limit: number = 10) => ({
                 url: '/',
                 params: {
                     limit
                 }
-            })
+            }),
+            transformResponse: (response: IVacancy[]) => camelcaseKeys(response, { deep: true })
         }),
-        getVacancy: build.query<IVacancyItem, string>({
+        getVacancy: build.query<IVacancy[], string>({
             query: (id) => ({
                 url: '/',
                 params: {
                     id
                 }
-            })
+            }),
+            transformResponse: (response: IVacancy[]) => camelcaseKeys(response, { deep: true })
         })
     })
 })

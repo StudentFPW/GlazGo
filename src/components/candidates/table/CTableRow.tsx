@@ -1,12 +1,12 @@
 import React, { FC } from 'react'
 import styled from 'styled-components'
-import { ICandidateItem } from '../../../modules/ICandidateItem'
+import { ICandidate } from '../../../modules/ICandidate'
 
 interface CandidateItemProps {
-    candidateItem: ICandidateItem
+    candidate: ICandidate
 }
-const CTableRow: FC<CandidateItemProps> = ({candidateItem}) => {
-    const {candidateName, vacancy, status, recruiter, attachmentDate, idVacancy, id} = candidateItem
+const CTableRow: FC<CandidateItemProps> = ({candidate}) => {
+    const {candidateName, vacancy, status, recruiter, attachmentDate, idVacancy, id} = candidate
 
     return (
         <tr>

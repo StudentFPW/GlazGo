@@ -30,7 +30,7 @@ function App() {
                 <Route path="/" element={<Rf/>}/>
                 <Route path="/authorization" element={<Authorization/>}/>
                 <Route path="/vacancies" element={<Vacancies/>}/>
-                <Route path="/vacancy" element={<Vacancy/>}/>
+                <Route path="/vacancy/:id" element={<Vacancy/>}/>
                 <Route path="/zayavka" element={<Zayavka/>}/>
                 <Route path="/candidates" element={<Candidates/>}/>
                 <Route path="/candidate" element={<Candidate/>}/>

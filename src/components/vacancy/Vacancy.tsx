@@ -1,15 +1,21 @@
-import React from 'react'
+import React, { FC } from 'react'
 import * as S from '../zayavka/ZayavkaStyles'
 import * as C from '../../styles/components'
 import Close from '../../images/icons/Close'
-import { Link } from 'react-router-dom'
-import VacancyApi from '../../services/VacancyService'
+import { Link, useParams } from 'react-router-dom'
+import vacancyApi from '../../services/VacancyService'
+import { IVacancy } from '../../modules/IVacancy'
 
-const Vacancy = () => {
+const Vacancy: FC = () => {
+    const {id} = useParams()
+    const {data: vacancyArr, isLoading} = vacancyApi.useGetVacancyQuery(id ? id : '')
+    let vacancy
+    if (vacancyArr) vacancy = vacancyArr[0]
+
 
 
     return (
-        <div>
+      <div>
             <div>
                 <S.Title>
                     <C.H2>Вакансия</C.H2>
@@ -19,8 +25,8 @@ const Vacancy = () => {
                         </C.NButton>
                     </Link>
                 </S.Title>
-                <S.VacancyName>Наименование вакансии</S.VacancyName>
-                <S.VacancyName>Открыта</S.VacancyName>
+                <S.VacancyName>{vacancy?.nameVacancy}</S.VacancyName>
+                <S.VacancyName>{vacancy?.status}</S.VacancyName>
             </div>
             <S.Head>
                 <div>

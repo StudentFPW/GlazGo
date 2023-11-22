@@ -1,26 +1,21 @@
 import React, { FC } from 'react'
 import styled from 'styled-components'
-import { IVacancyItem } from '../../../modules/IVacancyItem'
-import vacancyApi from '../../../services/VacancyService'
+import { IVacancy } from '../../../modules/IVacancy'
+import { Link } from 'react-router-dom'
 
 interface VacancyItemProps {
-    vacancyItem: IVacancyItem
+    vacancy: IVacancy
 }
 
-const VTableRow: FC<VacancyItemProps> = ({vacancyItem}) => {
+const VTableRow: FC<VacancyItemProps> = ({vacancy}) => {
 
-    const {vacancy, status, city, salary, id} = vacancyItem
-
-    const [getVacancy, {}] = vacancyApi.useGetVacancyQuery(id)
-
-    const handleVacancyClick = () => {
-
-
-    }
+    const {nameVacancy, status, city, salary, id} = vacancy
 
     return (
         <tr>
-            <Td onClick={handleVacancyClick}>{vacancy}</Td>
+            <Link to={`/vacancy/${id}`}>
+                <Td>{nameVacancy}</Td>
+            </Link>
             <Td>{status}</Td>
             <Td>{city}</Td>
             <Td>{salary}</Td>

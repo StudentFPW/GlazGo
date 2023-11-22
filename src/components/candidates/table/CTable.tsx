@@ -12,7 +12,7 @@ const CTable: FC = () => {
             <Table>
                 <TableHeader />
                 <tbody>
-                    {candidates.map(candidate => <TableRow key={candidate.id} candidateItem={candidate} />)}
+                    {candidates.map(candidate => <TableRow key={candidate.id} candidate={candidate} />)}
                 </tbody>
             </Table>
         </TableContainer>
