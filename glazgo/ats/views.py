@@ -18,6 +18,7 @@ class CPHistoryViewSet(PermissionRequiredMixin, viewsets.ModelViewSet):
     filter_backends = [DjangoFilterBackend, filters.OrderingFilter]
     ordering_fields = "__all__"
     filterset_fields = [
+        "id",
         "candidat_id",
         "vacancy_id",
         "recruter_id",
@@ -42,6 +43,7 @@ class VacancyViewSet(viewsets.ModelViewSet):
     filter_backends = [DjangoFilterBackend, filters.OrderingFilter]
     ordering_fields = "__all__"
     filterset_fields = [
+        "id",
         "recruter",
         "customer",
         "status_vacancy",
@@ -55,6 +57,7 @@ class CandidateViewSet(viewsets.ModelViewSet):
     filter_backends = [DjangoFilterBackend, filters.OrderingFilter]
     ordering_fields = "__all__"
     filterset_fields = [
+        "id",
         "email",
         "phone",
         "birthday",
@@ -67,6 +70,7 @@ class CPromotionViewSet(viewsets.ModelViewSet):
     filter_backends = [DjangoFilterBackend, filters.OrderingFilter]
     ordering_fields = "__all__"
     filterset_fields = [
+        "id",
         "candidat_id",
         "vacancy_id",
         "recruter_id",

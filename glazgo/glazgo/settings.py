@@ -184,9 +184,13 @@ REST_AUTH = {
     "USE_JWT": True,
     "JWT_AUTH_COOKIE": "jwt-auth",
     "JWT_AUTH_REFRESH_COOKIE": "jwt-refresh-token",
+    "OLD_PASSWORD_FIELD_ENABLED": True,
+    "LOGOUT_ON_PASSWORD_CHANGE": True,
     "REGISTER_SERIALIZER": "users.serializers.CustomRegisterSerializer",
-    "USER_DETAILS_SERIALIZER": "users.serializers.CustomUserDetailsSerializer",
+    "USER_DETAILS_SERIALIZER": "users.serializers.UserDetailsSerializer",
 }
+
+ACCOUNT_ADAPTER = "users.adapter.CustomAccountAdapter"
 
 AUTHENTICATION_BACKENDS = [
     "django.contrib.auth.backends.ModelBackend",

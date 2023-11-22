@@ -8,7 +8,9 @@ django-filter
 channels
 channels_redis
 django-cors-headers
+dj-rest-auth
 dj-rest-auth[with_social]
+django-allauth
 djangorestframework-simplejwt
 drf-yasg
 Pillow
