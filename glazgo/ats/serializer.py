@@ -39,16 +39,16 @@ class CPromotionSerializer(serializers.ModelSerializer):
         fields = "__all__"
 
 
-class MessageSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Message
-        fields = "__all__"
+# class MessageSerializer(serializers.ModelSerializer):
+#     class Meta:
+#         model = Message
+#         fields = "__all__"
 
 
-class WaitingCandidateSerializer(serializers.ModelSerializer):
-    candidat = CandidateSerializer(required=False)
-    vacancy = VacancySerializer(required=False)
+# class WaitingCandidateSerializer(serializers.ModelSerializer):
+#     candidat = CandidateSerializer(required=False)
+#     vacancy = VacancySerializer(required=False)
 
-    class Meta:
-        model = CandidatePromotion
-        fields = "__all__"
+#     class Meta:
+#         model = CandidatePromotion
+#         fields = "__all__"

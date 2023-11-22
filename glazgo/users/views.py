@@ -1,21 +1,8 @@
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
-from django_filters.rest_framework import DjangoFilterBackend
-from rest_framework import viewsets, filters
 
-from .serializers import ULUSerializer, ULFSerializer
+from .serializers import ULUSerializer
 from .models import User
-
-
-class ULFViewSet(viewsets.ModelViewSet):
-    serializer_class = ULFSerializer
-    queryset = User.objects.all()
-    filter_backends = [DjangoFilterBackend, filters.OrderingFilter]
-    ordering_fields = "__all__"
-    filterset_fields = [
-        "role",
-        "phone",
-    ]
 
 
 @api_view(["GET"])

@@ -8,10 +8,15 @@ django-filter
 channels
 channels_redis
 django-cors-headers
+dj-rest-auth
 dj-rest-auth[with_social]
-redis
+django-allauth
 djangorestframework-simplejwt
 drf-yasg
 Pillow
 
-# pip install pywhatkit
+django-csp
+django-rest-framework-rules==0.1.1
+six
+
+# pywhatkit
