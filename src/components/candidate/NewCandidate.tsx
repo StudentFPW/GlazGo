@@ -16,7 +16,11 @@ const NewCandidate = () => {
                 </Link>
             </S.Title>
             <S.Form>
-                <label htmlFor="">ФИО</label>
+                <label htmlFor="">Фамилия</label>
+                <S.Input/>
+                <label htmlFor="">Имя</label>
+                <S.Input/>
+                <label htmlFor="">Отчество</label>
                 <S.Input/>
                 <label htmlFor="">Вакансия</label>
                 <S.Select name="" id="">

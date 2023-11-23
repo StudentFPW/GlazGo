@@ -8,11 +8,9 @@ import { IVacancy } from '../../modules/IVacancy'
 
 const Vacancy: FC = () => {
     const {id} = useParams()
-    const {data: vacancyArr, isLoading} = vacancyApi.useGetVacancyQuery(id ? id : '')
+    const {data: vacancyArr, isFetching, isSuccess} = vacancyApi.useGetVacancyQuery(id ? id : '')
     let vacancy
     if (vacancyArr) vacancy = vacancyArr[0]
-
-
 
     return (
       <div>

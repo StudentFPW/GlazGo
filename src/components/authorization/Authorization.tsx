@@ -5,12 +5,15 @@ import { SubmitHandler, useForm } from 'react-hook-form'
 import userApi from '../../services/UserService'
 import { IAuthData } from '../../modules/IAuth'
 import { useNavigate } from 'react-router-dom'
+
 const Authorization:FC = () => {
 
-  // const [fetchReg, {data: auth, error}] = userApi.useFetchRegMutation()
-  const [fetchAuth, { data: auth, error, isSuccess }] = userApi.useFetchAuthMutation()
+  const [fetchAuth, { data, error, isSuccess }] = userApi.useFetchAuthMutation()
 
-  if (auth?.accessToken) localStorage.setItem('accessToken', auth?.accessToken)
+  if (data) {
+    localStorage.setItem('accessToken', data.access)
+    localStorage.setItem('refreshToken', data.refresh)
+  }
 
   const navigate = useNavigate()
 
@@ -35,9 +38,9 @@ const Authorization:FC = () => {
     <div>
       <C.H2>Войти</C.H2>
       <S.Form onSubmit={handleSubmit(onSubmit)}>
-        <S.Label htmlFor="login">Логин</S.Label>
-        <S.Input id='login' {...register('email', {required: 'Поле обязательно к заполнению'})}/>
-        {errors?.email && <p>{errors?.email?.message}</p>}
+        <S.Label htmlFor="username">Логин</S.Label>
+        <S.Input id='username' {...register('username', {required: 'Поле обязательно к заполнению'})}/>
+        {errors?.username && <p>{errors?.username?.message}</p>}
         <S.Label htmlFor="password">Пароль</S.Label>
         <S.Input id='password' type="password" {...register('password', {required: 'Поле обязательно к заполнению'})} />
         {(errors?.password || error) && <p>{errors?.password?.message || 'Ошибка от апи'}</p>}

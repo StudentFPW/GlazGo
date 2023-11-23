@@ -1,10 +1,10 @@
 export interface ITheme {
   colors: {
-    primary: string,
-    inactive: string,
-    black: string,
-    white: string,
-    gray:  string,
+    primary: string
+    inactive: string
+    black: string
+    white: string
+    gray:  string
     lightGray: string
   }
   sizes: {

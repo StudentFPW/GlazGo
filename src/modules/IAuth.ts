@@ -1,11 +1,4 @@
-
-
 export interface IAuthData {
-    email: string,
+    username: string
     password: string
-}
-
-export interface IAuthToken {
-    accessToken: string,
-    user: any
 }

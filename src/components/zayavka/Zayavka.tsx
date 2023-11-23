@@ -15,16 +15,6 @@ const Zayavka = () => {
                 </C.NButton>
             </Link>
         </S.Title>
-        <S.Head>
-            <div>
-                <p>Дата</p>
-                <p>11.10.2023</p>
-            </div>
-            <div>
-                <p>ID вакансии</p>
-                <p>0000000011</p>
-            </div>
-        </S.Head>
         <S.Info>
             <S.AutoItem>
                 <p>Заказчик:</p>
@@ -74,7 +64,7 @@ const Zayavka = () => {
             </S.Select>
             <label htmlFor="">Ссылка на вакансию</label>
             <S.Input type="text" />
-            <C.FButton>Создать вакансию</C.FButton>
+            <C.FButton>Отправить заявку</C.FButton>
         </S.Form>
     </div>
   )

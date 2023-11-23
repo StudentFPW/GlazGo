@@ -16,6 +16,7 @@ import Candidates from "./components/candidates/Candidates";
 import Candidate from "./components/candidate/Candidate";
 import NewCandidate from "./components/candidate/NewCandidate";
 import VacancyClosed from "./components/VacancyClosed";
+import Registration from "./components/authorization/Registration";
 
 
 function App() {
@@ -28,6 +29,7 @@ function App() {
             <Main>
               <Routes>
                 <Route path="/" element={<Rf/>}/>
+                <Route path="/registration" element={<Registration/>}/>
                 <Route path="/authorization" element={<Authorization/>}/>
                 <Route path="/vacancies" element={<Vacancies/>}/>
                 <Route path="/vacancy/:id" element={<Vacancy/>}/>

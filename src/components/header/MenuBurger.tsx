@@ -29,6 +29,7 @@ const MenuBurger: FC = () => {
                         <C.Container>
                             <nav>
                                 <ul>
+                                    <li><NavLink to="/registration" onClick={toggleNav}>Регистрация</NavLink></li>
                                     <li><NavLink to="/authorization" onClick={toggleNav}>Авторизация</NavLink></li>
                                     <li><NavLink to="/vacancies" onClick={toggleNav}>Вакансии</NavLink></li>
                                     <li><NavLink to="/candidates" onClick={toggleNav}>Кандидаты</NavLink></li>
