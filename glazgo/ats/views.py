@@ -1,18 +1,22 @@
 from datetime import timedelta
 
 from django.utils.timezone import now
+from django_filters.rest_framework import DjangoFilterBackend
+
 from rest_framework import viewsets, filters
 from rest_framework_rules.mixins import PermissionRequiredMixin
-from django_filters.rest_framework import DjangoFilterBackend
 
 from .models import *
 from .serializer import *
+from users.permissions import UserRecruiter
 
-# from users.permissions import UserRecruiter
+# Пожалуйста не удаляйте !
+# PermissionRequiredMixin
+# permission_classes = [UserRecruiter]
+# permission_required = "ats.view_cp_history"
 
 
-class CPHistoryViewSet(PermissionRequiredMixin, viewsets.ModelViewSet):
-    # permission_classes = [UserRecruiter]
+class CPHistoryViewSet(viewsets.ModelViewSet):
     serializer_class = CPHistorySerializer
     queryset = CPHistory.objects.all()
     filter_backends = [DjangoFilterBackend, filters.OrderingFilter]
@@ -28,6 +32,8 @@ class CPHistoryViewSet(PermissionRequiredMixin, viewsets.ModelViewSet):
 
 
 class ResponsibilitiesViewSet(viewsets.ModelViewSet):
+    permission_classes = [UserRecruiter]
+    permission_required = "ats.view_cp_history"
     serializer_class = ResponsibilitiesSerializer
     queryset = Responsibilities.objects.all()
 
@@ -79,11 +85,11 @@ class CPromotionViewSet(viewsets.ModelViewSet):
     ]
 
 
-def get_message(user):
-    """
-    функция получения кверисета непрочтенных сообщений адресованных текущему пользователю
-    """
-    return Message.objects.filter(user_id__username=user, viewed=False)
+# def get_message(user):
+#     """
+#     функция получения кверисета непрочтенных сообщений адресованных текущему пользователю
+#     """
+#     return Message.objects.filter(user_id__username=user, viewed=False)
 
 
 # class MessageViewSet(viewsets.ModelViewSet):

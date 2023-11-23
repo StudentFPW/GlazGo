@@ -17,13 +17,6 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 
-from rest_framework_simplejwt.views import (
-    TokenObtainPairView,
-    TokenRefreshView,
-    TokenVerifyView,
-    TokenBlacklistView,
-)
-
 from rest_framework import routers, permissions
 from drf_yasg.views import get_schema_view
 from drf_yasg import openapi
@@ -58,10 +51,6 @@ urlpatterns = [
     path("secret-k6F8-admin-73rbHG/", admin.site.urls),
     path("auth/", include("dj_rest_auth.urls")),
     path("auth/reg/", include("dj_rest_auth.registration.urls")),
-    path("api/token/", TokenObtainPairView.as_view(), name="token_obtain_pair"),
-    path("api/token/refresh/", TokenRefreshView.as_view(), name="token_refresh"),
-    path("api/token/verify/", TokenVerifyView.as_view(), name="token_verify"),
-    path("api/token/blacklist/", TokenBlacklistView.as_view(), name="token_blacklist"),
     path("chat/", include("chat.urls")),
     path("users/", include("users.urls")),
     path("swag<format>/", schema_view.without_ui(cache_timeout=0), name="schema-json"),
