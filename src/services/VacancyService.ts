@@ -13,7 +13,7 @@ const vacancyApi = createApi({
         }
     }),
     endpoints: (build) => ({
-        getVacancies: build.query<IVacancy[], number>({
+        fetchVacancies: build.query<IVacancy[], number>({
             query: (limit: number = 10) => ({
                 url: '/',
                 params: {
@@ -22,7 +22,7 @@ const vacancyApi = createApi({
             }),
             transformResponse: (response: IVacancy[]) => camelcaseKeys(response, { deep: true })
         }),
-        getVacancy: build.query<IVacancy[], string>({
+        fetchVacancy: build.query<IVacancy[], string>({
             query: (id) => ({
                 url: '/',
                 params: {

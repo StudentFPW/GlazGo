@@ -1,6 +1,11 @@
 import { styled } from "styled-components";
 import { input } from "../../styles/components";
 
+export const Title = styled.form`
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+`
 export const Form = styled.form`
     display: flex;
     flex-direction: column;

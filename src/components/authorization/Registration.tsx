@@ -2,20 +2,22 @@ import React, { FC, useEffect } from 'react'
 import * as C from '../../styles/components'
 import * as S from './RegistrationStyles'
 import { SubmitHandler, useForm } from 'react-hook-form'
-import userApi from '../../services/UserService'
+import userApi from '../../services/AuthService'
 import { useNavigate } from 'react-router-dom'
-import { IRegData } from '../../modules/IReg'
+import { IRegQueryData } from '../../modules/IReg'
 
 const Registration:FC = () => {
 
-  const [fetchReg, {data, error, isSuccess}] = userApi.useFetchRegMutation()
+  const [registration, {data, error, isSuccess}] = userApi.useRegistrationMutation()
 
   if (data) {
     localStorage.setItem('accessToken', data.access)
-    localStorage.setItem('refreshToken', data.refresh)
+    localStorage.setItem('role', data.user.role.toString())
   }
 
   const navigate = useNavigate()
+
+  const goToAuth = () => navigate('/authorization')
 
   useEffect(() => {
     if (isSuccess) navigate('/vacancies')
@@ -25,15 +27,18 @@ const Registration:FC = () => {
     register,
     formState: { errors, isValid},
     handleSubmit
-  } = useForm<IRegData>({mode: 'onBlur'})
+  } = useForm<IRegQueryData>({mode: 'onBlur'})
 
-  const onSubmit: SubmitHandler<IRegData> = async (data) => {
-    await fetchReg(data)
+  const onSubmit: SubmitHandler<IRegQueryData> = async (data) => {
+    await registration(data)
   }
 
   return (
     <div>
-      <C.H2>Зарегестрироваться</C.H2>
+        <S.Title>
+            <C.H2>Зарегистрироваться</C.H2>
+            <div onClick={goToAuth}>Войти</div>
+      </S.Title>
       <S.Form onSubmit={handleSubmit(onSubmit)}>
         <S.Label htmlFor="firstName">Имя</S.Label>
         <S.Input id='firstName' {...register('firstName', {required: 'Поле обязательно к заполнению'})}/>

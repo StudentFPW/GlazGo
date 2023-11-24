@@ -31,6 +31,8 @@ const NewCandidate = () => {
                 </S.Select>
                 <label htmlFor="">Телефон</label>
                 <S.Input />
+                <label htmlFor="">Email</label>
+                <S.Input />
                 <label htmlFor="">Источник</label>
                 <S.Input />
                 <S.RefProgramm htmlFor="">
@@ -39,12 +41,8 @@ const NewCandidate = () => {
                 </S.RefProgramm>
                 <label htmlFor="">Реферер</label>
                 <S.Input />
-                <label htmlFor="">Статус</label>
-                <S.Select name="" id="">
-                    <option value="1">Новый</option>
-                    <option value="2">3-й недозвон</option>
-                    <option value="3">стажировка</option>
-                </S.Select>
+                <label htmlFor="">Ссылка на резюме</label>
+                <S.Input />
                 <label htmlFor="">Комментарии</label>
                 <S.Textarea name="" id="" cols={30} rows={8}></S.Textarea>
                 <C.FButton>Добавить кандидата</C.FButton>

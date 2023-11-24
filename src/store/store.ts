@@ -1,9 +1,11 @@
 import { configureStore, ThunkAction, Action } from '@reduxjs/toolkit';
-import userApi from '../services/UserService'
-import VacancyApi from '../services/VacancyService';
+import userApi from '../services/AuthService'
+import VacancyApi from '../services/VacancyService'
+import authReduser from './redusers/authSlice'
 
 export const store = configureStore({
   reducer: {
+    auth: authReduser,
     [userApi.reducerPath]: userApi.reducer,
     [VacancyApi.reducerPath]: VacancyApi.reducer,
   },

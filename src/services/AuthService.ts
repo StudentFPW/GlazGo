@@ -1,34 +1,41 @@
 import {createApi, fetchBaseQuery} from '@reduxjs/toolkit/dist/query/react'
 import { IAuthData } from '../modules/IAuth'
-import { IRegData } from '../modules/IReg'
+import { IRegQueryData, IRegResponseData } from '../modules/IReg'
 import decamelizeKeys from 'decamelize-keys'
-import { ITokens } from '../modules/ITokens'
 
-const userApi = createApi({
-    reducerPath: 'userApi',
+const authApi = createApi({
+    reducerPath: 'authApi',
     baseQuery: fetchBaseQuery({
         baseUrl: 'http://127.0.0.1:8000',
         prepareHeaders: (headers) => {
             headers.set('Content-Type', 'application/json')
             return headers
-        }
+        },
+        // credentials: 'include'
     }),
     endpoints: (build) => ({
-        fetchReg: build.mutation<ITokens, IRegData>({
+        registration: build.mutation<IRegResponseData, IRegQueryData>({
             query: (regData) => ({
                 url: '/auth/reg/',
                 method: 'POST',
                 body: JSON.stringify(decamelizeKeys(regData))
             })
         }),
-        fetchAuth: build.mutation<ITokens, IAuthData>({
+        login: build.mutation<IRegResponseData, IAuthData>({
             query: (authData) => ({
                 url: '/auth/login/',
                 method: 'POST',
                 body: JSON.stringify(authData)
             })
+        }),
+        logout: build.mutation({
+            query: () => ({
+                url: '/auth/logout/',
+                method: 'POST',
+                // credentials: 'include'
+            })
         })
     })
 })
 
-export default userApi
+export default authApi

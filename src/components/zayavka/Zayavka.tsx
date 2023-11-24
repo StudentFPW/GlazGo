@@ -38,14 +38,9 @@ const Zayavka = () => {
                 <option value="3">Проект 3</option>
             </S.Select>
             <label htmlFor="">Вакансия</label>
-            <S.Input type="text" />
+            <S.Input />
             <label htmlFor="">Город</label>
-            <S.Select name="" id="">
-                <option value="0"></option>
-                <option value="1">Город 1</option>
-                <option value="2">Город 2</option>
-                <option value="3">Город 3</option>
-            </S.Select>
+            <S.Input />
             <label htmlFor="">Зарплата</label>
             <S.Input type="number" />
             <label htmlFor="">График</label>

@@ -1,36 +1,54 @@
 import React, { FC, useState } from 'react'
-import { NavLink } from 'react-router-dom'
+import { NavLink, useNavigate } from 'react-router-dom'
 import { css, styled } from 'styled-components'
 import Burger from '../../images/icons/Burger'
 import Close from '../../images/icons/Close'
 import Logo from '../../images/icons/Logo'
 import * as C from '../../styles/components'
+import { useAppDispatch, useAppSelector } from '../../hooks/redux'
+import authApi from '../../services/AuthService'
+import { logout } from '../../store/redusers/authSlice'
 
 const MenuBurger: FC = () => {
     const [nav, setNav] = useState(false)
+    const navigate = useNavigate()
+    const goToAuth = () => navigate('/authorization')
+    const toggleNav = () => setNav(!nav)
+    const goToHome = () => navigate('/')
+    const isAuth = useAppSelector(state => state.auth.isAuth)
+    const dispatch = useAppDispatch()
+    const [logoutUser] = authApi.useLogoutMutation()
+    const logOut = async () => {
+        await logoutUser({})
+        dispatch(logout())
+    }
+    let content
 
-    const toggleNav = () => {
-        setNav(!nav);
+    if (isAuth) {
+        content = <div onClick={logOut}>Выйти</div>
+    } else {
+        content = <div onClick={goToAuth}>Войти</div>
     }
 
     return (
         <div>
             <div>
-                <Icons>
-                    <Btn onClick={toggleNav}>
-                        {nav ? <SClose><Close/></SClose> : <Burger/>}
-                    </Btn>
-                    <SLogo>
-                        <Logo/>
-                    </SLogo>
-                </Icons>
+                <Header>
+                    <Icons>
+                        <Btn onClick={toggleNav}>
+                            {nav ? <SClose><Close/></SClose> : <Burger/>}
+                        </Btn>
+                        <SLogo onClick={goToHome}>
+                            <Logo/>
+                        </SLogo>
+                    </Icons>
+                    {content}
+                </Header>
                 {nav &&
                     <NavWrapper>
                         <C.Container>
                             <nav>
                                 <ul>
-                                    <li><NavLink to="/registration" onClick={toggleNav}>Регистрация</NavLink></li>
-                                    <li><NavLink to="/authorization" onClick={toggleNav}>Авторизация</NavLink></li>
                                     <li><NavLink to="/vacancies" onClick={toggleNav}>Вакансии</NavLink></li>
                                     <li><NavLink to="/candidates" onClick={toggleNav}>Кандидаты</NavLink></li>
                                     <li><NavLink to="/candidate" onClick={toggleNav}>Кандидат</NavLink></li>
@@ -48,6 +66,12 @@ const MenuBurger: FC = () => {
 
 export default MenuBurger
 
+const Header = styled.div`
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    color: ${({ theme }) => theme.colors.white};
+`
 const Icons = styled.div`
     display: flex;
     column-gap: 14px;

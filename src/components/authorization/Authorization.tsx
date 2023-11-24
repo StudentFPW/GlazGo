@@ -2,20 +2,25 @@ import React, { FC, useEffect } from 'react'
 import * as C from '../../styles/components'
 import * as S from './AuthorizationStyles'
 import { SubmitHandler, useForm } from 'react-hook-form'
-import userApi from '../../services/UserService'
 import { IAuthData } from '../../modules/IAuth'
 import { useNavigate } from 'react-router-dom'
+import { useAppDispatch } from '../../hooks/redux'
+import { setAuth } from '../../store/redusers/authSlice'
+import authApi from '../../services/AuthService'
 
 const Authorization:FC = () => {
 
-  const [fetchAuth, { data, error, isSuccess }] = userApi.useFetchAuthMutation()
+  const [login, { data, error, isSuccess }] = authApi.useLoginMutation()
+  const dispatch = useAppDispatch()
 
   if (data) {
     localStorage.setItem('accessToken', data.access)
-    localStorage.setItem('refreshToken', data.refresh)
+    dispatch(setAuth())
   }
 
   const navigate = useNavigate()
+
+  const goToReg = () => navigate('/registration')
 
   useEffect(() => {
     if (isSuccess) navigate('/vacancies')
@@ -27,16 +32,16 @@ const Authorization:FC = () => {
     handleSubmit
   } = useForm<IAuthData>({mode: 'onBlur'})
 
-  // const onSubmit: SubmitHandler<IAuthData> = async (data) => {
-  //   await fetchReg(data)
-  // }
   const onSubmit: SubmitHandler<IAuthData> = async (data) => {
-    await fetchAuth(data)
+    await login(data)
   }
 
   return (
     <div>
-      <C.H2>Войти</C.H2>
+      <S.Title>
+        <C.H2>Войти</C.H2>
+        <div onClick={goToReg}>Зарегистрироваться</div>
+      </S.Title>
       <S.Form onSubmit={handleSubmit(onSubmit)}>
         <S.Label htmlFor="username">Логин</S.Label>
         <S.Input id='username' {...register('username', {required: 'Поле обязательно к заполнению'})}/>
