@@ -32,8 +32,6 @@ class CPHistoryViewSet(viewsets.ModelViewSet):
 
 
 class ResponsibilitiesViewSet(viewsets.ModelViewSet):
-    # permission_classes = [UserRecruiter]
-    # permission_required = "ats.view_cp_history"
     serializer_class = ResponsibilitiesSerializer
     queryset = Responsibilities.objects.all()
 

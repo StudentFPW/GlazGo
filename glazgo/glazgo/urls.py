@@ -23,6 +23,7 @@ from drf_yasg import openapi
 
 from ats.views import *
 from referral_system.views import *
+from users.views import *
 
 router = routers.DefaultRouter()
 router.register(r"cph", CPHistoryViewSet)
@@ -33,6 +34,7 @@ router.register(r"cand", CandidateViewSet)
 router.register(r"c-p", CPromotionViewSet)
 router.register(r"ref", RRViewSet)
 router.register(r"refl", RCViewSet)
+router.register(r"ud", UserDetailsViewSet)
 # router.register(r"mes", MessageViewSet)
 # router.register(r"w-cand", WaitingCandidateViewSet)
 

@@ -1,11 +1,8 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
-from .manager import UserManager
 
 
 class User(AbstractUser):
-    objects = UserManager()
-
     ROLES = [
         (0, "Администратор"),
         (1, "Рекрутер"),
@@ -13,8 +10,6 @@ class User(AbstractUser):
         (3, "Заказчик"),
         (4, "Заказчик-администратор"),
     ]
-    REQUIRED_FIELDS = ["referral_token", "email"]
-
     # Необходимые поля
     referral_token = models.CharField(max_length=255)
     role = models.IntegerField("Права", choices=ROLES, default=1)
