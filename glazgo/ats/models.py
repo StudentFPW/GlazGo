@@ -157,6 +157,7 @@ class CandidatePromotion(models.Model):
     appointment_date = models.DateField("Назначенная дата")
     event = models.BooleanField("Состоялось событие", default=False)
     comment = models.TextField("Коментарий")
+    agreed = models.BooleanField("Одобрен", default=False)
 
     def __str__(self):
         return f"candidat_id: {self.candidat_id}, vacancy_id: {self.vacancy_id}, recruter_id: {self.recruter_id}, status: {self.status_change}, date: {self.status_change_date}"
