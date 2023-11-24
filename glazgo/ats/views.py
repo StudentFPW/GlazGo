@@ -4,13 +4,13 @@ from django.utils.timezone import now
 from django_filters.rest_framework import DjangoFilterBackend
 
 from rest_framework import viewsets, filters
-from rest_framework_rules.mixins import PermissionRequiredMixin
 
 from .models import *
 from .serializer import *
-from users.permissions import UserRecruiter
 
 # Пожалуйста не удаляйте !
+# from rest_framework_rules.mixins import PermissionRequiredMixin
+# from users.permissions import UserRecruiter
 # PermissionRequiredMixin
 # permission_classes = [UserRecruiter]
 # permission_required = "ats.view_cp_history"
@@ -32,8 +32,8 @@ class CPHistoryViewSet(viewsets.ModelViewSet):
 
 
 class ResponsibilitiesViewSet(viewsets.ModelViewSet):
-    permission_classes = [UserRecruiter]
-    permission_required = "ats.view_cp_history"
+    # permission_classes = [UserRecruiter]
+    # permission_required = "ats.view_cp_history"
     serializer_class = ResponsibilitiesSerializer
     queryset = Responsibilities.objects.all()
 

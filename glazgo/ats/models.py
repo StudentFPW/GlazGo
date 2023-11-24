@@ -22,7 +22,7 @@ class CPHistory(models.Model):
     datetime = models.DateTimeField("Зафиксированное время", auto_now_add=True)
 
     def __str__(self):
-        return f"datetime: {self.datetime}"
+        return f"Дата: {self.datetime}"
 
 
 class Responsibilities(models.Model):
@@ -33,7 +33,7 @@ class Responsibilities(models.Model):
     name_resp = models.CharField(max_length=250, unique=True)  # описание обязанности
 
     def __str__(self):
-        return f"responsibilities: {self.name_resp}"
+        return f"Ответственности: {self.name_resp}"
 
 
 class Requirements(models.Model):
@@ -44,7 +44,7 @@ class Requirements(models.Model):
     name_req = models.CharField(max_length=250, unique=True)  # описание требований
 
     def __str__(self):
-        return f"requirements: {self.name_req}"
+        return f"«Требования»: {self.name_req}"
 
 
 class Vacancy(models.Model):
@@ -75,14 +75,14 @@ class Vacancy(models.Model):
     status_vacancy = models.IntegerField(
         "Статус вакансии", choices=VACANCY_STATUS, default=1
     )
-    responsibilities = models.ManyToManyField(
-        Responsibilities, related_name="responsibilities"
-    )
+    # responsibilities = models.ManyToManyField(
+    #     Responsibilities, related_name="responsibilities"
+    # )  # front pouse
 
-    requirements = models.ManyToManyField(Requirements, related_name="requirements")
+    # requirements = models.ManyToManyField(Requirements, related_name="requirements")  # front pouse
     date_cust = models.DateTimeField("Дата поступления вакансии", auto_now_add=True)
     name_vacancy = models.CharField("Название вакансии", max_length=250)
-    description_vacancy = models.TextField("Описание вакансии")
+    description_vacancy = models.TextField("Описание вакансии", null=True)
     region = models.CharField("Место работы", max_length=250)
     salary = models.IntegerField("Зарплата", default=0)
     motivation = models.IntegerField("Дополнительная мотивация (Сумма)", default=0)
@@ -92,12 +92,12 @@ class Vacancy(models.Model):
     type_job = models.BooleanField("Удаленная работа", default=False)
     intern = models.IntegerField("Вид стажировки", choices=INTERN_TYPE, default=1)
     schedule = models.CharField("График работы", max_length=30)
-    count_hours = models.IntegerField("Среднее количество часов в день")
-    count_tt = models.IntegerField("Среднее количество ТТ в день")
+    count_hours = models.IntegerField("Среднее количество часов в день", null=True)
+    count_tt = models.IntegerField("Среднее количество ТТ в день", null=True)
     cause = models.CharField("Причина открытия вакансии", max_length=500)
 
     def __str__(self):
-        return f"recruter: {self.recruter}, vacancy: {self.name_vacancy}, customer:{self.customer}"
+        return f"ИД рекрутера: {self.recruter}, Название вакансии: {self.name_vacancy}, Заказчик:{self.customer}"
 
 
 class Candidate(models.Model):
@@ -106,18 +106,26 @@ class Candidate(models.Model):
     фамилия, дата рождения, адрес электронной почты, номер телефона и т. д.
     """
 
+    INVITED = [
+        (1, "Реферальная программа"),
+        (2, "Заказчик"),
+        (3, "Ручной ввод"),
+    ]
+
     surname = models.CharField("Фамилия", max_length=20)
     name = models.CharField("Имя", max_length=20)
     otch = models.CharField("Отчество", max_length=20, null=True)
-    birthday = models.DateField("Дата рождения")
+    birthday = models.DateField("Дата рождения", null=True)
     email = models.EmailField("Почта")
     phone = models.CharField("Телефон", max_length=15)
+    referral_program = models.IntegerField("Приглашение", choices=INVITED, default=3)
+    source = models.TextField("Источник")
     ref = models.TextField("Кто привел кандидата")
     auto = models.BooleanField("Наличие автомобиля", default=False)
     resume = models.FileField("Файл резюме")
 
     def __str__(self):
-        return f"name: {self.name}, surname: {self.surname}, email: {self.email}"
+        return f"Имя: {self.name}, Фамилия: {self.surname}, Почта: {self.email}"
 
 
 class CandidatePromotion(models.Model):
@@ -154,12 +162,12 @@ class CandidatePromotion(models.Model):
         "Дата изменения статуса", auto_now_add=True
     )
 
-    appointment_date = models.DateField("Назначенная дата")
+    appointment_date = models.DateField("Назначенная дата", null=True)
     event = models.BooleanField("Состоялось событие", default=False)
-    comment = models.TextField("Коментарий")
+    comment = models.TextField("Коментарий", null=True)
 
     def __str__(self):
-        return f"candidat_id: {self.candidat_id}, vacancy_id: {self.vacancy_id}, recruter_id: {self.recruter_id}, status: {self.status_change}, date: {self.status_change_date}"
+        return f"ИД кандидата: {self.candidat_id}, ИД вакансии: {self.vacancy_id}, ИД рекрутера: {self.recruter_id}, Статус: {self.status_change}, Дата: {self.status_change_date}"
 
 
 class Message(models.Model):
@@ -177,7 +185,7 @@ class Message(models.Model):
     viewed = models.BooleanField("Просмотрено", default=False)
 
     def __str__(self):
-        return f"user_id: {self.user_id}, candidate_id: {self.candidate_id}, viewed: {self.viewed}"
+        return f"ИД пользователи: {self.user_id}, ИД кандидата: {self.candidate_id}, Просмотрено: {self.viewed}"
 
 
 class CallCandidate(models.Model):

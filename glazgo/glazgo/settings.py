@@ -58,6 +58,7 @@ INSTALLED_APPS = [
     "ats",
     "users",
     "chat",
+    "referral_system",
 ]
 
 MIDDLEWARE = [
@@ -155,8 +156,8 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 ASGI_APPLICATION = "glazgo.asgi.application"
 
-ACCOUNT_UNIQUE_EMAIL = True
-ACCOUNT_EMAIL_REQUIRED = True
+# ACCOUNT_UNIQUE_EMAIL = True
+# ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_USERNAME_REQUIRED = True
 ACCOUNT_AUTHENTICATION_METHOD = "username"
 ACCOUNT_EMAIL_VERIFICATION = "none"
