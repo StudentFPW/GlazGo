@@ -28,9 +28,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.getenv("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True  # TODO Turn on false <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+DEBUG = True  # Режим продукции
 
-ALLOWED_HOSTS = ["*"]  # TODO Switch to your domain <<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+ALLOWED_HOSTS = ["*"]  # Режим продукции
 
 # Application definition
 INSTALLED_APPS = [
@@ -60,6 +60,8 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+    # "csp.middleware.CSPMiddleware",  # Режим продукции
+    "allauth.account.middleware.AccountMiddleware",
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "corsheaders.middleware.CorsMiddleware",
@@ -68,7 +70,6 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
-    "allauth.account.middleware.AccountMiddleware",
 ]
 
 ROOT_URLCONF = "glazgo.urls"
@@ -101,7 +102,7 @@ DATABASES = {
     }
 }
 
-# DATABASES = {  # TODO Switch to product db <<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+# DATABASES = {  # Режим продукции
 #     "default": {
 #         "ENGINE": "django.db.backends.postgresql",
 #         "NAME": os.getenv("DB_NAME"),
@@ -155,40 +156,46 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 ASGI_APPLICATION = "glazgo.asgi.application"
 
-AUTHENTICATION_BACKENDS = [
-    "django.contrib.auth.backends.ModelBackend",
-    "allauth.account.auth_backends.AuthenticationBackend",
-]
-
-LOGIN_REDIRECT_URL = "/"
 ACCOUNT_UNIQUE_EMAIL = True
 ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_USERNAME_REQUIRED = True
 ACCOUNT_AUTHENTICATION_METHOD = "username"
 ACCOUNT_EMAIL_VERIFICATION = "none"
+ACCOUNT_LOGOUT_ON_PASSWORD_CHANGE = True
 
 SITE_ID = 1
 
-CORS_ALLOW_ALL_ORIGINS = (
-    True  # TODO Switch to specific urls <<<<<<<<<<<<<<<<<<<<<<<<<<<<<
-)
+CORS_ALLOW_ALL_ORIGINS = True  # Режим продукции
 
 REST_FRAMEWORK = {
     "DEFAULT_PERMISSION_CLASSES": [
         # "rest_framework.permissions.AllowAny",
-        "rest_framework.permissions.IsAuthenticated",  # TODO Switch on product mode <<<<<<<<<<
+        "rest_framework.permissions.IsAuthenticated",  # Режим продукции
     ],
     "DEFAULT_AUTHENTICATION_CLASSES": [
         "dj_rest_auth.jwt_auth.JWTCookieAuthentication",
         "rest_framework_simplejwt.authentication.JWTAuthentication",
     ],
+    "DEFAULT_PAGINATION_CLASS": "rest_framework.pagination.LimitOffsetPagination",
+    "PAGE_SIZE": 10,
 }
 
 REST_AUTH = {
     "USE_JWT": True,
     "JWT_AUTH_COOKIE": "jwt-auth",
     "JWT_AUTH_REFRESH_COOKIE": "jwt-refresh-token",
+    "OLD_PASSWORD_FIELD_ENABLED": True,
+    "LOGOUT_ON_PASSWORD_CHANGE": True,
+    "REGISTER_SERIALIZER": "users.serializers.CustomRegisterSerializer",
+    "USER_DETAILS_SERIALIZER": "users.serializers.UserDetailsSerializer",
 }
+
+ACCOUNT_ADAPTER = "users.adapter.CustomAccountAdapter"
+
+AUTHENTICATION_BACKENDS = [
+    "django.contrib.auth.backends.ModelBackend",
+    "allauth.account.auth_backends.AuthenticationBackend",
+]
 
 AUTH_USER_MODEL = "users.User"
 
@@ -236,3 +243,44 @@ SIMPLE_JWT = {
     "SLIDING_TOKEN_OBTAIN_SERIALIZER": "rest_framework_simplejwt.serializers.TokenObtainSlidingSerializer",
     "SLIDING_TOKEN_REFRESH_SERIALIZER": "rest_framework_simplejwt.serializers.TokenRefreshSlidingSerializer",
 }
+
+################################################################
+
+# Разкомментируйте эти переменные в режиме продукции !!!
+
+# Контрольный список безопасности !!!
+
+# Чтобы сообщить браузеру, что он никогда не должен загружать сайт
+# с использованием HTTP и вместо этого должен автоматически преобразовывать
+# все попытки доступа к сайту с использованием HTTP в запросы HTTPS.
+# SECURE_HSTS_SECONDS = 15780000
+# SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+# SECURE_HSTS_PRELOAD = True
+
+# Чтобы заблокировать загрузку страниц при обнаружении отраженных XSS-атак
+# SECURE_BROWSER_XSS_FILTER = True
+# SECURE_CONTENT_TYPE_NOSNIFF = True
+
+# Чтобы избежать случайной передачи файла cookie CSRF по HTTP.
+# CSRF_COOKIE_SECURE = True
+
+# Чтобы избежать случайной передачи файла cookie сеанса по HTTP.
+# SESSION_COOKIE_SECURE = True
+
+# Чтобы Django перенаправлял все запросы, отличные от HTTPS, на HTTPS.
+# SECURE_SSL_REDIRECT = True
+
+# Политика безопасности контента (CSP)
+# CSP_DEFAULT_SRC = ("'none'", )
+# CSP_BASE_URI = ("'none'", )
+# CSP_FRAME_ANCESTORS = ("'none'", )
+# CSP_FORM_ACTION = ("'self'", )
+# CSP_STYLE_SRC = ("'self'", )
+# CSP_SCRIPT_SRC = ("'self'", )
+# CSP_IMG_SRC = ("'self'", )
+# CSP_FONT_SRC = ("'self'", )
+
+# Чтобы проверить соответствует ли приложение списку безопасности
+# python manage.py check --deploy
+
+################################################################
