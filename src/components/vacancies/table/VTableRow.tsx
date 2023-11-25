@@ -1,7 +1,7 @@
 import React, { FC } from 'react'
 import styled from 'styled-components'
 import { IVacancy } from '../../../modules/IVacancy'
-import { Link } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 
 interface VacancyItemProps {
     vacancy: IVacancy
@@ -9,15 +9,16 @@ interface VacancyItemProps {
 
 const VTableRow: FC<VacancyItemProps> = ({vacancy}) => {
 
-    const {nameVacancy, status, city, salary, id} = vacancy
+    const {nameVacancy, statusVacancy, region, salary, id} = vacancy
+
+    const navigate = useNavigate()
+    const handleGoToVacancy = () => navigate(`/vacancy/${id}`)
 
     return (
         <tr>
-            <Link to={`/vacancy/${id}`}>
-                <Td>{nameVacancy}</Td>
-            </Link>
-            <Td>{status}</Td>
-            <Td>{city}</Td>
+            <Td onClick={handleGoToVacancy}>{nameVacancy}</Td>
+            <Td>{statusVacancy}</Td>
+            <Td>{region}</Td>
             <Td>{salary}</Td>
             <Td>{id}</Td>
         </tr>

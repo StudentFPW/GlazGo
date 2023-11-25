@@ -12,22 +12,24 @@ import { logout } from '../../store/redusers/authSlice'
 const MenuBurger: FC = () => {
     const [nav, setNav] = useState(false)
     const navigate = useNavigate()
-    const goToAuth = () => navigate('/authorization')
-    const toggleNav = () => setNav(!nav)
-    const goToHome = () => navigate('/')
+    const handleGoToAuth = () => navigate('/authorization')
+    const handleToggleNav = () => setNav(!nav)
+    const handleGoToHome = () => navigate('/')
     const isAuth = useAppSelector(state => state.auth.isAuth)
     const dispatch = useAppDispatch()
     const [logoutUser] = authApi.useLogoutMutation()
-    const logOut = async () => {
+    // const {} = authApi.useLogoutQuery({})
+    const handleLogOut = async () => {
         await logoutUser({})
         dispatch(logout())
     }
+
     let content
 
     if (isAuth) {
-        content = <div onClick={logOut}>Выйти</div>
+        content = <div onClick={handleLogOut}>Выйти</div>
     } else {
-        content = <div onClick={goToAuth}>Войти</div>
+        content = <div onClick={handleGoToAuth}>Войти</div>
     }
 
     return (
@@ -35,10 +37,10 @@ const MenuBurger: FC = () => {
             <div>
                 <Header>
                     <Icons>
-                        <Btn onClick={toggleNav}>
+                        <Btn onClick={handleToggleNav}>
                             {nav ? <SClose><Close/></SClose> : <Burger/>}
                         </Btn>
-                        <SLogo onClick={goToHome}>
+                        <SLogo onClick={handleGoToHome}>
                             <Logo/>
                         </SLogo>
                     </Icons>
@@ -49,11 +51,11 @@ const MenuBurger: FC = () => {
                         <C.Container>
                             <nav>
                                 <ul>
-                                    <li><NavLink to="/vacancies" onClick={toggleNav}>Вакансии</NavLink></li>
-                                    <li><NavLink to="/candidates" onClick={toggleNav}>Кандидаты</NavLink></li>
-                                    <li><NavLink to="/candidate" onClick={toggleNav}>Кандидат</NavLink></li>
-                                    <li><NavLink to="/vacancy-closed" onClick={toggleNav}>Вакансия закрыта</NavLink></li>
-                                    <li><NavLink to="/chat" onClick={toggleNav}>Чат</NavLink></li>
+                                    <li><NavLink to="/vacancies" onClick={handleToggleNav}>Вакансии</NavLink></li>
+                                    <li><NavLink to="/candidates" onClick={handleToggleNav}>Кандидаты</NavLink></li>
+                                    <li><NavLink to="/candidate" onClick={handleToggleNav}>Кандидат</NavLink></li>
+                                    <li><NavLink to="/vacancy-closed" onClick={handleToggleNav}>Вакансия закрыта</NavLink></li>
+                                    <li><NavLink to="/chat" onClick={handleToggleNav}>Чат</NavLink></li>
                                 </ul>
                             </nav>
                         </C.Container>

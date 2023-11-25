@@ -17,7 +17,7 @@ const Registration:FC = () => {
 
   const navigate = useNavigate()
 
-  const goToAuth = () => navigate('/authorization')
+  const handleGoToAuth = () => navigate('/authorization')
 
   useEffect(() => {
     if (isSuccess) navigate('/vacancies')
@@ -37,7 +37,7 @@ const Registration:FC = () => {
     <div>
         <S.Title>
             <C.H2>Зарегистрироваться</C.H2>
-            <div onClick={goToAuth}>Войти</div>
+            <div onClick={handleGoToAuth}>Войти</div>
       </S.Title>
       <S.Form onSubmit={handleSubmit(onSubmit)}>
         <S.Label htmlFor="firstName">Имя</S.Label>

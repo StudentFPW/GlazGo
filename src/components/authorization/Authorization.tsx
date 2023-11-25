@@ -15,12 +15,13 @@ const Authorization:FC = () => {
 
   if (data) {
     localStorage.setItem('accessToken', data.access)
+    localStorage.setItem('role', data.user.role.toString())
     dispatch(setAuth())
   }
 
   const navigate = useNavigate()
 
-  const goToReg = () => navigate('/registration')
+  const handleGoToReg = () => navigate('/registration')
 
   useEffect(() => {
     if (isSuccess) navigate('/vacancies')
@@ -40,7 +41,7 @@ const Authorization:FC = () => {
     <div>
       <S.Title>
         <C.H2>Войти</C.H2>
-        <div onClick={goToReg}>Зарегистрироваться</div>
+        <div onClick={handleGoToReg}>Зарегистрироваться</div>
       </S.Title>
       <S.Form onSubmit={handleSubmit(onSubmit)}>
         <S.Label htmlFor="username">Логин</S.Label>

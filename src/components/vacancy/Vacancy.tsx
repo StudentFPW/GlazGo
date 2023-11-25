@@ -4,7 +4,6 @@ import * as C from '../../styles/components'
 import Close from '../../images/icons/Close'
 import { Link, useParams } from 'react-router-dom'
 import vacancyApi from '../../services/VacancyService'
-import { IVacancy } from '../../modules/IVacancy'
 
 const Vacancy: FC = () => {
     const {id} = useParams()
@@ -24,7 +23,7 @@ const Vacancy: FC = () => {
                     </Link>
                 </S.Title>
                 <S.VacancyName>{vacancy?.nameVacancy}</S.VacancyName>
-                <S.VacancyName>{vacancy?.status}</S.VacancyName>
+                <S.VacancyName>{vacancy?.statusVacancy}</S.VacancyName>
             </div>
             <S.Head>
                 <div>

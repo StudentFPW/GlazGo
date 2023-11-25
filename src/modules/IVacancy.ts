@@ -1,8 +1,11 @@
 export interface IVacancy {
     nameVacancy: string
-    status: string
-    city: string
+    statusVacancy: number
+    region: string
     salary: number
-    id: string
-    project: string
+    id: number
+}
+
+export interface IVacancyResponseData {
+    results: IVacancy[]
 }

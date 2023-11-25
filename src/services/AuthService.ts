@@ -32,6 +32,13 @@ const authApi = createApi({
             query: () => ({
                 url: '/auth/logout/',
                 method: 'POST',
+                credentials: 'include'
+            })
+        }),
+        checkAuth: build.mutation({
+            query: () => ({
+                url: '/auth/token/refresh/',
+                method: 'POST',
                 // credentials: 'include'
             })
         })
