@@ -3,21 +3,15 @@ from rest_framework import serializers
 from .models import *
 
 
+class CandidateBaseSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = CandidateBase
+        fields = "__all__"
+
+
 class CPHistorySerializer(serializers.ModelSerializer):
     class Meta:
         model = CPHistory
-        fields = "__all__"
-
-
-class ResponsibilitiesSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Responsibilities
-        fields = "__all__"
-
-
-class RequirementsSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Requirements
         fields = "__all__"
 
 

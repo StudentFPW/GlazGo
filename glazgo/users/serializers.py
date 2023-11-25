@@ -1,12 +1,11 @@
-import secrets
-
 from django.db import transaction
 
 from rest_framework import serializers
 from dj_rest_auth.registration.serializers import RegisterSerializer
 
-from .models import User
 from referral_system.models import ReferralRelationship, ReferralCode
+from .models import User
+from .signals import create_reftoken
 
 
 class CustomRegisterSerializer(RegisterSerializer):
@@ -32,6 +31,14 @@ class CustomRegisterSerializer(RegisterSerializer):
             raise ValueError("Users must have an email address!")
         if not self.data.get("username"):
             raise ValueError("Users must have an username!")
+        if not self.data.get("role"):
+            raise ValueError("Users must have an role!")
+        if not self.data.get("first_name"):
+            raise ValueError("Users must have an first_name!")
+        if not self.data.get("last_name"):
+            raise ValueError("Users must have an last_name!")
+        if not self.data.get("phone"):
+            raise ValueError("Users must have an phone!")
 
         username_r = self.data.get("username")
         email_r = self.data.get("email")
@@ -43,7 +50,7 @@ class CustomRegisterSerializer(RegisterSerializer):
 
         # Этот блок кода проверяет, не равно ли значение переменной role_r 0. Если оно не равно 0, он
         # выполняет следующие действия:
-        if not role_r == 0:
+        if role_r >= 1 and role_r <= 4:
             ref_code = ReferralCode.objects.filter(token=referral_token_r)
             if not ref_code:
                 raise ValueError("Your token is not valid!")
@@ -62,41 +69,12 @@ class CustomRegisterSerializer(RegisterSerializer):
                     employee=user,
                     refer_token=ref_code[0],
                 ).save()
-
-                # создает для пользователя 30 реферальных токенов.
-                for i in range(30):
-                    self.create_reftoken(user)
+                # создает для пользователя 5 реферальных токенов.
+                for i in range(3):
+                    create_reftoken(user)
             else:
                 raise ValueError("This token is used!")
             return user
-
-        # Ненадежно в будущем нужно переконструировать !!!
-        user.username = username_r
-        user.email = email_r
-        user.referral_token = referral_token_r
-        user.role = role_r
-        user.first_name = first_name_r
-        user.last_name = last_name_r
-        user.phone = phone_r
-        user.is_admin = True
-        user.is_superuser = True
-        user.is_staff = True
-        user.save()
-        for i in range(100):
-            self.create_reftoken(user)
-        return user
-
-    def create_reftoken(self, user):
-        """
-        Функция создает случайный токен и сохраняет его вместе с
-        пользователем в модели ReferralCode.
-
-        param user:
-                Параметр user — это объект, представляющий пользователя,
-                для которого создается реферальный токен
-        """
-        token = secrets.token_urlsafe(10)
-        ReferralCode(token=token, user=user).save()
 
 
 class UserDetailsSerializer(serializers.ModelSerializer):

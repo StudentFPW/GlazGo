@@ -54,6 +54,7 @@ INSTALLED_APPS = [
     "django_filters",
     "channels",
     "corsheaders",
+    "import_export",
     # Приложения ↓
     "ats",
     "users",

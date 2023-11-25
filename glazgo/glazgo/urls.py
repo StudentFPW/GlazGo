@@ -26,15 +26,16 @@ from referral_system.views import *
 from users.views import *
 
 router = routers.DefaultRouter()
-router.register(r"cph", CPHistoryViewSet)
-router.register(r"resp", ResponsibilitiesViewSet)
-router.register(r"req", RequirementsViewSet)
-router.register(r"vac", VacancyViewSet)
-router.register(r"cand", CandidateViewSet)
-router.register(r"c-p", CPromotionViewSet)
-router.register(r"ref", RRViewSet)
-router.register(r"refl", RCViewSet)
-router.register(r"ud", UserDetailsViewSet)
+router.register(r"cph", CPHistoryViewSet, basename="CPH")
+router.register(r"vac", VacancyViewSet, basename="V")
+router.register(r"cand", CandidateViewSet, basename="C")
+router.register(r"c-p", CPromotionViewSet, basename="CP")
+router.register(r"ref", RRViewSet, basename="RR")
+router.register(r"refl", RCViewSet, basename="RC")
+router.register(r"ud", UserDetailsViewSet, basename="UD")
+router.register(r"cb", CandidateBaseViewSet, basename="CB")
+
+# Этот функционал не используется или не работает!!!
 # router.register(r"mes", MessageViewSet)
 # router.register(r"w-cand", WaitingCandidateViewSet)
 

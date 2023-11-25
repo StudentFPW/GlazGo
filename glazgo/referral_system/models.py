@@ -17,12 +17,13 @@ class ReferralRelationship(models.Model):
     )
     refer_token = models.ForeignKey(
         "ReferralCode",
+        related_name="referral_code",
         verbose_name="referral_code",
         on_delete=models.CASCADE,
     )
 
     def __str__(self) -> str:
-        return f"inviter: {self.employer}, invited: {self.employee}, {self.refer_token}"
+        return f"Пригласил: {self.employer}, Приглашённый: {self.employee}, {self.refer_token}"
 
 
 class ReferralCode(models.Model):

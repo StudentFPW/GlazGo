@@ -1,19 +1,24 @@
 from datetime import timedelta
 
 from django.utils.timezone import now
-from django_filters.rest_framework import DjangoFilterBackend
 
+from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import viewsets, filters
 
 from .models import *
 from .serializer import *
 
+
 # Пожалуйста не удаляйте !
 # from rest_framework_rules.mixins import PermissionRequiredMixin
 # from users.permissions import UserRecruiter
-# PermissionRequiredMixin
-# permission_classes = [UserRecruiter]
 # permission_required = "ats.view_cp_history"
+# permission_classes = [UserRecruiter]
+
+
+class CandidateBaseViewSet(viewsets.ModelViewSet):
+    serializer_class = CandidateBaseSerializer
+    queryset = CandidateBase.objects.all()
 
 
 class CPHistoryViewSet(viewsets.ModelViewSet):
@@ -29,16 +34,6 @@ class CPHistoryViewSet(viewsets.ModelViewSet):
         "status",
         "datetime",
     ]
-
-
-class ResponsibilitiesViewSet(viewsets.ModelViewSet):
-    serializer_class = ResponsibilitiesSerializer
-    queryset = Responsibilities.objects.all()
-
-
-class RequirementsViewSet(viewsets.ModelViewSet):
-    serializer_class = RequirementsSerializer
-    queryset = Requirements.objects.all()
 
 
 class VacancyViewSet(viewsets.ModelViewSet):
