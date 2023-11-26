@@ -6,6 +6,10 @@ from import_export import resources
 
 class CandidateBase(models.Model):
     file = models.FileField("Файл с базой кандидатов", null=False)
+    datetime = models.DateTimeField("Время загрузки файла", auto_now_add=True)
+
+    def __str__(self):
+        return f"Файл: {self.file} Дата: {self.datetime}"
 
 
 class CPHistory(models.Model):
@@ -29,6 +33,7 @@ class CPHistory(models.Model):
 
     def __str__(self):
         return f"Дата: {self.datetime}"
+
 
 class Vacancy(models.Model):
     """

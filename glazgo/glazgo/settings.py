@@ -43,12 +43,13 @@ INSTALLED_APPS = [
     # Авторизация ↓
     "rest_framework",
     "rest_framework.authtoken",
+    "dj_rest_auth",
     "django.contrib.sites",
     "allauth",
     "allauth.account",
     "allauth.socialaccount",
-    "dj_rest_auth",
     "dj_rest_auth.registration",
+    "rest_framework_simplejwt",
     # Другие необходимые инструменты ↓
     "drf_yasg",
     "django_filters",
@@ -157,26 +158,50 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 ASGI_APPLICATION = "glazgo.asgi.application"
 
-# ACCOUNT_UNIQUE_EMAIL = True
-# ACCOUNT_EMAIL_REQUIRED = True
+ACCOUNT_UNIQUE_EMAIL = True
+
+ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_USERNAME_REQUIRED = True
+
 ACCOUNT_AUTHENTICATION_METHOD = "username"
 ACCOUNT_EMAIL_VERIFICATION = "none"
+
+ACCOUNT_USERNAME_MIN_LENGTH = 7
+ACCOUNT_USERNAME_BLACKLIST = ["admin", "root", "service", "glazgo"]
+ACCOUNT_SIGNUP_PASSWORD_ENTER_TWICE = True
+
+LOGIN_REDIRECT_URL = "/"
+ACCOUNT_LOGOUT_REDIRECT_URL = "/"
+ACCOUNT_SIGNUP_REDIRECT_URL = "/"
 ACCOUNT_LOGOUT_ON_PASSWORD_CHANGE = True
 
 SITE_ID = 1
 
-CORS_ALLOW_ALL_ORIGINS = True  # Режим продукции
+if DEBUG:
+    CORS_ALLOW_ALL_ORIGINS = True
+else:
+    CORS_ALLOWED_ORIGINS = [
+        "http://localhost:3000/",
+        "http://127.0.0.1:3000/",
+    ]
 
 REST_FRAMEWORK = {
+    "DEFAULT_PERMISSION_CLASSES": [
+        "rest_framework.permissions.IsAuthenticated",  # Режим продукции
+        # 'rest_framework.permissions.AllowAny',
+    ],
     "DEFAULT_AUTHENTICATION_CLASSES": [
-        "rest_framework.authentication.TokenAuthentication",
+        "dj_rest_auth.jwt_auth.JWTCookieAuthentication",
     ],
     "DEFAULT_PAGINATION_CLASS": "rest_framework.pagination.LimitOffsetPagination",
     "PAGE_SIZE": 10,
 }
 
 REST_AUTH = {
+    "USE_JWT": True,
+    "JWT_AUTH_COOKIE": "JWT-AUTH-COOKIE",
+    "JWT_AUTH_REFRESH_COOKIE": "JWT-AUTH-REFRESH-COOKIE",
+    "JWT_AUTH_HTTPONLY": False,
     "OLD_PASSWORD_FIELD_ENABLED": True,
     "LOGOUT_ON_PASSWORD_CHANGE": True,
     "REGISTER_SERIALIZER": "users.serializers.CustomRegisterSerializer",
@@ -201,6 +226,16 @@ CHANNEL_LAYERS = {
             ],
         },
     },
+}
+
+SIMPLE_JWT = {
+    "ACCESS_TOKEN_LIFETIME": timedelta(minutes=60),
+    "REFRESH_TOKEN_LIFETIME": timedelta(days=7),
+    "ROTATE_REFRESH_TOKENS": False,
+    "BLACKLIST_AFTER_ROTATION": False,
+    "UPDATE_LAST_LOGIN": True,
+    "SIGNING_KEY": "complexsigningkey",  # generate a key and replace me
+    "ALGORITHM": "HS512",
 }
 
 ################################################################

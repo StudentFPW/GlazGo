@@ -47,8 +47,7 @@ class UserCustomerAdmin(permissions.BasePermission):
     pass
 
 
-# IMPORT THIS TO USE PERMISSIONS !
-
+# Пожалуйста не удаляйте !!!
 # from .permissions UserRecruiter, UserCustomer, UserRecruiterAdmin, UserRecruiterAdmin
 # permission_classes = [IsAuthenticated, UserRecruiter]  # FOR EXAMPLE
 # permission_classes = [IsStaff, UserCustomer]  # FOR EXAMPLE

@@ -55,10 +55,8 @@ schema_view = get_schema_view(
 urlpatterns = [
     path("api-", include(router.urls)),
     path("secret-k6F8-admin-73rbHG/", admin.site.urls),
-    path("auth/", include("dj_rest_auth.urls")),
-    path("auth/reg/", include("dj_rest_auth.registration.urls")),
     path("chat/", include("chat.urls")),
-    path("users/", include("users.urls")),
+    path("user/", include("users.urls")),
     path("swag<format>/", schema_view.without_ui(cache_timeout=0), name="schema-json"),
     path("redoc/", schema_view.with_ui("redoc", cache_timeout=0), name="schema-redoc"),
     path(

@@ -19,6 +19,12 @@ from .serializer import *
 class CandidateBaseViewSet(viewsets.ModelViewSet):
     serializer_class = CandidateBaseSerializer
     queryset = CandidateBase.objects.all()
+    filter_backends = [DjangoFilterBackend, filters.OrderingFilter]
+    ordering_fields = "__all__"
+    filterset_fields = [
+        "id",
+        "datetime",
+    ]
 
 
 class CPHistoryViewSet(viewsets.ModelViewSet):
