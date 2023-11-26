@@ -3,7 +3,7 @@ import { styled } from 'styled-components'
 import Filter from '../../../images/icons/Filter'
 
 const CTableHeader = () => {
-    const titles = ['Кандидат', 'Вакансия', 'Статус', 'Рекрутер', 'Прикр.', 'ID вак.']
+    const titles = ['Кандидат', 'Статус', 'Прикреплен',]
 
     return (
         <Header>
@@ -41,22 +41,13 @@ const Header = styled.thead`
     }
     tr {
         > th:nth-child(1) {
-            width: 150px;
+            width: 200px;
         }
         > th:nth-child(2) {
             width: 150px;
         }
         > th:nth-child(3) {
             width: 150px;
-        }
-        > th:nth-child(4) {
-            width: 150px;
-        }
-        > th:nth-child(5) {
-            width: 100px;
-        }
-        > th:nth-child(6) {
-            width: 100px;
         }
     }
 

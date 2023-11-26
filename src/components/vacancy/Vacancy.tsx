@@ -2,14 +2,17 @@ import React, { FC } from 'react'
 import * as S from '../zayavka/ZayavkaStyles'
 import * as C from '../../styles/components'
 import Close from '../../images/icons/Close'
-import { Link, useParams } from 'react-router-dom'
+import { Link, useNavigate, useParams } from 'react-router-dom'
 import vacancyApi from '../../services/VacancyService'
 
 const Vacancy: FC = () => {
     const {id} = useParams()
-    const {data: vacancyArr, isFetching, isSuccess} = vacancyApi.useFetchVacancyQuery(id ? id : '')
-    let vacancy
-    if (vacancyArr) vacancy = vacancyArr[0]
+    const {data: vacancy, isFetching, isSuccess} = vacancyApi.useFetchVacancyQuery(id ? id : '')
+    const navigate = useNavigate()
+
+    const handleGoToCandidates = () => {
+        navigate(`/vacancies/${id}/candidates`)
+    }
 
     return (
       <div>
@@ -93,7 +96,7 @@ const Vacancy: FC = () => {
             </S.Form>
             <S.Buttons>
                 <C.FButton>Закрыть вакансию</C.FButton>
-                <C.LButton>Кандидаты</C.LButton>
+                <C.LButton onClick={handleGoToCandidates}>Кандидаты</C.LButton>
                 <C.LButton>Чат с рекрутером</C.LButton>
             </S.Buttons>
         </div>

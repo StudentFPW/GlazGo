@@ -32,16 +32,16 @@ const App: FC = () => {
     <Routes>
       <Route path="/" element={<Layout/>}>
         <Route index element={<Home/>}/>
-        <Route path="/registration" element={<Registration/>}/>
-        <Route path="/authorization" element={<Authorization/>}/>
-        <Route path="/vacancies" element={<Vacancies/>}/>
-        <Route path="/vacancy/:id" element={<Vacancy/>}/>
-        <Route path="/zayavka" element={<Zayavka/>}/>
-        <Route path="/candidates" element={<Candidates/>}/>
-        <Route path="/candidate" element={<Candidate/>}/>
-        <Route path="/new-candidate" element={<NewCandidate/>}/>
-        <Route path="/chat" element={<Chat/>}/>
-        <Route path="/vacancy-closed" element={<VacancyClosed/>}/>
+        <Route path="registration" element={<Registration/>}/>
+        <Route path="authorization" element={<Authorization/>}/>
+        <Route path="vacancies" element={<Vacancies/>}/>
+        <Route path="vacancies/:id" element={<Vacancy/>}/>
+        <Route path="zayavka" element={<Zayavka/>}/>
+        <Route path="vacancies/:id/candidates" element={<Candidates/>}/>
+        <Route path="candidates/:id" element={<Candidate/>}/>
+        <Route path="new-candidate" element={<NewCandidate/>}/>
+        <Route path="chat" element={<Chat/>}/>
+        <Route path="vacancy-closed" element={<VacancyClosed/>}/>
         <Route path="*" element={<NotFound />} />
       </Route>
     </Routes>

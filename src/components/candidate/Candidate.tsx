@@ -1,43 +1,50 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import Close from '../../images/icons/Close'
 import * as C from '../../styles/components'
 import * as S from './CandidateStyles'
 import Telegram from '../../images/icons/Telegram'
 import WatsApp from '../../images/icons/WatsApp'
+import candidateApi from '../../services/CandidateService'
 
 const Candidate = () => {
+    const {id} = useParams()
+    const {data: candidate } = candidateApi.useFetchCandidateQuery(id ? id : '')
+    const navigate = useNavigate()
+    const handleGoBack = () => navigate(-1)
+
     return (
         <div>
             <S.Title>
                 <C.H2>Кандидат</C.H2>
-                <Link to="/candidates">
-                    <C.NButton>
+                    <C.NButton onClick={handleGoBack}>
                         <C.SvgIconWrapper><Close/></C.SvgIconWrapper>
                     </C.NButton>
-                </Link>
             </S.Title>
-            <div>Прикреплен к вакансии ID888888 рекрутером 19.11.2023</div>
+            <div>Прикреплен к вакансии ID{candidate?.vacancyId} рекрутером 19.11.2023</div>
             <div>
                 <div>ФИО</div>
-                <S.ItemValue>Романова Валерия Тимуровна</S.ItemValue>
+                <S.ItemValue>{candidate?.surname} {candidate?.name} {candidate?.otch}</S.ItemValue>
                 <div>Вакансия</div>
-                <S.ItemValue>Менеджер</S.ItemValue>
+                <S.ItemValue></S.ItemValue>
                 <div>Заказчик</div>
-                <S.ItemValue>Герасимов Андрей Антонович</S.ItemValue>
+                <S.ItemValue></S.ItemValue>
                 <div>Реферер</div>
-                <S.ItemValue>Иванов Иван Иванович</S.ItemValue>
+                <S.ItemValue></S.ItemValue>
                 <div>Рекрутер</div>
-                <S.ItemValue>Васильева Злата Ильинична</S.ItemValue>
+                <S.ItemValue></S.ItemValue>
                 <div>Источник</div>
-                <S.ItemValue>hh.ru</S.ItemValue>
+                <S.ItemValue></S.ItemValue>
+                <div>Email</div>
+                <S.ItemValue>{candidate?.email}</S.ItemValue>
+                <div>Резюме</div>
+                <S.ItemValue>{candidate?.resume}</S.ItemValue>
                 <div>Телефон</div>
-                <S.ItemValue><a href="tel:+79999999999">+7 (646) 067-96-75</a></S.ItemValue>
+                <S.ItemValue><a href={`tel:${candidate?.phone}`}>{candidate?.phone}</a></S.ItemValue>
                 <S.MessengerWrapper>
-                    <a href="https://t.me/+79999999999"><S.Messenger><Telegram/></S.Messenger></a>
-                    <a href="https://wa.me/+79999999999"><S.Messenger><WatsApp/></S.Messenger></a>
+                    <a href={`https://t.me/${candidate?.phone}`}><S.Messenger><Telegram/></S.Messenger></a>
+                    <a href={`https://wa.me/${candidate?.phone}`}><S.Messenger><WatsApp/></S.Messenger></a>
                 </S.MessengerWrapper>
-                <C.LButton>Резюме</C.LButton>
                 <S.Form>
                     <label htmlFor="">Статус</label>
                     <S.Select name="" id="">

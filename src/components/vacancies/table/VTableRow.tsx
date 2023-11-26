@@ -1,4 +1,4 @@
-import React, { FC } from 'react'
+import React, { FC, useState } from 'react'
 import styled from 'styled-components'
 import { IVacancy } from '../../../modules/IVacancy'
 import { useNavigate } from 'react-router-dom'
@@ -11,16 +11,26 @@ const VTableRow: FC<VacancyItemProps> = ({vacancy}) => {
 
     const {nameVacancy, statusVacancy, region, salary, id} = vacancy
 
+    const [showFullContent, setShowFullContent] = useState(false)
+
     const navigate = useNavigate()
-    const handleGoToVacancy = () => navigate(`/vacancy/${id}`)
+
+    const handleGoToVacancy = () => {
+        if (showFullContent) {
+            navigate(`/vacancies/${id}`)
+        } else {
+            // Показать содержимое ячейки полностью
+            setShowFullContent(true);
+          }
+    }
 
     return (
         <tr>
-            <Td onClick={handleGoToVacancy}>{nameVacancy}</Td>
-            <Td>{statusVacancy}</Td>
-            <Td>{region}</Td>
-            <Td>{salary}</Td>
-            <Td>{id}</Td>
+            <Td data-content={nameVacancy} onClick={handleGoToVacancy}>{nameVacancy}</Td>
+            <Td data-content={statusVacancy}>{statusVacancy}</Td>
+            <Td data-content={region}>{region}</Td>
+            <Td data-content={salary}>{salary}</Td>
+            <Td data-content={id}>{id}</Td>
         </tr>
     )
 }
@@ -32,4 +42,21 @@ const Td = styled.td`
     white-space: nowrap;
     overflow: hidden;
     font-size: 14px;
+    position: relative;
+    &:hover, &:active {
+        overflow: visible;
+        &::after {
+            content: attr(data-content);
+            position: absolute;
+            background-color: ${({ theme }) => theme.colors.lightGray};
+            /* border: 1px solid ${({ theme }) => theme.colors.gray}; */
+            border-radius: 4px;
+            padding: 10px 16px;
+            top: 0;
+            left: 0;
+            width: max-content;
+            white-space: normal;
+            z-index: 999;
+        }
+    }
 `

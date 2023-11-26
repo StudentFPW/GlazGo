@@ -1,16 +1,14 @@
 import { configureStore, ThunkAction, Action } from '@reduxjs/toolkit';
-import userApi from '../services/AuthService'
-import VacancyApi from '../services/VacancyService'
 import authReduser from './redusers/authSlice'
+import baseApi from '../services/BaseApi';
 
 export const store = configureStore({
   reducer: {
     auth: authReduser,
-    [userApi.reducerPath]: userApi.reducer,
-    [VacancyApi.reducerPath]: VacancyApi.reducer,
+    [baseApi.reducerPath]: baseApi.reducer,
   },
   middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().concat(userApi.middleware, VacancyApi.middleware),
+    getDefaultMiddleware().concat(baseApi.middleware),
 });
 
 export type AppDispatch = typeof store.dispatch;

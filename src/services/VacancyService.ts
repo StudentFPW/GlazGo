@@ -1,17 +1,8 @@
-import {createApi, fetchBaseQuery} from '@reduxjs/toolkit/dist/query/react'
 import { IVacancy, IVacancyResponseData } from '../modules/IVacancy'
 import camelcaseKeys from 'camelcase-keys'
+import baseApi from './BaseApi'
 
-const vacancyApi = createApi({
-    reducerPath: 'vacancyApi',
-    baseQuery: fetchBaseQuery({
-        baseUrl: 'http://127.0.0.1:8000',
-        prepareHeaders: (headers) => {
-            headers.set('Content-Type', 'application/json')
-            headers.set('Authorization', `Bearer ${localStorage.getItem('accessToken')}`)
-            return headers
-        }
-    }),
+const vacancyApi = baseApi.injectEndpoints({
     endpoints: (build) => ({
         fetchVacancies: build.query<IVacancyResponseData, number>({
             query: (limit: number = 10) => ({
@@ -22,14 +13,11 @@ const vacancyApi = createApi({
             }),
             transformResponse: (response: any): IVacancyResponseData => camelcaseKeys(response, { deep: true })
         }),
-        fetchVacancy: build.query<IVacancy[], string>({
+        fetchVacancy: build.query<IVacancy, string>({
             query: (id) => ({
-                url: '/',
-                params: {
-                    id
-                }
+                url: `/api-vac/${id}/`,
             }),
-            transformResponse: (response: IVacancy[]) => camelcaseKeys(response, { deep: true })
+            transformResponse: (response: any): IVacancy => camelcaseKeys(response, { deep: true })
         })
     })
 })

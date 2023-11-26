@@ -1,18 +1,21 @@
 import React, { FC } from 'react'
 import TableHeader from './CTableHeader'
 import { styled } from 'styled-components'
-import data from '../../../candidates.json'
 import TableRow from './CTableRow'
+import candidateApi from '../../../services/CandidateService'
+import { useParams } from 'react-router-dom'
 
 const CTable: FC = () => {
+    const {id} = useParams()
+    const {data} = candidateApi.useFetchCandidatesQuery({limit: 10, id: id ? id : ''})
+    const candidates = data?.results
 
-    const candidates = data
     return (
         <TableContainer>
             <Table>
                 <TableHeader />
                 <tbody>
-                    {candidates.map(candidate => <TableRow key={candidate.id} candidate={candidate} />)}
+                    {candidates &&candidates.map(candidate => <TableRow key={candidate.candidatId} candidate={candidate} />)}
                 </tbody>
             </Table>
         </TableContainer>

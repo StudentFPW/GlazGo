@@ -1,18 +1,9 @@
-import {createApi, fetchBaseQuery} from '@reduxjs/toolkit/dist/query/react'
 import { IAuthData } from '../modules/IAuth'
 import { IRegQueryData, IRegResponseData } from '../modules/IReg'
 import decamelizeKeys from 'decamelize-keys'
+import baseApi from './BaseApi'
 
-const authApi = createApi({
-    reducerPath: 'authApi',
-    baseQuery: fetchBaseQuery({
-        baseUrl: 'http://127.0.0.1:8000',
-        prepareHeaders: (headers) => {
-            headers.set('Content-Type', 'application/json')
-            return headers
-        },
-        // credentials: 'include'
-    }),
+const authApi = baseApi.injectEndpoints({
     endpoints: (build) => ({
         registration: build.mutation<IRegResponseData, IRegQueryData>({
             query: (regData) => ({
@@ -39,7 +30,7 @@ const authApi = createApi({
             query: () => ({
                 url: '/auth/token/refresh/',
                 method: 'POST',
-                // credentials: 'include'
+                credentials: 'include'
             })
         })
     })

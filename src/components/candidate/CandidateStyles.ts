@@ -54,6 +54,7 @@ export const ItemValue = styled.div`
     ${inputS}
     border: none;
     display: flex;
+    overflow: auto;
 `
 export const MessengerWrapper = styled.div`
     display: flex;
