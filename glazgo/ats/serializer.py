@@ -66,8 +66,8 @@ class CandidateAddedSerializer(serializers.ModelSerializer):
     phone = serializers.CharField()
     ref = serializers.CharField()
     resume = serializers.CharField()
-    comment = serializers.CharField()
-    vacancy = serializers.IntegerField()
+    comment = serializers.CharField(required=False)
+    vacancy = serializers.IntegerField(required=False)
 
     class Meta:
         model = Candidate
@@ -84,11 +84,11 @@ class CandidateAddedSerializer(serializers.ModelSerializer):
         vacancy = Vacancy.objects.get(pk=vacancy_id)
         # Отбираю пользователей из User, где поле role соответствует рекрутеру и рекрутеру администратору
         recruters = User.objects.filter(role__in=[1, 2])
-        print(f'Тест списка рекрутеров: {recruters}')
         # из отобранного списка рекрутеров, случайным образом выбираю одного
         recruter = recruters[random.randint(0, recruters.count()-1)]
 
         candidate_promotion_new = CandidatePromotion.objects.create(candidat_id=candidate, comment=comment_date,
                                                                     vacancy_id=vacancy, recruter_id=recruter)
         return candidate
+
 

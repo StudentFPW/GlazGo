@@ -130,6 +130,7 @@ class WaitingCandidateViewSet(viewsets.ModelViewSet):
 
         return qs
 
+
 class CandidateAddedViewSet(viewsets.ModelViewSet):
     serializer_class = CandidateAddedSerializer
     queryset = Candidate.objects.all()
@@ -140,4 +141,3 @@ class CandidateAddedViewSet(viewsets.ModelViewSet):
         "candidat_id",
         "status_change",
     ]
-
