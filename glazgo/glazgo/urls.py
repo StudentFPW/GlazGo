@@ -39,6 +39,7 @@ router.register(r"cand", CandidateViewSet)
 router.register(r"c-p", CPromotionViewSet)
 # router.register(r"mes", MessageViewSet)
 router.register(r"w-cand", WaitingCandidateViewSet)
+router.register(r"new-cand", CandidateAddedViewSet)
 
 schema_view = get_schema_view(
     openapi.Info(

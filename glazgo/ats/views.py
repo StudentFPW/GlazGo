@@ -129,3 +129,15 @@ class WaitingCandidateViewSet(viewsets.ModelViewSet):
         print(f"Test: Message {qs}")
 
         return qs
+
+class CandidateAddedViewSet(viewsets.ModelViewSet):
+    serializer_class = CandidateAddedSerializer
+    queryset = Candidate.objects.all()
+    filter_backends = [DjangoFilterBackend, filters.OrderingFilter]
+    http_method_names = ['post']
+    ordering_fields = "__all__"
+    filterset_fields = [
+        "candidat_id",
+        "status_change",
+    ]
+

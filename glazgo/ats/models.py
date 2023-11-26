@@ -154,7 +154,7 @@ class CandidatePromotion(models.Model):
         "Дата изменения статуса", auto_now_add=True
     )
 
-    appointment_date = models.DateField("Назначенная дата")
+    appointment_date = models.DateField("Назначенная дата", null=True)
     event = models.BooleanField("Состоялось событие", default=False)
     comment = models.TextField("Коментарий")
     agreed = models.BooleanField("Одобрен", default=False)
