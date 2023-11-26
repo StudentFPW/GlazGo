@@ -14,11 +14,11 @@ def RoleRecognizer(instance, **kwargs):
         user = User.objects.get(id=instance.pk)
         if instance.role == 1:
             group = Group.objects.get(name="UR")
-        if instance.role == 2:
+        elif instance.role == 2:
             group = Group.objects.get(name="URA")
-        if instance.role == 3:
+        elif instance.role == 3:
             group = Group.objects.get(name="UC")
-        if instance.role == 4:
+        elif instance.role == 4:
             group = Group.objects.get(name="UCA")
         user.groups.add(group)
         return user

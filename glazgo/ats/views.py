@@ -1,19 +1,13 @@
 from datetime import timedelta
 
 from django.utils.timezone import now
-
 from django_filters.rest_framework import DjangoFilterBackend
+
 from rest_framework import viewsets, filters
 
 from .models import *
 from .serializer import *
-
-
-# Пожалуйста не удаляйте !
-# from rest_framework_rules.mixins import PermissionRequiredMixin
-# from users.permissions import UserRecruiter
-# permission_required = "ats.view_cp_history"
-# permission_classes = [UserRecruiter]
+from users.permissions import UserRecruiter
 
 
 class CandidateBaseViewSet(viewsets.ModelViewSet):
@@ -70,6 +64,7 @@ class CandidateViewSet(viewsets.ModelViewSet):
 
 
 class CPromotionViewSet(viewsets.ModelViewSet):
+    permission_classes = [UserRecruiter]
     serializer_class = CPromotionSerializer
     queryset = CandidatePromotion.objects.all()
     filter_backends = [DjangoFilterBackend, filters.OrderingFilter]

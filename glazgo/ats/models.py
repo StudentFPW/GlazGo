@@ -5,7 +5,7 @@ from import_export import resources
 
 
 class CandidateBase(models.Model):
-    file = models.FileField("Файл с базой кандидатов", null=False)
+    file = models.FileField("Файл с базой кандидатов", null=False, upload_to="excel/")
     datetime = models.DateTimeField("Время загрузки файла", auto_now_add=True)
 
     def __str__(self):
@@ -84,7 +84,7 @@ class Vacancy(models.Model):
     )
 
     def __str__(self):
-        return f"ИД рекрутера: {self.recruter}, Название вакансии: {self.name_vacancy}, Заказчик:{self.customer}"
+        return f"Рекрутер: {self.recruter}, Название вакансии: {self.name_vacancy}, Заказчик: {self.customer.last_name}"
 
 
 class Candidate(models.Model):
@@ -165,7 +165,7 @@ class CandidatePromotion(models.Model):
     comment = models.TextField("Коментарий", null=True)
 
     def __str__(self):
-        return f"ИД кандидата: {self.candidat_id}, ИД вакансии: {self.vacancy_id}, ИД рекрутера: {self.recruter_id}, Статус: {self.status_change}, Дата: {self.status_change_date}"
+        return f"Кандидат: {self.candidat_id.surname}, Вакансия: {self.vacancy_id.name_vacancy}, Рекрутер: {self.recruter_id.last_name}, Статус: {self.status_change}, Дата: {self.status_change_date}"
 
 
 class Message(models.Model):

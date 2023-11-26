@@ -13,6 +13,22 @@ from tablib import Dataset
 from .models import *
 
 
+@receiver(post_save, sender=Candidate)
+def post_save_candidate(instance, **kwargs):
+    # Например у нас уже есть созданная вакансия.
+
+    # И когда кто либо заносит информацию о кандидате в модель Candidate,
+    # нам необходимо также добавить новый объект в CandidatePromotion.
+
+    # Чтобы в дальнейшем было понятно какой у него статус,
+    # к какой вакансии он относится, кто является ответственным по рекрутингу этого кандидата...
+
+    # Определить все эти поля возможно будет из модели проджект.
+
+    # Также сюда же нужно будет добавить новый объект в историю CPHISTORY
+    pass
+
+
 @receiver(post_save, sender=CandidateBase)
 def post_save_candidate_base(instance, **kwargs):
     file = instance.file
