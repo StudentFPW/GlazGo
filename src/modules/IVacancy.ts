@@ -5,7 +5,3 @@ export interface IVacancy {
     salary: number
     id: number
 }
-
-export interface IVacancyResponseData {
-    results: IVacancy[]
-}

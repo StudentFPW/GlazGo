@@ -1,7 +1,7 @@
 import React from 'react'
 import * as S from './ZayavkaStyles'
 import * as C from '../../styles/components'
-import Close from '../../images/icons/Close'
+import Close from '../../images/icons/close.svg'
 import { Link } from 'react-router-dom'
 
 const Zayavka = () => {

@@ -1,23 +1,27 @@
 import camelcaseKeys from 'camelcase-keys'
 import baseApi from './BaseApi'
-import { ICandidate, ICandidateResponseData } from '../modules/ICandidate'
+import { ICandidateProm } from '../modules/ICandidate'
+
+export interface ICandidatesResponseData {
+    results: ICandidateProm[]
+}
 
 const candidateApi = baseApi.injectEndpoints({
     endpoints: (build) => ({
-        fetchCandidates: build.query<ICandidateResponseData, {limit: number, id: string}>({
+        fetchCandidates: build.query<ICandidatesResponseData, {limit: number, id: string}>({
             query: ({limit = 10, id}) => ({
                 url: `/api-c-p/?vacancy_id=${id}`,
                 params: {
                     limit
                 }
             }),
-            transformResponse: (response: any): ICandidateResponseData => camelcaseKeys(response, { deep: true })
+            transformResponse: (response: any): ICandidatesResponseData => camelcaseKeys(response, { deep: true })
         }),
-        fetchCandidate: build.query<ICandidate, string>({
+        fetchCandidate: build.query<ICandidateProm, string>({
             query: (id) => ({
-                url: `/api-cand/${id}/`,
+                url: `/api-c-p/${id}/`,
             }),
-            transformResponse: (response: any): ICandidate => camelcaseKeys(response, { deep: true })
+            transformResponse: (response: any): ICandidateProm => camelcaseKeys(response, { deep: true })
         })
     })
 })

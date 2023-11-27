@@ -1,8 +1,8 @@
 import React, { FC } from 'react'
 import { css, styled } from 'styled-components'
 import * as C from '../../styles/components'
-import Plus from '../../images/icons/Plus'
-import Funnel from '../../images/icons/Funnel'
+import Plus from '../../images/icons/plus.svg'
+import Funnel from '../../images/icons/funnel.svg'
 import { Link } from 'react-router-dom'
 
 interface OptionsProps {

@@ -1,9 +1,7 @@
+import { IUser } from "./IUser"
+import { IVacancy } from "./IVacancy"
+
 export interface ICandidate {
-    candidatId: number
-    vacancyId: number
-    statusChange: number
-    recruterId: number
-    appointmentDate: string
     id: number
     surname: string
     name: string
@@ -14,6 +12,10 @@ export interface ICandidate {
     resume: string
 }
 
-export interface ICandidateResponseData {
-    results: ICandidate[]
+export interface ICandidateProm {
+    candidatId: ICandidate
+    vacancyId: IVacancy
+    statusChange: number
+    recruterId: IUser
+    appointmentDate: string
 }

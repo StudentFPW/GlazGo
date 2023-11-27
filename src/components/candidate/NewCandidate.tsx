@@ -1,19 +1,20 @@
 import React from 'react'
 import * as C from '../../styles/components'
-import { Link } from 'react-router-dom'
-import Close from '../../images/icons/Close'
+import { useNavigate } from 'react-router-dom'
+import Close from '../../images/icons/close.svg'
 import * as S from './NewCandidateStyles'
 
 const NewCandidate = () => {
+    const navigate = useNavigate()
+    const handleGoBack = () => navigate(-1)
+
     return (
         <div>
             <S.Title>
                 <C.H2>Новый кандидат</C.H2>
-                <Link to="/candidates">
-                    <C.NButton>
-                        <C.SvgIconWrapper><Close/></C.SvgIconWrapper>
-                    </C.NButton>
-                </Link>
+                <C.NButton onClick={handleGoBack}>
+                    <C.SvgIconWrapper><Close/></C.SvgIconWrapper>
+                </C.NButton>
             </S.Title>
             <S.Form>
                 <label htmlFor="">Фамилия</label>

@@ -1,6 +1,6 @@
 import React from 'react'
 import { styled } from 'styled-components'
-import Filter from '../../../images/icons/Filter'
+import Filter from '../../../images/icons/filter.svg'
 
 const VTableHeader = () => {
     const titles = ['Вакансия', 'Статус', 'Город', 'З/п', 'ID']
@@ -10,7 +10,7 @@ const VTableHeader = () => {
             <tr>
                 {titles.map((title, index) => {
                     return (
-                        <th scope="col">
+                        <th scope="col" key={title}>
                             <ThContainer>
                                 <ThBody>
                                     <span>{title}</span>

@@ -1,6 +1,10 @@
-import { IVacancy, IVacancyResponseData } from '../modules/IVacancy'
+import { IVacancy } from '../modules/IVacancy'
 import camelcaseKeys from 'camelcase-keys'
 import baseApi from './BaseApi'
+
+export interface IVacancyResponseData {
+    results: IVacancy[]
+}
 
 const vacancyApi = baseApi.injectEndpoints({
     endpoints: (build) => ({

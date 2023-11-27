@@ -1,13 +1,15 @@
 import React, { FC, useState } from 'react'
 import styled from 'styled-components'
-import { ICandidate } from '../../../modules/ICandidate'
+import { ICandidateProm } from '../../../modules/ICandidate'
 import { useNavigate } from 'react-router-dom'
+import { CANDIDATE_STATUS } from '../../../config'
 
 interface CandidateItemProps {
-    candidate: ICandidate
+    candidate: ICandidateProm
 }
 const CTableRow: FC<CandidateItemProps> = ({candidate}) => {
     const {candidatId, vacancyId, statusChange, recruterId, appointmentDate} = candidate
+    const fio = `${candidatId.surname} ${candidatId.name} ${candidatId.otch}`
 
     const [showFullContent, setShowFullContent] = useState(false)
 
@@ -15,7 +17,7 @@ const CTableRow: FC<CandidateItemProps> = ({candidate}) => {
 
     const handleGoToCandidate = () => {
         if (showFullContent) {
-            navigate(`/candidates/${candidatId}`)
+            navigate(`/candidates/${candidatId.id}`)
         } else {
             // Показать содержимое ячейки полностью
             setShowFullContent(true);
@@ -24,8 +26,8 @@ const CTableRow: FC<CandidateItemProps> = ({candidate}) => {
 
     return (
         <tr>
-            <Td data-content={candidatId} onClick={handleGoToCandidate}>{candidatId}</Td>
-            <Td data-content={statusChange}>{statusChange}</Td>
+            <Td data-content={fio} onClick={handleGoToCandidate}>{fio}</Td>
+            <Td data-content={CANDIDATE_STATUS[statusChange]}>{CANDIDATE_STATUS[statusChange]}</Td>
             <Td data-content={appointmentDate}>{appointmentDate}</Td>
         </tr>
     )

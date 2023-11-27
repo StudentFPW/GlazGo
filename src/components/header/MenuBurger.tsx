@@ -1,9 +1,9 @@
 import React, { FC, useState } from 'react'
 import { NavLink, useNavigate } from 'react-router-dom'
 import { css, styled } from 'styled-components'
-import Burger from '../../images/icons/Burger'
-import Close from '../../images/icons/Close'
-import Logo from '../../images/icons/Logo'
+import Burger from '../../images/icons/burger.svg'
+import Close from '../../images/icons/close.svg'
+import Logo from '../../images/icons/logo.svg'
 import * as C from '../../styles/components'
 import { useAppDispatch, useAppSelector } from '../../hooks/redux'
 import authApi from '../../services/AuthService'
@@ -41,7 +41,7 @@ const MenuBurger: FC = () => {
                             {nav ? <SClose><Close/></SClose> : <Burger/>}
                         </Btn>
                         <SLogo onClick={handleGoToHome}>
-                            <Logo/>
+                            <Logo />
                         </SLogo>
                     </Icons>
                     {content}
@@ -81,16 +81,15 @@ const Btn = styled.div`
     z-index: ${({ theme }) => theme.order.burger};
 `
 const whiteSvgIcon = css`
-    g {
-        path {
-            fill:  ${({ theme }) => theme.colors.white};
-        }
+    path {
+        fill:  ${({ theme }) => theme.colors.white};
     }
 `
 const SClose = styled.div`
     ${whiteSvgIcon}
 `
 const SLogo = styled.div`
+    height: 18px;
     svg {
         width: 78px;
         height: 18px;

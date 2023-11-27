@@ -1,15 +1,21 @@
 import React, { FC } from 'react'
 import * as S from '../zayavka/ZayavkaStyles'
 import * as C from '../../styles/components'
-import Close from '../../images/icons/Close'
-import { Link, useNavigate, useParams } from 'react-router-dom'
+import Close from '../../images/icons/close.svg'
+import { useNavigate, useParams } from 'react-router-dom'
 import vacancyApi from '../../services/VacancyService'
+import { VACANCY_STATUS } from '../../config'
 
 const Vacancy: FC = () => {
     const {id} = useParams()
     const {data: vacancy, isFetching, isSuccess} = vacancyApi.useFetchVacancyQuery(id ? id : '')
     const navigate = useNavigate()
+    let status
+    if (vacancy) status = vacancy.statusVacancy
 
+    const handleGoToBack = () => {
+        navigate(`/vacancies`)
+    }
     const handleGoToCandidates = () => {
         navigate(`/vacancies/${id}/candidates`)
     }
@@ -19,37 +25,35 @@ const Vacancy: FC = () => {
             <div>
                 <S.Title>
                     <C.H2>Вакансия</C.H2>
-                    <Link to="/vacancies">
-                        <C.NButton>
-                            <C.SvgIconWrapper><Close/></C.SvgIconWrapper>
-                        </C.NButton>
-                    </Link>
+                    <C.NButton onClick={handleGoToBack}>
+                        <C.SvgIconWrapper><Close/></C.SvgIconWrapper>
+                    </C.NButton>
                 </S.Title>
                 <S.VacancyName>{vacancy?.nameVacancy}</S.VacancyName>
-                <S.VacancyName>{vacancy?.statusVacancy}</S.VacancyName>
+                <S.VacancyName>{status && VACANCY_STATUS[status]}</S.VacancyName>
             </div>
             <S.Head>
                 <div>
-                    <p>Дата</p>
+                    <p>Создана</p>
                     <p>11.10.2023</p>
                 </div>
                 <div>
-                    <p>ID вакансии</p>
-                    <p>0000000011</p>
+                    <p>ID</p>
+                    <p>{id}</p>
                 </div>
             </S.Head>
             <S.Info>
                 <S.AutoItem>
                     <p>Заказчик:</p>
-                    <p>Иванов Иван Иванович</p>
+                    <p></p>
                 </S.AutoItem>
                 <S.AutoItem>
                     <p>Рекрутер:</p>
-                    <p>Петров Петр Петрович</p>
+                    <p></p>
                 </S.AutoItem>
                 <S.AutoItem>
                     <p>Компания:</p>
-                    <p>OOO "Компания"</p>
+                    <p></p>
                 </S.AutoItem>
             </S.Info>
             <S.Form>
@@ -68,7 +72,7 @@ const Vacancy: FC = () => {
                     <option value="3">Город 3</option>
                 </S.Select>
                 <label htmlFor="">Зарплата</label>
-                <S.Input type="number" />
+                <S.Input type="number" value={vacancy?.salary} />
                 <label htmlFor="">График</label>
                 <S.Select name="" id="">
                     <option value="0"></option>

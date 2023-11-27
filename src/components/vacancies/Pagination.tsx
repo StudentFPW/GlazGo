@@ -1,16 +1,15 @@
 import React from 'react'
 import styled from 'styled-components'
-import ArrowLeft from '../../images/icons/ArrowLeft'
-import ArrowRight from '../../images/icons/ArrowRight'
+import ArrowLeft from '../../images/icons/arrow-left.svg'
+import ArrowRight from '../../images/icons/arrow-right.svg'
 import * as C from '../../styles/components'
-
 
 const Pagination = () => {
     return (
         <PContainer>
             <p>1 - 7 из 50 страниц</p>
             <Arrows>
-                <C.NButton><ArrowLeft /></C.NButton>
+                <C.NButton><ArrowLeft/></C.NButton>
                 <C.NButton><ArrowRight /></C.NButton>
             </Arrows>
         </PContainer>
