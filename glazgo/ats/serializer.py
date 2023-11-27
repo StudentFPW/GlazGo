@@ -2,6 +2,7 @@ from rest_framework import serializers
 
 from .models import *
 from users.models import User
+from users.serializers import UserDetailsSerializer
 import random
 
 
@@ -36,9 +37,12 @@ class CandidateSerializer(serializers.ModelSerializer):
 
 
 class CPromotionSerializer(serializers.ModelSerializer):
+    candidat_id = CandidateSerializer()
+    vacancy_id = VacancySerializer()
+    recruter_id = UserDetailsSerializer
     class Meta:
         model = CandidatePromotion
-        fields = "__all__"
+        fields = ("status_change", "status_change_date", "appointment_date", "event", "comment", "agreed", "candidat_id", "vacancy_id", "recruter_id")
 
 
 class MessageSerializer(serializers.ModelSerializer):
