@@ -161,6 +161,8 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 ASGI_APPLICATION = "glazgo.asgi.application"
 
+# Настройки авторизации Начало ↓
+
 ACCOUNT_UNIQUE_EMAIL = True
 
 ACCOUNT_EMAIL_REQUIRED = True
@@ -178,12 +180,15 @@ ACCOUNT_LOGOUT_REDIRECT_URL = "/"
 ACCOUNT_SIGNUP_REDIRECT_URL = "/"
 ACCOUNT_LOGOUT_ON_PASSWORD_CHANGE = True
 
+# Настройки авторизации Конец ↑
+
 SITE_ID = 1
 
 if DEBUG:
     CORS_ALLOW_ALL_ORIGINS = True
 else:
-    CORS_ALLOWED_ORIGINS = [
+    CORS_ALLOWED_ORIGINS = [  # Режим продукции
+        # Необходимо будет донастроить !!!
         "http://localhost:3000/",
         "http://127.0.0.1:3000/",
     ]

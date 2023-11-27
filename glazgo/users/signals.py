@@ -23,7 +23,7 @@ def RoleRecognizer(instance, **kwargs):
         user.groups.add(group)
         return user
     User.objects.filter(id=instance.pk).update(role=0)
-    for i in range(50):
+    for i in range(100):
         create_reftoken(instance)
 
 
@@ -31,8 +31,6 @@ def create_reftoken(user):
     """
     Функция создает случайный токен и сохраняет его вместе с
     пользователем в модели ReferralCode.
-
-    Токены растут в геометрической прогрессии.
 
     param user:
         Параметр user — это объект, представляющий пользователя,

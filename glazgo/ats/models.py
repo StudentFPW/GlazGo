@@ -84,7 +84,7 @@ class Vacancy(models.Model):
     )
 
     def __str__(self):
-        return f"Рекрутер: {self.recruter}, Название вакансии: {self.name_vacancy}, Заказчик: {self.customer.last_name}"
+        return f"Рекрутер: {self.recruter.last_name}, Название вакансии: {self.name_vacancy}, Заказчик: {self.customer.last_name}"
 
 
 class Candidate(models.Model):
@@ -183,7 +183,7 @@ class Message(models.Model):
     viewed = models.BooleanField("Просмотрено", default=False)
 
     def __str__(self):
-        return f"ИД пользователи: {self.user_id}, ИД кандидата: {self.candidate_id}, Просмотрено: {self.viewed}"
+        return f"Пользователь: {self.user_id.last_name}, Кандидат: {self.candidate_id.surname}, Просмотрено: {self.viewed}"
 
 
 class CallCandidate(models.Model):

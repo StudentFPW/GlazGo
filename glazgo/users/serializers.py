@@ -69,8 +69,9 @@ class CustomRegisterSerializer(RegisterSerializer):
                     employee=user,
                     refer_token=ref_code[0],
                 ).save()
-                # создает для пользователя 5 реферальных токенов.
-                for i in range(3):
+                # Этот цикл необходимо поместить в условия которые
+                # определяет является ли пользовател участником группы или нет.
+                for i in range(3):  # создает для пользователя 5 реферальных токенов.
                     create_reftoken(user)
             else:
                 raise ValueError("This token is used!")
