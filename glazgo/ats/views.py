@@ -10,6 +10,39 @@ from .serializer import *
 from users.permissions import UserRecruiter
 
 
+class RFOViewSet(viewsets.ModelViewSet):
+    serializer_class = RFOSerializer
+    queryset = ReasonForOpening.objects.all()
+    filter_backends = [DjangoFilterBackend, filters.OrderingFilter]
+    ordering_fields = "__all__"
+    filterset_fields = [
+        "id",
+        "text",
+    ]
+
+
+class WorkTimeViewSet(viewsets.ModelViewSet):
+    serializer_class = WorkTimeSerializer
+    queryset = WorkTime.objects.all()
+    filter_backends = [DjangoFilterBackend, filters.OrderingFilter]
+    ordering_fields = "__all__"
+    filterset_fields = [
+        "id",
+        "time",
+    ]
+
+
+class RegionViewSet(viewsets.ModelViewSet):
+    serializer_class = RegionSerializer
+    queryset = Region.objects.all()
+    filter_backends = [DjangoFilterBackend, filters.OrderingFilter]
+    ordering_fields = "__all__"
+    filterset_fields = [
+        "id",
+        "name",
+    ]
+
+
 class CandidateBaseViewSet(viewsets.ModelViewSet):
     serializer_class = CandidateBaseSerializer
     queryset = CandidateBase.objects.all()

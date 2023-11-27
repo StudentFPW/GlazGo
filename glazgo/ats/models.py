@@ -5,7 +5,7 @@ from import_export import resources
 
 
 class CandidateBase(models.Model):
-    file = models.FileField("Файл с базой кандидатов", null=False, upload_to="excel/")
+    file = models.FileField("Файл с базой кандидатов", upload_to="excel/")
     datetime = models.DateTimeField("Время загрузки файла", auto_now_add=True)
 
     def __str__(self):
@@ -35,6 +35,27 @@ class CPHistory(models.Model):
         return f"Дата: {self.datetime}"
 
 
+class Region(models.Model):
+    name = models.CharField("Название города", max_length=150)
+
+    def __str__(self):
+        return f"{self.name}"
+
+
+class WorkTime(models.Model):
+    time = models.CharField("График работы", max_length=50)
+
+    def __str__(self):
+        return f"{self.time}"
+
+
+class ReasonForOpening(models.Model):
+    text = models.CharField("Причина открытия вакансии", max_length=250)
+
+    def __str__(self):
+        return f"{self.text}"
+
+
 class Vacancy(models.Model):
     """
     Класс Vacancy представляет вакансию с различными атрибутами, такими как дата создания, работодатель,
@@ -60,12 +81,16 @@ class Vacancy(models.Model):
     customer = models.ForeignKey(
         settings.AUTH_USER_MODEL, on_delete=models.PROTECT, related_name="customers"
     )
+    schedule = models.ForeignKey(
+        WorkTime, on_delete=models.CASCADE, related_name="work_time"
+    )
+    reason = models.ForeignKey(
+        ReasonForOpening, on_delete=models.CASCADE, related_name="reason"
+    )
+    region = models.ForeignKey(Region, on_delete=models.CASCADE, related_name="region")
 
     # Необходимые поля
     name_vacancy = models.CharField("Название вакансии", max_length=250)
-    region = models.CharField("Место работы", max_length=250)
-    schedule = models.CharField("График работы", max_length=30)
-    cause = models.CharField("Причина открытия вакансии", max_length=500)
 
     # Необязательные поля
     date_cust = models.DateTimeField("Дата поступления вакансии", auto_now_add=True)
@@ -104,7 +129,7 @@ class Candidate(models.Model):
     email = models.EmailField("Почта")
     phone = models.CharField("Телефон", max_length=15)
     source = models.TextField("Источник")
-    resume = models.FileField("Файл резюме", null=False)
+    resume = models.FileField("Резюме", upload_to="resume/")
 
     # Необязательные поля
     otch = models.CharField("Отчество", max_length=20, null=True)

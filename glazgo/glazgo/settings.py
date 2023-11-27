@@ -195,8 +195,8 @@ else:
 
 REST_FRAMEWORK = {
     "DEFAULT_PERMISSION_CLASSES": [
-        "rest_framework.permissions.IsAuthenticated",  # Режим продукции
-        # 'rest_framework.permissions.AllowAny',
+        # "rest_framework.permissions.IsAuthenticated",  # Режим продукции
+        "rest_framework.permissions.AllowAny",
     ],
     "DEFAULT_AUTHENTICATION_CLASSES": [
         "dj_rest_auth.jwt_auth.JWTCookieAuthentication",
