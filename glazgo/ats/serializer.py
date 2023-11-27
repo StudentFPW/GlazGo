@@ -35,11 +35,16 @@ class CandidateSerializer(serializers.ModelSerializer):
         model = Candidate
         fields = "__all__"
 
+class UserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = "__all__"
+
 
 class CPromotionSerializer(serializers.ModelSerializer):
     candidat_id = CandidateSerializer()
     vacancy_id = VacancySerializer()
-    recruter_id = UserDetailsSerializer
+    recruter_id = UserSerializer()
     class Meta:
         model = CandidatePromotion
         fields = ("status_change", "status_change_date", "appointment_date", "event", "comment", "agreed", "candidat_id", "vacancy_id", "recruter_id")

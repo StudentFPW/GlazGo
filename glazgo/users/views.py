@@ -1,7 +1,10 @@
+from django_filters import filters
+from django_filters.rest_framework import DjangoFilterBackend
+from rest_framework import viewsets
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
 
-from .serializers import ULUSerializer
+from .serializers import ULUSerializer, UserDetailsSerializer
 from .models import User
 
 
@@ -22,3 +25,13 @@ def user_list(request):
     users = User.objects.all().order_by("username")
     serializer = ULUSerializer(instance=users, many=True)
     return Response(serializer.data)
+
+class UserViewSet(viewsets.ModelViewSet):
+    serializer_class = UserDetailsSerializer
+    queryset = User.objects.all()
+    filter_backends = [DjangoFilterBackend, filters.OrderingFilter]
+    ordering_fields = "__all__"
+    filterset_fields = [
+        "role",
+        "email",
+    ]
