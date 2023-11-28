@@ -1,6 +1,7 @@
 import camelcaseKeys from 'camelcase-keys'
 import baseApi from './BaseApi'
-import { ICandidateProm } from '../modules/ICandidate'
+import { ICandidateProm, INewCandidate } from '../modules/ICandidate'
+import decamelizeKeys from 'decamelize-keys'
 
 export interface ICandidatesResponseData {
     results: ICandidateProm[]
@@ -22,6 +23,13 @@ const candidateApi = baseApi.injectEndpoints({
                 url: `/api-c-p/${id}/`,
             }),
             transformResponse: (response: any): ICandidateProm => camelcaseKeys(response, { deep: true })
+        }),
+        createCandidate: build.mutation<INewCandidate, INewCandidate>({
+            query: (candidate) => ({
+                url: `/api-new-cand/`,
+                method: 'POST',
+                body: JSON.stringify(decamelizeKeys(candidate))
+            })
         })
     })
 })

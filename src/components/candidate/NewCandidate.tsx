@@ -6,6 +6,7 @@ import * as S from './NewCandidateStyles'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { INewCandidate } from '../../modules/ICandidate'
 import vacancyApi from '../../services/VacancyService'
+import candidateApi from '../../services/CandidateService'
 
 const NewCandidate = () => {
     const navigate = useNavigate()
@@ -14,6 +15,7 @@ const NewCandidate = () => {
     const {data} = vacancyApi.useFetchAllVacanciesQuery()
     const vacancies = data?.results
 
+    const [createCandidate] = candidateApi.useCreateCandidateMutation()
 
     const {
         register,
@@ -22,7 +24,7 @@ const NewCandidate = () => {
     } = useForm<INewCandidate>({mode: 'onBlur'})
 
     const onSubmit: SubmitHandler<INewCandidate> = async (data) => {
-    // await login(data)
+    await createCandidate(data)
     }
 
     const [isRef, setIsRef] = useState(false)

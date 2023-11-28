@@ -70,6 +70,7 @@ export const input = css`
     border: 1px solid ${({ theme }) => theme.colors.gray};
 `
 export const SvgIconWrapper = styled.div`
+    height: 16px;
     svg {
         width: 16px;
         height: 16px;

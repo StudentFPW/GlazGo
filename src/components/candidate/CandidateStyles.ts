@@ -66,6 +66,10 @@ export const Messenger = styled.div`
     height: 40px;
     border-radius: 8px;
     overflow: hidden;
+    svg {
+        width: 40px;
+        height: 40px;
+    }
 `
 export const Textarea = styled.textarea`
     ${inputS}

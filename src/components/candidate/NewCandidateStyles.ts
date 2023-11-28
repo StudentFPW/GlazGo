@@ -74,6 +74,6 @@ export const RefProgramm = styled.label`
     margin-bottom: 6px;
 `
 export const Ref = styled.div`
-    display: block;
-
+    display: flex;
+    flex-direction: column;
 `
