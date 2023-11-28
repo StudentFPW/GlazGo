@@ -5,6 +5,7 @@ import { SubmitHandler, useForm } from 'react-hook-form'
 import userApi from '../../services/AuthService'
 import { useNavigate } from 'react-router-dom'
 import { IRegQueryData } from '../../modules/IReg'
+import Logo from '../../images/icons/logo.svg'
 
 const Registration:FC = () => {
 
@@ -35,7 +36,10 @@ const Registration:FC = () => {
 
   return (
     <div>
-        <S.Title>
+      <S.LogoWrapper>
+        <Logo/>
+      </S.LogoWrapper>
+      <S.Title>
             <C.H2>Зарегистрироваться</C.H2>
             <div onClick={handleGoToAuth}>Войти</div>
       </S.Title>

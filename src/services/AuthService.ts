@@ -17,7 +17,8 @@ const authApi = baseApi.injectEndpoints({
                 url: '/auth/login/',
                 method: 'POST',
                 body: JSON.stringify(authData)
-            })
+            }),
+            // transformErrorResponse: (response) => response.data
         }),
         logout: build.mutation({
             query: () => ({

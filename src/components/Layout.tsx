@@ -5,12 +5,16 @@ import * as C from "../styles/components"
 import GlobalStyles from "../styles/global"
 import Header from './header/Header'
 import { baseTheme } from '../styles/theme'
+import { useAppSelector } from '../hooks/redux'
 
 const Layout = () => {
+    // const token = localStorage.getItem('accessToken')
+    const isAuth = useAppSelector(state => state.auth.isAuth)
+
     return (
         <ThemeProvider theme={baseTheme}>
             <Wrapper>
-                <Header/>
+                {isAuth && <Header />}
                 <Main>
                     <C.Container>
                         <Outlet />

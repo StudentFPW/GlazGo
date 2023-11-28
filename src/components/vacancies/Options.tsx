@@ -36,9 +36,10 @@ const BtnContainer = styled.div`
     margin-bottom: 24px;
 `
 const SPlus = styled.div`
-    width: 20px;
     height: 20px;
     svg {
+        width: 20px;
+        height: 20px;
         path {
             fill:  ${({ theme }) => theme.colors.white};
         }

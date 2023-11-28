@@ -19,3 +19,9 @@ export interface ICandidateProm {
     recruterId: IUser
     appointmentDate: string
 }
+
+export interface INewCandidate extends ICandidate {
+    vacancy: number
+    source: string
+}
+

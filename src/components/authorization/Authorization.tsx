@@ -7,17 +7,22 @@ import { useNavigate } from 'react-router-dom'
 import { useAppDispatch } from '../../hooks/redux'
 import { setAuth } from '../../store/redusers/authSlice'
 import authApi from '../../services/AuthService'
+import Logo from '../../images/icons/logo.svg'
 
 const Authorization:FC = () => {
 
   const [login, { data, error, isSuccess }] = authApi.useLoginMutation()
   const dispatch = useAppDispatch()
 
-  if (data) {
-    localStorage.setItem('accessToken', data.access)
-    localStorage.setItem('role', data.user.role.toString())
-    dispatch(setAuth())
-  }
+  // console.log(error?.data)
+
+  useEffect(() => {
+    if (data) {
+      localStorage.setItem('accessToken', data.access)
+      localStorage.setItem('role', data.user.role.toString())
+      dispatch(setAuth())
+    }
+  }, [data])
 
   const navigate = useNavigate()
 
@@ -39,6 +44,9 @@ const Authorization:FC = () => {
 
   return (
     <div>
+      <S.LogoWrapper>
+        <Logo/>
+      </S.LogoWrapper>
       <S.Title>
         <C.H2>Войти</C.H2>
         <div onClick={handleGoToReg}>Зарегистрироваться</div>

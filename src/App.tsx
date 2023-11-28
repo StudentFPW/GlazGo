@@ -14,8 +14,10 @@ import Home from "./components/Home";
 import Layout from "./components/Layout";
 import authApi from "./services/AuthService";
 import { FC, useEffect } from "react";
-import { useAppDispatch } from "./hooks/redux";
+import { useAppDispatch, useAppSelector } from "./hooks/redux";
 import { setAuth } from "./store/redusers/authSlice";
+import { ERoutes } from "./enums/routes";
+import { PrivateRoutes } from "./components/PrivateRoutes";
 
 const App: FC = () => {
   const [checkAuth] = authApi.useCheckAuthMutation()
@@ -28,20 +30,24 @@ const App: FC = () => {
     }
   }, [])
 
+  const isAuth = useAppSelector(state => state.auth.isAuth)
+
   return (
     <Routes>
-      <Route path="/" element={<Layout/>}>
-        <Route index element={<Home/>}/>
-        <Route path="registration" element={<Registration/>}/>
-        <Route path="authorization" element={<Authorization/>}/>
-        <Route path="vacancies" element={<Vacancies/>}/>
-        <Route path="vacancies/:id" element={<Vacancy/>}/>
-        <Route path="zayavka" element={<Zayavka/>}/>
-        <Route path="vacancies/:id/candidates" element={<Candidates/>}/>
-        <Route path="candidates/:id" element={<Candidate/>}/>
-        <Route path="new-candidate" element={<NewCandidate/>}/>
-        <Route path="chat" element={<Chat/>}/>
-        <Route path="vacancy-closed" element={<VacancyClosed/>}/>
+      <Route path={ERoutes.Root} element={<Layout/>}>
+        <Route path={ERoutes.Registration} element={<Registration/>}/>
+        <Route path={ERoutes.Authorization} element={<Authorization/>}/>
+        <Route element={<PrivateRoutes isAuthenticated={isAuth} redirectPath={ERoutes.Authorization} />}>
+          <Route index element={<Home/>}/>
+          <Route path={ERoutes.Vacancies} element={<Vacancies/>}/>
+          <Route path={ERoutes.Vacancy} element={<Vacancy/>}/>
+          <Route path={ERoutes.Zayavka} element={<Zayavka/>}/>
+          <Route path={ERoutes.Candidates} element={<Candidates/>}/>
+          <Route path={ERoutes.Candidate} element={<Candidate/>}/>
+          <Route path={ERoutes.NewCandidate} element={<NewCandidate/>}/>
+          <Route path={ERoutes.Chat} element={<Chat/>}/>
+          <Route path={ERoutes.VacancyClosed} element={<VacancyClosed/>}/>
+        </Route>
         <Route path="*" element={<NotFound />} />
       </Route>
     </Routes>

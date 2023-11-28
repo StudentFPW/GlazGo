@@ -1,6 +1,13 @@
 import { styled } from "styled-components";
 import { input } from "../../styles/components";
 
+export const LogoWrapper = styled.div`
+    text-align: center;
+    svg {
+        width: 171px;
+        height: 40px;
+    }
+`
 export const Title = styled.form`
     display: flex;
     align-items: center;

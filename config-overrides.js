@@ -4,7 +4,13 @@ const { addWebpackModuleRule } = require('customize-cra')
 module.exports = override(
     addWebpackModuleRule({
         test: /\.svg$/i,
+        type: 'asset',
+        resourceQuery: /url/, // *.svg?url
+    }),
+    addWebpackModuleRule({
+        test: /\.svg$/i,
         issuer: /\.[jt]sx?$/,
-        use: [{ loader: '@svgr/webpack', options: { dimensions: false } }],
+        resourceQuery: { not: [/url/] }, // exclude react component if *.svg?url
+        use: [{ loader: '@svgr/webpack', options: { icon: true } }],
     }),
   );

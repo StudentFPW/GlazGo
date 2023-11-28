@@ -1,12 +1,31 @@
-import React from 'react'
+import React, { useState } from 'react'
 import * as C from '../../styles/components'
 import { useNavigate } from 'react-router-dom'
 import Close from '../../images/icons/close.svg'
 import * as S from './NewCandidateStyles'
+import { SubmitHandler, useForm } from 'react-hook-form'
+import { INewCandidate } from '../../modules/ICandidate'
+import vacancyApi from '../../services/VacancyService'
 
 const NewCandidate = () => {
     const navigate = useNavigate()
     const handleGoBack = () => navigate(-1)
+
+    const {data} = vacancyApi.useFetchAllVacanciesQuery()
+    const vacancies = data?.results
+
+
+    const {
+        register,
+        formState: { errors, isValid},
+        handleSubmit
+    } = useForm<INewCandidate>({mode: 'onBlur'})
+
+    const onSubmit: SubmitHandler<INewCandidate> = async (data) => {
+    // await login(data)
+    }
+
+    const [isRef, setIsRef] = useState(false)
 
     return (
         <div>
@@ -16,36 +35,40 @@ const NewCandidate = () => {
                     <C.SvgIconWrapper><Close/></C.SvgIconWrapper>
                 </C.NButton>
             </S.Title>
-            <S.Form>
-                <label htmlFor="">Фамилия</label>
-                <S.Input/>
-                <label htmlFor="">Имя</label>
-                <S.Input/>
-                <label htmlFor="">Отчество</label>
-                <S.Input/>
-                <label htmlFor="">Вакансия</label>
-                <S.Select name="" id="">
+            <S.Form onSubmit={handleSubmit(onSubmit)}>
+                <label htmlFor="surname">Фамилия</label>
+                <S.Input id='surname' {...register('surname')}/>
+                <label htmlFor="name">Имя</label>
+                <S.Input id='name' {...register('name')}/>
+                <label htmlFor="otch">Отчество</label>
+                <S.Input id='otch' {...register('otch')}/>
+                <label htmlFor="vacancy">Вакансия</label>
+                <S.Select id="vacancy" {...register('vacancy')}>
                     <option value="0"></option>
-                    <option value="1">Вакансия 1</option>
-                    <option value="2">Вакансия 2</option>
-                    <option value="3">Вакансия 3</option>
+                    {vacancies && vacancies.map(vacancy => {
+                        return <option key={vacancy.id} value={vacancy.id}>{vacancy.nameVacancy}</option>
+                    })}
                 </S.Select>
-                <label htmlFor="">Телефон</label>
-                <S.Input />
-                <label htmlFor="">Email</label>
-                <S.Input />
-                <label htmlFor="">Источник</label>
-                <S.Input />
-                <S.RefProgramm htmlFor="">
-                    <S.Checkbox type='checkbox'/>
+                <label htmlFor="phone">Телефон</label>
+                <S.Input id='phone' {...register('phone')} />
+                <label htmlFor="email">Email</label>
+                <S.Input id='email' {...register('email')} />
+                <label htmlFor="source">Источник</label>
+                <S.Input id='source' {...register('source')} />
+                <S.RefProgramm htmlFor="referalProgramm">
+                    <S.Checkbox id='referalProgramm' type='checkbox' checked={isRef} onChange={e => setIsRef(e.target.checked)}/>
                     Реферальная программа
                 </S.RefProgramm>
-                <label htmlFor="">Реферер</label>
-                <S.Input />
-                <label htmlFor="">Ссылка на резюме</label>
-                <S.Input />
-                <label htmlFor="">Комментарии</label>
-                <S.Textarea name="" id="" cols={30} rows={8}></S.Textarea>
+                {isRef &&
+                <S.Ref>
+                    <label htmlFor="ref">Реферер</label>
+                    <S.Input id='ref' {...register('ref')} />
+                </S.Ref>
+                }
+                <label htmlFor="resume">Ссылка на резюме</label>
+                <S.Input id='resume' {...register('resume')} />
+                <label htmlFor="comment">Комментарии</label>
+                <S.Textarea  id="comment" cols={30} rows={8}></S.Textarea>
                 <C.FButton>Добавить кандидата</C.FButton>
             </S.Form>
         </div>

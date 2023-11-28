@@ -38,7 +38,7 @@ const MenuBurger: FC = () => {
                 <Header>
                     <Icons>
                         <Btn onClick={handleToggleNav}>
-                            {nav ? <SClose><Close/></SClose> : <Burger/>}
+                            {nav ? <SClose><Close/></SClose> : <SBurger><Burger/></SBurger>}
                         </Btn>
                         <SLogo onClick={handleGoToHome}>
                             <Logo />
@@ -87,6 +87,18 @@ const whiteSvgIcon = css`
 `
 const SClose = styled.div`
     ${whiteSvgIcon}
+    height: 24px;
+    svg {
+        width: 24px;
+        height: 24px;
+    }
+`
+const SBurger = styled.div`
+    height: 24px;
+    svg {
+        width: 24px;
+        height: 24px;
+    }
 `
 const SLogo = styled.div`
     height: 18px;
