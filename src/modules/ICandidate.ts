@@ -1,3 +1,4 @@
+import { IPagination } from "./IPagination"
 import { IUser } from "./IUser"
 import { IVacancy } from "./IVacancy"
 
@@ -20,8 +21,14 @@ export interface ICandidateProm {
     appointmentDate: string
 }
 
+export interface ICandidatesResponseData extends IPagination {
+    results: ICandidateProm[]
+}
+
 export interface INewCandidate extends ICandidate {
     vacancy: number
     source: string
+    birthday: Date
+    comment: string
 }
 

@@ -1,16 +1,42 @@
-import React from 'react'
+import React, { FC, useEffect } from 'react'
 import styled from 'styled-components'
 import ArrowLeft from '../../images/icons/arrow-left.svg'
 import ArrowRight from '../../images/icons/arrow-right.svg'
 import * as C from '../../styles/components'
+import { ICandidatesResponseData } from '../../modules/ICandidate'
+import { IPagination } from '../../modules/IPagination'
+import candidateApi from '../../services/CandidateService'
+import { useAppDispatch } from '../../hooks/redux'
+import { setNext } from '../../store/redusers/paginationSlice'
 
-const Pagination = () => {
+const Pagination: FC<IPagination> = ({count, next, previous}) => {
+    // let url = ''
+    // // let data
+
+    // if (next) {
+    //     return url = next.slice(next.indexOf('?'))
+    // }
+
+    // const handleNextPage = () => {
+    //     if (next.includes('api-c-p')) {
+    //         const {data} = candidateApi.useFetchLimitCandidatesQuery(url)
+    //     }
+    // }
+
+    const dispatch = useAppDispatch()
+    const handleQuery = () => {
+        dispatch(setNext())
+    }
+    // useEffect(() => {
+    //     handleQuery()
+    //   }, [])
+
     return (
         <PContainer>
-            <p>1 - 7 из 50 страниц</p>
+            <p>{count > 10 ? 10 : count} из {count}</p>
             <Arrows>
                 <C.NButton><ArrowLeft/></C.NButton>
-                <C.NButton><ArrowRight /></C.NButton>
+                <C.NButton onClick={handleQuery}><ArrowRight/></C.NButton>
             </Arrows>
         </PContainer>
     )

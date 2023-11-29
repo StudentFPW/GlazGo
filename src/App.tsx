@@ -18,6 +18,7 @@ import { useAppDispatch, useAppSelector } from "./hooks/redux";
 import { setAuth } from "./store/redusers/authSlice";
 import { ERoutes } from "./enums/routes";
 import { PrivateRoutes } from "./components/PrivateRoutes";
+import CandidatesAll from "./components/candidates/CandidatesAll";
 
 const App: FC = () => {
   const [checkAuth] = authApi.useCheckAuthMutation()
@@ -25,7 +26,7 @@ const App: FC = () => {
 
   useEffect(() => {
     if (localStorage.getItem('accessToken')) {
-      checkAuth({})
+      // checkAuth({})
       dispatch(setAuth())
     }
   }, [])
@@ -37,11 +38,12 @@ const App: FC = () => {
       <Route path={ERoutes.Root} element={<Layout/>}>
         <Route path={ERoutes.Registration} element={<Registration/>}/>
         <Route path={ERoutes.Authorization} element={<Authorization/>}/>
-        <Route element={<PrivateRoutes isAuthenticated={isAuth} redirectPath={ERoutes.Authorization} />}>
+        <Route element={<PrivateRoutes isAuthenticated={true} redirectPath={ERoutes.Authorization} />}>
           <Route index element={<Home/>}/>
           <Route path={ERoutes.Vacancies} element={<Vacancies/>}/>
           <Route path={ERoutes.Vacancy} element={<Vacancy/>}/>
           <Route path={ERoutes.Zayavka} element={<Zayavka/>}/>
+          <Route path={ERoutes.CandidatesAll} element={<CandidatesAll/>}/>
           <Route path={ERoutes.Candidates} element={<Candidates/>}/>
           <Route path={ERoutes.Candidate} element={<Candidate/>}/>
           <Route path={ERoutes.NewCandidate} element={<NewCandidate/>}/>

@@ -44,6 +44,8 @@ const NewCandidate = () => {
                 <S.Input id='name' {...register('name')}/>
                 <label htmlFor="otch">Отчество</label>
                 <S.Input id='otch' {...register('otch')}/>
+                <label htmlFor="birthday">др</label>
+                <S.Input type='date' id='birthday' {...register('birthday')}/>
                 <label htmlFor="vacancy">Вакансия</label>
                 <S.Select id="vacancy" {...register('vacancy')}>
                     <option value="0"></option>
@@ -53,10 +55,10 @@ const NewCandidate = () => {
                 </S.Select>
                 <label htmlFor="phone">Телефон</label>
                 <S.Input id='phone' {...register('phone')} />
-                <label htmlFor="email">Email</label>
+                {/* <label htmlFor="email">Email</label>
                 <S.Input id='email' {...register('email')} />
                 <label htmlFor="source">Источник</label>
-                <S.Input id='source' {...register('source')} />
+                <S.Input id='source' {...register('source')} /> */}
                 <S.RefProgramm htmlFor="referalProgramm">
                     <S.Checkbox id='referalProgramm' type='checkbox' checked={isRef} onChange={e => setIsRef(e.target.checked)}/>
                     Реферальная программа
@@ -70,7 +72,7 @@ const NewCandidate = () => {
                 <label htmlFor="resume">Ссылка на резюме</label>
                 <S.Input id='resume' {...register('resume')} />
                 <label htmlFor="comment">Комментарии</label>
-                <S.Textarea  id="comment" cols={30} rows={8}></S.Textarea>
+                <S.Textarea  id="comment" {...register('comment')} cols={30} rows={8}></S.Textarea>
                 <C.FButton>Добавить кандидата</C.FButton>
             </S.Form>
         </div>

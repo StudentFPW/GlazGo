@@ -1,3 +1,4 @@
+import { IPagination } from "./IPagination"
 import { IUser } from "./IUser"
 
 export interface IVacancy {
@@ -6,6 +7,7 @@ export interface IVacancy {
     region: string
     salary: number
     id: number
+    dateCust: string
     customer: IUser
     recruter: IUser
 }
@@ -17,4 +19,8 @@ export interface IVacancyChangeQueryData extends IVacancy {
     link: string
     candidate: number
     statusVacancy: number
+}
+
+export interface IVacancyResponseData extends IPagination {
+    results: IVacancy[]
 }

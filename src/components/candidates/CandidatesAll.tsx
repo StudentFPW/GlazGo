@@ -1,20 +1,20 @@
-import React from 'react'
+import React, { FC } from 'react'
 import Options from '../vacancies/Options'
 import Pagination from '../vacancies/Pagination'
 import * as C from '../../styles/components'
 import CTable from './table/CTable'
 import Close from '../../images/icons/close.svg'
-import { useNavigate, useParams } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { styled } from 'styled-components'
 import candidateApi from '../../services/CandidateService'
+import { IPagination } from '../../modules/IPagination'
 
-const Candidates = () => {
+const CandidatesAll: FC = () => {
   const navigate = useNavigate()
   const handleGoToCandidates = () => {
     navigate(-1)
   }
-  const {id} = useParams()
-  const {data} = candidateApi.useFetchVacancyCandidatesQuery({limit: 10, id: id ? id : ''})
+  const {data} = candidateApi.useFetchAllCandidatesQuery()
 
   return (
     <div>
@@ -31,7 +31,7 @@ const Candidates = () => {
   )
 }
 
-export default Candidates
+export default CandidatesAll
 
 const Title = styled.div`
   display: flex;

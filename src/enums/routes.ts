@@ -8,7 +8,8 @@ export enum ERoutes {
     Vacancy = "vacancies/:id",
     Candidates = "vacancies/:id/candidates",
     Candidate = "candidates/:id",
+    CandidatesAll = "candidates",
     NewCandidate = "new-candidate",
-    VacancyClosed = "vacancy-closed",
+    VacancyClosed = "vacancy-closed/:id",
     Chat = "chat",
 }

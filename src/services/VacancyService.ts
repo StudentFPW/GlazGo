@@ -1,10 +1,7 @@
-import { IVacancy } from '../modules/IVacancy'
+import { IVacancy, IVacancyResponseData } from '../modules/IVacancy'
 import camelcaseKeys from 'camelcase-keys'
 import baseApi from './BaseApi'
-
-export interface IVacancyResponseData {
-    results: IVacancy[]
-}
+import decamelizeKeys from 'decamelize-keys'
 
 const vacancyApi = baseApi.injectEndpoints({
     endpoints: (build) => ({
@@ -28,6 +25,13 @@ const vacancyApi = baseApi.injectEndpoints({
                 url: `/api-vac/${id}/`,
             }),
             transformResponse: (response: any): IVacancy => camelcaseKeys(response, { deep: true })
+        }),
+        createVacancy: build.mutation<IVacancy, IVacancy>({
+            query: (vacancy) => ({
+                url: `/api-vac/`,
+                method: 'POST',
+                body: JSON.stringify(decamelizeKeys(vacancy))
+            })
         })
     })
 })

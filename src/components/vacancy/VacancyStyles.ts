@@ -42,6 +42,12 @@ export const Select = styled.select`
 export const Input = styled.input`
     ${inputS}
 `
+export const FormButtons = styled.div`
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    column-gap: 20px;
+`
 export const Buttons = styled.div`
     display: flex;
     flex-direction: column;

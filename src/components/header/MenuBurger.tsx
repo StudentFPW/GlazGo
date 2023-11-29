@@ -8,6 +8,7 @@ import * as C from '../../styles/components'
 import { useAppDispatch, useAppSelector } from '../../hooks/redux'
 import authApi from '../../services/AuthService'
 import { logout } from '../../store/redusers/authSlice'
+import { ERoutes } from '../../enums/routes'
 
 const MenuBurger: FC = () => {
     const [nav, setNav] = useState(false)
@@ -20,7 +21,7 @@ const MenuBurger: FC = () => {
     const [logoutUser] = authApi.useLogoutMutation()
     // const {} = authApi.useLogoutQuery({})
     const handleLogOut = async () => {
-        await logoutUser({})
+        // await logoutUser({})
         dispatch(logout())
     }
 
@@ -51,9 +52,9 @@ const MenuBurger: FC = () => {
                         <C.Container>
                             <nav>
                                 <ul>
-                                    <li><NavLink to="/vacancies" onClick={handleToggleNav}>Вакансии</NavLink></li>
-                                    <li><NavLink to="/vacancy-closed" onClick={handleToggleNav}>Вакансия закрыта</NavLink></li>
-                                    <li><NavLink to="/chat" onClick={handleToggleNav}>Чат</NavLink></li>
+                                    <li><NavLink to={ERoutes.Vacancies} onClick={handleToggleNav}>Вакансии</NavLink></li>
+                                    <li><NavLink to={ERoutes.CandidatesAll} onClick={handleToggleNav}>Кандидаты</NavLink></li>
+                                    <li>Чат</li>
                                 </ul>
                             </nav>
                         </C.Container>

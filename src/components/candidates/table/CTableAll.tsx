@@ -1,14 +1,31 @@
-import React, { FC } from 'react'
+import React, { FC, useEffect } from 'react'
 import TableHeader from './CTableHeader'
 import { styled } from 'styled-components'
 import TableRow from './CTableRow'
 import candidateApi from '../../../services/CandidateService'
 import { useParams } from 'react-router-dom'
+import { useAppSelector } from '../../../hooks/redux'
 
-const CTable: FC = () => {
-    const {id} = useParams()
-    const {data} = candidateApi.useFetchVacancyCandidatesQuery({limit: 10, id: id ? id : ''})
+const CTableAll: FC = () => {
+    const {data} = candidateApi.useFetchAllCandidatesQuery()
     const candidates = data?.results
+    console.log(candidates)
+    const url = data?.next.slice(data?.next.indexOf('?'))
+    console.log(url)
+    const isNext = useAppSelector(state => state.pagination.isNext)
+    useEffect(() => {
+        if (isNext) {
+            const {data: datas} = candidateApi.useFetchLimitCandidatesQuery(url ? url : '')
+            console.log(datas)
+            console.log('datas')
+        }
+    }, [isNext])
+    // if (isNext) {
+    //     const {data: datas} = candidateApi.useFetchLimitCandidatesQuery(url ? url : '')
+    //     console.log(datas)
+    //     console.log('datas')
+    // }
+
 
     return (
         <TableContainer>
@@ -23,7 +40,7 @@ const CTable: FC = () => {
   )
 }
 
-export default CTable
+export default CTableAll
 
 const TableContainer = styled.div`
     max-width: 100%;
