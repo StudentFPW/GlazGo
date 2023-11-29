@@ -1,9 +1,10 @@
+import random
+
 from rest_framework import serializers
 
 from .models import *
 from users.models import User
 from users.serializers import UserDetailsSerializer
-import random
 
 
 class RFOSerializer(serializers.ModelSerializer):

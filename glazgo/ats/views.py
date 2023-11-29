@@ -1,8 +1,8 @@
 from rest_framework import viewsets, filters
 from rest_framework_rules.mixins import PermissionRequiredMixin
-from django_filters.rest_framework import DjangoFilterBackend
-
 from rest_framework import viewsets, filters
+
+from django_filters.rest_framework import DjangoFilterBackend
 
 from .models import *
 from .serializer import *
