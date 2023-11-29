@@ -40,23 +40,27 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    "django.contrib.sites",
+    # Авторизация ↓
     "rest_framework",
     "rest_framework.authtoken",
-    "rest_framework_simplejwt",
-    "rest_framework_simplejwt.token_blacklist",
-    "drf_yasg",
-    "django_filters",
-    "channels",
-    "corsheaders",
     "dj_rest_auth",
+    "django.contrib.sites",
     "allauth",
     "allauth.account",
     "allauth.socialaccount",
     "dj_rest_auth.registration",
+    "rest_framework_simplejwt",
+    # Другие необходимые инструменты ↓
+    "drf_yasg",
+    "django_filters",
+    "channels",
+    "corsheaders",
+    "import_export",
+    # Приложения ↓
     "ats",
     "users",
     "chat",
+    "referral_system",
 ]
 
 MIDDLEWARE = [
@@ -113,7 +117,6 @@ DATABASES = {
 #     }
 # }
 
-
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
 
@@ -132,7 +135,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/4.2/topics/i18n/
 
@@ -147,7 +149,10 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
-STATIC_URL = "static/"
+STATIC_URL = "/static/"
+MEDIA_ROOT = "/media/"
+MEDIA_ROOT = os.path.join(BASE_DIR, "media")
+STATICFILES_DIR = os.path.join(BASE_DIR, "static")
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
@@ -156,25 +161,45 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 ASGI_APPLICATION = "glazgo.asgi.application"
 
+# Настройки авторизации Начало ↓
+
 ACCOUNT_UNIQUE_EMAIL = True
+
 ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_USERNAME_REQUIRED = True
+
 ACCOUNT_AUTHENTICATION_METHOD = "username"
 ACCOUNT_EMAIL_VERIFICATION = "none"
+
+ACCOUNT_USERNAME_MIN_LENGTH = 7
+ACCOUNT_USERNAME_BLACKLIST = ["admin", "root", "service", "glazgo"]
+ACCOUNT_SIGNUP_PASSWORD_ENTER_TWICE = True
+
+LOGIN_REDIRECT_URL = "/"
+ACCOUNT_LOGOUT_REDIRECT_URL = "/"
+ACCOUNT_SIGNUP_REDIRECT_URL = "/"
 ACCOUNT_LOGOUT_ON_PASSWORD_CHANGE = True
+
+# Настройки авторизации Конец ↑
 
 SITE_ID = 1
 
-CORS_ALLOW_ALL_ORIGINS = True  # Режим продукции
+if DEBUG:
+    CORS_ALLOW_ALL_ORIGINS = True
+else:
+    CORS_ALLOWED_ORIGINS = [  # Режим продукции
+        # Необходимо будет донастроить !!!
+        "http://localhost:3000/",
+        "http://127.0.0.1:3000/",
+    ]
 
 REST_FRAMEWORK = {
     "DEFAULT_PERMISSION_CLASSES": [
-        # "rest_framework.permissions.AllowAny",
-        "rest_framework.permissions.IsAuthenticated",  # Режим продукции
+        # "rest_framework.permissions.IsAuthenticated",  # Режим продукции
+        "rest_framework.permissions.AllowAny",
     ],
     "DEFAULT_AUTHENTICATION_CLASSES": [
         "dj_rest_auth.jwt_auth.JWTCookieAuthentication",
-        "rest_framework_simplejwt.authentication.JWTAuthentication",
     ],
     "DEFAULT_PAGINATION_CLASS": "rest_framework.pagination.LimitOffsetPagination",
     "PAGE_SIZE": 10,
@@ -182,15 +207,14 @@ REST_FRAMEWORK = {
 
 REST_AUTH = {
     "USE_JWT": True,
-    "JWT_AUTH_COOKIE": "jwt-auth",
-    "JWT_AUTH_REFRESH_COOKIE": "jwt-refresh-token",
+    "JWT_AUTH_COOKIE": "JWT-AUTH-COOKIE",
+    "JWT_AUTH_REFRESH_COOKIE": "JWT-AUTH-REFRESH-COOKIE",
+    "JWT_AUTH_HTTPONLY": False,
     "OLD_PASSWORD_FIELD_ENABLED": True,
     "LOGOUT_ON_PASSWORD_CHANGE": True,
     "REGISTER_SERIALIZER": "users.serializers.CustomRegisterSerializer",
     "USER_DETAILS_SERIALIZER": "users.serializers.UserDetailsSerializer",
 }
-
-ACCOUNT_ADAPTER = "users.adapter.CustomAccountAdapter"
 
 AUTHENTICATION_BACKENDS = [
     "django.contrib.auth.backends.ModelBackend",
@@ -213,35 +237,13 @@ CHANNEL_LAYERS = {
 }
 
 SIMPLE_JWT = {
-    "ACCESS_TOKEN_LIFETIME": timedelta(minutes=180),
-    "REFRESH_TOKEN_LIFETIME": timedelta(days=50),
-    "ROTATE_REFRESH_TOKENS": True,
-    "BLACKLIST_AFTER_ROTATION": True,
-    "UPDATE_LAST_LOGIN": False,
-    "ALGORITHM": "HS256",
-    "VERIFYING_KEY": None,
-    "AUDIENCE": None,
-    "ISSUER": None,
-    "JWK_URL": None,
-    "LEEWAY": 0,
-    "AUTH_HEADER_TYPES": ("Bearer",),
-    "AUTH_HEADER_NAME": "HTTP_AUTHORIZATION",
-    "USER_ID_FIELD": "id",
-    "USER_ID_CLAIM": "user_id",
-    "USER_AUTHENTICATION_RULE": "rest_framework_simplejwt.authentication.default_user_authentication_rule",
-    "AUTH_TOKEN_CLASSES": ("rest_framework_simplejwt.tokens.AccessToken",),
-    "TOKEN_TYPE_CLAIM": "token_type",
-    "TOKEN_USER_CLASS": "rest_framework_simplejwt.models.TokenUser",
-    "JTI_CLAIM": "jti",
-    "SLIDING_TOKEN_REFRESH_EXP_CLAIM": "refresh_exp",
-    "SLIDING_TOKEN_LIFETIME": timedelta(minutes=5),
-    "SLIDING_TOKEN_REFRESH_LIFETIME": timedelta(days=1),
-    "TOKEN_OBTAIN_SERIALIZER": "rest_framework_simplejwt.serializers.TokenObtainPairSerializer",
-    "TOKEN_REFRESH_SERIALIZER": "rest_framework_simplejwt.serializers.TokenRefreshSerializer",
-    "TOKEN_VERIFY_SERIALIZER": "rest_framework_simplejwt.serializers.TokenVerifySerializer",
-    "TOKEN_BLACKLIST_SERIALIZER": "rest_framework_simplejwt.serializers.TokenBlacklistSerializer",
-    "SLIDING_TOKEN_OBTAIN_SERIALIZER": "rest_framework_simplejwt.serializers.TokenObtainSlidingSerializer",
-    "SLIDING_TOKEN_REFRESH_SERIALIZER": "rest_framework_simplejwt.serializers.TokenRefreshSlidingSerializer",
+    "ACCESS_TOKEN_LIFETIME": timedelta(minutes=60),
+    "REFRESH_TOKEN_LIFETIME": timedelta(days=7),
+    "ROTATE_REFRESH_TOKENS": False,
+    "BLACKLIST_AFTER_ROTATION": False,
+    "UPDATE_LAST_LOGIN": True,
+    "SIGNING_KEY": "complexsigningkey",  # generate a key and replace me
+    "ALGORITHM": "HS512",
 }
 
 ################################################################

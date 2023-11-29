@@ -16,27 +16,31 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-
-from rest_framework_simplejwt.views import (
-    TokenObtainPairView,
-    TokenRefreshView,
-    TokenVerifyView,
-    TokenBlacklistView,
-)
+from django.conf import settings
+from django.conf.urls.static import static
 
 from rest_framework import routers, permissions
 from drf_yasg.views import get_schema_view
 from drf_yasg import openapi
 
 from ats.views import *
+from referral_system.views import *
+from users.views import *
 
 router = routers.DefaultRouter()
-router.register(r"cph", CPHistoryViewSet)
-router.register(r"resp", ResponsibilitiesViewSet)
-router.register(r"req", RequirementsViewSet)
-router.register(r"vac", VacancyViewSet)
-router.register(r"cand", CandidateViewSet)
-router.register(r"c-p", CPromotionViewSet)
+router.register(r"cph", CPHistoryViewSet, basename="CPH")
+router.register(r"vac", VacancyViewSet, basename="V")
+router.register(r"cand", CandidateViewSet, basename="C")
+router.register(r"c-p", CPromotionViewSet, basename="CP")
+router.register(r"ref", RRViewSet, basename="RR")
+router.register(r"refl", RCViewSet, basename="RC")
+router.register(r"ud", UserDetailsViewSet, basename="UD")
+router.register(r"cb", CandidateBaseViewSet, basename="CB")
+router.register(r"re", RegionViewSet, basename="R")
+router.register(r"wt", WorkTimeViewSet, basename="WT")
+router.register(r"rfo", RFOViewSet, basename="RFO")
+
+# Этот функционал не используется или не работает!!!
 # router.register(r"mes", MessageViewSet)
 # router.register(r"w-cand", WaitingCandidateViewSet)
 
@@ -56,14 +60,8 @@ schema_view = get_schema_view(
 urlpatterns = [
     path("api-", include(router.urls)),
     path("secret-k6F8-admin-73rbHG/", admin.site.urls),
-    path("auth/", include("dj_rest_auth.urls")),
-    path("auth/reg/", include("dj_rest_auth.registration.urls")),
-    path("api/token/", TokenObtainPairView.as_view(), name="token_obtain_pair"),
-    path("api/token/refresh/", TokenRefreshView.as_view(), name="token_refresh"),
-    path("api/token/verify/", TokenVerifyView.as_view(), name="token_verify"),
-    path("api/token/blacklist/", TokenBlacklistView.as_view(), name="token_blacklist"),
     path("chat/", include("chat.urls")),
-    path("users/", include("users.urls")),
+    path("user/", include("users.urls")),
     path("swag<format>/", schema_view.without_ui(cache_timeout=0), name="schema-json"),
     path("redoc/", schema_view.with_ui("redoc", cache_timeout=0), name="schema-redoc"),
     path(
@@ -71,4 +69,4 @@ urlpatterns = [
         schema_view.with_ui("swagger", cache_timeout=0),
         name="schema-swagger-ui",
     ),
-]
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -1,8 +1,14 @@
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
+from rest_framework import viewsets
 
-from .serializers import ULUSerializer
+from .serializers import ULUSerializer, UserDetailsSerializer
 from .models import User
+
+
+class UserDetailsViewSet(viewsets.ModelViewSet):
+    serializer_class = UserDetailsSerializer
+    queryset = User.objects.all()
 
 
 @api_view(["GET"])

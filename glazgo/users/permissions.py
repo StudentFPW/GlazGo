@@ -2,6 +2,11 @@ from rest_framework import permissions
 
 
 class UserRecruiter(permissions.BasePermission):
+    """
+    Класс UserRecruiter — это класс разрешений в Python, который проверяет, есть ли у пользователя
+    необходимые разрешения для доступа к объекту на основе его роли или членства в группе.
+    """
+
     # Разрешены все методы, кроме тех, которые определили в edit_methods.
     # edit_methods = ("PUT", "PATCH")
 
@@ -42,8 +47,7 @@ class UserCustomerAdmin(permissions.BasePermission):
     pass
 
 
-# IMPORT THIS TO USE PERMISSIONS !
-
+# Пожалуйста не удаляйте !!!
 # from .permissions UserRecruiter, UserCustomer, UserRecruiterAdmin, UserRecruiterAdmin
 # permission_classes = [IsAuthenticated, UserRecruiter]  # FOR EXAMPLE
 # permission_classes = [IsStaff, UserCustomer]  # FOR EXAMPLE

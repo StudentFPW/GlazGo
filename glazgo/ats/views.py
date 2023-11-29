@@ -1,18 +1,60 @@
 from datetime import timedelta
 
 from django.utils.timezone import now
-from rest_framework import viewsets, filters
-from rest_framework_rules.mixins import PermissionRequiredMixin
 from django_filters.rest_framework import DjangoFilterBackend
+
+from rest_framework import viewsets, filters
 
 from .models import *
 from .serializer import *
+from users.permissions import UserRecruiter
 
-# from users.permissions import UserRecruiter
+
+class RFOViewSet(viewsets.ModelViewSet):
+    serializer_class = RFOSerializer
+    queryset = ReasonForOpening.objects.all()
+    filter_backends = [DjangoFilterBackend, filters.OrderingFilter]
+    ordering_fields = "__all__"
+    filterset_fields = [
+        "id",
+        "text",
+    ]
 
 
-class CPHistoryViewSet(PermissionRequiredMixin, viewsets.ModelViewSet):
-    # permission_classes = [UserRecruiter]
+class WorkTimeViewSet(viewsets.ModelViewSet):
+    serializer_class = WorkTimeSerializer
+    queryset = WorkTime.objects.all()
+    filter_backends = [DjangoFilterBackend, filters.OrderingFilter]
+    ordering_fields = "__all__"
+    filterset_fields = [
+        "id",
+        "time",
+    ]
+
+
+class RegionViewSet(viewsets.ModelViewSet):
+    serializer_class = RegionSerializer
+    queryset = Region.objects.all()
+    filter_backends = [DjangoFilterBackend, filters.OrderingFilter]
+    ordering_fields = "__all__"
+    filterset_fields = [
+        "id",
+        "name",
+    ]
+
+
+class CandidateBaseViewSet(viewsets.ModelViewSet):
+    serializer_class = CandidateBaseSerializer
+    queryset = CandidateBase.objects.all()
+    filter_backends = [DjangoFilterBackend, filters.OrderingFilter]
+    ordering_fields = "__all__"
+    filterset_fields = [
+        "id",
+        "datetime",
+    ]
+
+
+class CPHistoryViewSet(viewsets.ModelViewSet):
     serializer_class = CPHistorySerializer
     queryset = CPHistory.objects.all()
     filter_backends = [DjangoFilterBackend, filters.OrderingFilter]
@@ -25,16 +67,6 @@ class CPHistoryViewSet(PermissionRequiredMixin, viewsets.ModelViewSet):
         "status",
         "datetime",
     ]
-
-
-class ResponsibilitiesViewSet(viewsets.ModelViewSet):
-    serializer_class = ResponsibilitiesSerializer
-    queryset = Responsibilities.objects.all()
-
-
-class RequirementsViewSet(viewsets.ModelViewSet):
-    serializer_class = RequirementsSerializer
-    queryset = Requirements.objects.all()
 
 
 class VacancyViewSet(viewsets.ModelViewSet):
@@ -65,6 +97,7 @@ class CandidateViewSet(viewsets.ModelViewSet):
 
 
 class CPromotionViewSet(viewsets.ModelViewSet):
+    permission_classes = [UserRecruiter]
     serializer_class = CPromotionSerializer
     queryset = CandidatePromotion.objects.all()
     filter_backends = [DjangoFilterBackend, filters.OrderingFilter]
@@ -79,11 +112,11 @@ class CPromotionViewSet(viewsets.ModelViewSet):
     ]
 
 
-def get_message(user):
-    """
-    функция получения кверисета непрочтенных сообщений адресованных текущему пользователю
-    """
-    return Message.objects.filter(user_id__username=user, viewed=False)
+# def get_message(user):
+#     """
+#     функция получения кверисета непрочтенных сообщений адресованных текущему пользователю
+#     """
+#     return Message.objects.filter(user_id__username=user, viewed=False)
 
 
 # class MessageViewSet(viewsets.ModelViewSet):

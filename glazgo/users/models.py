@@ -10,14 +10,16 @@ class User(AbstractUser):
         (3, "Заказчик"),
         (4, "Заказчик-администратор"),
     ]
-
+    # Необходимые поля
+    referral_token = models.CharField(max_length=255)
     role = models.IntegerField("Права", choices=ROLES, default=1)
     first_name = models.CharField("Имя", max_length=30)
     last_name = models.CharField("Фамилия", max_length=150)
+    phone = models.CharField("Телефон", max_length=15)
     email = models.EmailField("Электронная Почта")
 
+    # Опционально
     birthday = models.DateField("Дата рождения", null=True)
-    phone = models.CharField("Телефон", max_length=15)
     bio = models.CharField("Биография", max_length=255, null=True)
     cover_photo = models.ImageField(upload_to="covers/", null=True)
     company_name = models.CharField("Название организации", max_length=30, null=True)

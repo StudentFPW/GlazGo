@@ -1,14 +1,60 @@
 import pywhatkit
+import pandas as pd
 
 from datetime import datetime
 
 from django.db.models.signals import post_save
 from django.dispatch import receiver
-from dotenv import load_dotenv
 
-from .models import Message, CandidatePromotion, CPHistory, CallCandidate
+from rest_framework.response import Response
+from rest_framework import status
+from tablib import Dataset
 
-load_dotenv()
+from .models import *
+
+
+@receiver(post_save, sender=Candidate)
+def post_save_candidate(instance, **kwargs):
+    # Например у нас уже есть созданная вакансия.
+
+    # И когда кто либо заносит информацию о кандидате в модель Candidate,
+    # нам необходимо также добавить новый объект в CandidatePromotion.
+
+    # Чтобы в дальнейшем было понятно какой у него статус,
+    # к какой вакансии он относится, кто является ответственным по рекрутингу этого кандидата...
+
+    # Определить все эти поля возможно будет из модели проджект.
+
+    # Также сюда же нужно будет добавить новый объект в историю CPHISTORY
+    pass
+
+
+@receiver(post_save, sender=CandidateBase)
+def post_save_candidate_base(instance, **kwargs):
+    file = instance.file
+    df = pd.read_excel(file)
+
+    rename_columns = {
+        "Фамилия": "surname",
+        "Имя": "name",
+        "Емайл": "email",
+        "Телефон": "phone",
+        "Ресурс": "source",
+        "Отчество": "otch",
+        "День рождения": "birthday",
+        "Транспорт": "auto",
+    }
+    df.rename(columns=rename_columns, inplace=True)
+    candidate_resource = CandidateResource()
+    dataset = Dataset().load(df)
+    result = candidate_resource.import_data(dataset, dry_run=True, raise_errors=True)
+    if not result.has_errors():
+        result = candidate_resource.import_data(dataset, dry_run=False)
+        return Response({"status": "Candidate Data Imported Successfully"})
+    return Response(
+        {"status": "Not Imported Candidate Data"},
+        status=status.HTTP_400_BAD_REQUEST,
+    )
 
 
 @receiver(post_save, sender=CandidatePromotion)
