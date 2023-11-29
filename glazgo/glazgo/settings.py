@@ -170,6 +170,7 @@ ACCOUNT_USERNAME_REQUIRED = True
 
 ACCOUNT_AUTHENTICATION_METHOD = "username"
 ACCOUNT_EMAIL_VERIFICATION = "none"
+ACCOUNT_LOGOUT_ON_PASSWORD_CHANGE = True
 
 ACCOUNT_USERNAME_MIN_LENGTH = 7
 ACCOUNT_USERNAME_BLACKLIST = ["admin", "root", "service", "glazgo"]
@@ -195,8 +196,8 @@ else:
 
 REST_FRAMEWORK = {
     "DEFAULT_PERMISSION_CLASSES": [
-        # "rest_framework.permissions.IsAuthenticated",  # Режим продукции
-        "rest_framework.permissions.AllowAny",
+        "rest_framework.permissions.IsAuthenticated",  # Режим продукции
+        # "rest_framework.permissions.AllowAny",
     ],
     "DEFAULT_AUTHENTICATION_CLASSES": [
         "dj_rest_auth.jwt_auth.JWTCookieAuthentication",

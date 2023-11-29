@@ -78,6 +78,6 @@ def post_save_candidate_promotion(instance, **kwargs):
 def post_save_send_messange(instance, **kwargs):
     if instance.result == False:
         recipient = instance.candidat_id
-        sender = instance.candidat_id.user_id
+        sender = instance.vacancy_id.recruter
         text = f"Добрый день, {recipient.name} {recipient.surname}! Меня зовут {sender.name} {sender.surname}, не могу дозвониться до Вас, так как вы являетесь кандидатом на вакансию."
         pywhatkit.sendwhatmsg_instantly(phone_no=recipient.phone, message=text)

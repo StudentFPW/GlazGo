@@ -34,15 +34,12 @@ router.register(r"cand", CandidateViewSet, basename="C")
 router.register(r"c-p", CPromotionViewSet, basename="CP")
 router.register(r"ref", RRViewSet, basename="RR")
 router.register(r"refl", RCViewSet, basename="RC")
-router.register(r"ud", UserDetailsViewSet, basename="UD")
+router.register(r"ud", UserViewSet, basename="UD")
 router.register(r"cb", CandidateBaseViewSet, basename="CB")
 router.register(r"re", RegionViewSet, basename="R")
 router.register(r"wt", WorkTimeViewSet, basename="WT")
 router.register(r"rfo", RFOViewSet, basename="RFO")
-
-# Этот функционал не используется или не работает!!!
-# router.register(r"mes", MessageViewSet)
-# router.register(r"w-cand", WaitingCandidateViewSet)
+router.register(r"new-cand", CandidateAddedViewSet)
 
 schema_view = get_schema_view(
     openapi.Info(

@@ -75,6 +75,7 @@ class Vacancy(models.Model):
         (4, "Удаленно"),
     ]
 
+    # Необходимые поля
     recruter = models.ForeignKey(
         settings.AUTH_USER_MODEL, on_delete=models.PROTECT, related_name="recruters"
     )
@@ -88,8 +89,6 @@ class Vacancy(models.Model):
         ReasonForOpening, on_delete=models.CASCADE, related_name="reason"
     )
     region = models.ForeignKey(Region, on_delete=models.CASCADE, related_name="region")
-
-    # Необходимые поля
     name_vacancy = models.CharField("Название вакансии", max_length=250)
 
     # Необязательные поля
@@ -187,7 +186,8 @@ class CandidatePromotion(models.Model):
 
     appointment_date = models.DateField("Назначенная дата", null=True)
     event = models.BooleanField("Состоялось событие", default=False)
-    comment = models.TextField("Коментарий", null=True)
+    comment = models.TextField("Коментарий")
+    agreed = models.BooleanField("Одобрен", default=False)
 
     def __str__(self):
         return f"Кандидат: {self.candidat_id.surname}, Вакансия: {self.vacancy_id.name_vacancy}, Рекрутер: {self.recruter_id.last_name}, Статус: {self.status_change}, Дата: {self.status_change_date}"
