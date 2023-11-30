@@ -19,9 +19,8 @@ const MenuBurger: FC = () => {
     const isAuth = useAppSelector(state => state.auth.isAuth)
     const dispatch = useAppDispatch()
     const [logoutUser] = authApi.useLogoutMutation()
-    // const {} = authApi.useLogoutQuery({})
     const handleLogOut = async () => {
-        // await logoutUser({})
+        await logoutUser({})
         dispatch(logout())
     }
 

@@ -2,19 +2,20 @@ import { IAuthData } from '../modules/IAuth'
 import { IRegQueryData, IRegResponseData } from '../modules/IReg'
 import decamelizeKeys from 'decamelize-keys'
 import baseApi from './BaseApi'
+import { IToken } from '../modules/IToken'
 
 const authApi = baseApi.injectEndpoints({
     endpoints: (build) => ({
         registration: build.mutation<IRegResponseData, IRegQueryData>({
             query: (regData) => ({
-                url: '/auth/reg/',
+                url: '/user/reg/',
                 method: 'POST',
                 body: JSON.stringify(decamelizeKeys(regData))
             })
         }),
         login: build.mutation<IRegResponseData, IAuthData>({
             query: (authData) => ({
-                url: '/auth/login/',
+                url: '/user/login/',
                 method: 'POST',
                 body: JSON.stringify(authData)
             }),
@@ -22,18 +23,26 @@ const authApi = baseApi.injectEndpoints({
         }),
         logout: build.mutation({
             query: () => ({
-                url: '/auth/logout/',
+                url: '/user/logout/',
                 method: 'POST',
-                credentials: 'include'
+                // credentials: 'include'
             })
         }),
-        checkAuth: build.mutation({
-            query: () => ({
-                url: '/auth/token/refresh/',
+        verify: build.mutation<IToken, IToken>({
+            query: (token) => ({
+                url: '/user/token/verify/',
                 method: 'POST',
-                credentials: 'include'
+                body: JSON.stringify(decamelizeKeys(token))
+                // credentials: 'include'
             })
-        })
+        }),
+        // checkAuth: build.mutation({
+        //     query: () => ({
+        //         url: '/user/token/refresh/',
+        //         method: 'POST',
+        //         credentials: 'include'
+        //     })
+        // })
     })
 })
 

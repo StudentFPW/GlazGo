@@ -73,9 +73,17 @@ const Registration:FC = () => {
         <S.Input id='username' {...register('username', {required: 'Поле обязательно к заполнению'})}/>
         {errors?.username && <p>{errors?.username?.message}</p>}
 
-        <S.Label htmlFor="password">Придумайте пароль</S.Label>
-        <S.Input id='password' type="password" {...register('password', {required: 'Поле обязательно к заполнению'})} />
-        {(errors?.password || error) && <p>{errors?.password?.message || 'Ошибка от апи'}</p>}
+        <S.Label htmlFor="password1">Придумайте пароль</S.Label>
+        <S.Input id='password1' type="password" {...register('password1', {required: 'Поле обязательно к заполнению'})} />
+        {(errors?.password1 || error) && <p>{errors?.password1?.message || 'Ошибка от апи'}</p>}
+
+        <S.Label htmlFor="password2">Повторите пароль</S.Label>
+        <S.Input id='password2' type="password" {...register('password2', {required: 'Поле обязательно к заполнению'})} />
+        {(errors?.password2 || error) && <p>{errors?.password2?.message || 'Ошибка от апи'}</p>}
+
+        <S.Label htmlFor="referralToken">Реферальная ссылка</S.Label>
+        <S.Input id='referralToken' {...register('referralToken', {required: 'Поле обязательно к заполнению'})} />
+        {(errors?.referralToken || error) && <p>{errors?.referralToken?.message || 'Ошибка от апи'}</p>}
         <C.FButton disabled={!isValid}>Продолжить</C.FButton>
       </S.Form>
     </div>

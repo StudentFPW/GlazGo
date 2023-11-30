@@ -13,20 +13,23 @@ import Registration from "./components/authorization/Registration";
 import Home from "./components/Home";
 import Layout from "./components/Layout";
 import authApi from "./services/AuthService";
-import { FC, useEffect } from "react";
+import { FC, useEffect, useState } from "react";
 import { useAppDispatch, useAppSelector } from "./hooks/redux";
 import { setAuth } from "./store/redusers/authSlice";
 import { ERoutes } from "./enums/routes";
 import { PrivateRoutes } from "./components/PrivateRoutes";
 import CandidatesAll from "./components/candidates/CandidatesAll";
+import { IToken } from "./modules/IToken";
 
 const App: FC = () => {
-  const [checkAuth] = authApi.useCheckAuthMutation()
+  const [verify] = authApi.useVerifyMutation()
   const dispatch = useAppDispatch()
 
   useEffect(() => {
     if (localStorage.getItem('accessToken')) {
-      // checkAuth({})
+      const token = localStorage.getItem('accessToken')
+      const queryBody: IToken = { token }
+      verify(queryBody)
       dispatch(setAuth())
     }
   }, [])
@@ -38,7 +41,7 @@ const App: FC = () => {
       <Route path={ERoutes.Root} element={<Layout/>}>
         <Route path={ERoutes.Registration} element={<Registration/>}/>
         <Route path={ERoutes.Authorization} element={<Authorization/>}/>
-        <Route element={<PrivateRoutes isAuthenticated={true} redirectPath={ERoutes.Authorization} />}>
+        <Route element={<PrivateRoutes isAuthenticated={isAuth} redirectPath={ERoutes.Authorization} />}>
           <Route index element={<Home/>}/>
           <Route path={ERoutes.Vacancies} element={<Vacancies/>}/>
           <Route path={ERoutes.Vacancy} element={<Vacancy/>}/>

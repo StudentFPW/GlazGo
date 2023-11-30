@@ -14,8 +14,8 @@ const Layout = () => {
     return (
         <ThemeProvider theme={baseTheme}>
             <Wrapper>
-                {/* {isAuth && <Header />} */}
-                <Header />
+                {isAuth && <Header />}
+                {/* <Header /> */}
                 <Main>
                     <C.Container>
                         <Outlet />
