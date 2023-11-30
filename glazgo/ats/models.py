@@ -4,6 +4,17 @@ from django.conf import settings
 from import_export import resources
 
 
+class Team(models.Model):
+    # Необходимые поля
+    name = models.CharField(max_length=255)
+    members = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name="members")
+    created_by = models.ForeignKey(
+        settings.AUTH_USER_MODEL, related_name="created_by", on_delete=models.CASCADE
+    )
+    # Необязательные поля
+    created_at = models.DateTimeField(auto_now_add=True)
+
+
 class CandidateBase(models.Model):
     file = models.FileField("Файл с базой кандидатов", upload_to="excel/")
     datetime = models.DateTimeField("Время загрузки файла", auto_now_add=True)
@@ -76,6 +87,12 @@ class Vacancy(models.Model):
     ]
 
     # Необходимые поля
+    created_by = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        related_name="vacancy_creator",
+        on_delete=models.CASCADE,
+    )
+    team = models.ForeignKey(Team, related_name="teams", on_delete=models.CASCADE)
     recruter = models.ForeignKey(
         settings.AUTH_USER_MODEL, on_delete=models.PROTECT, related_name="recruters"
     )

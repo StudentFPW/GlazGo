@@ -7,6 +7,20 @@ from users.models import User
 from users.serializers import UserDetailsSerializer
 
 
+class TeamSerializer(serializers.ModelSerializer):
+    members = UserDetailsSerializer(many=True, read_only=True)
+    created_by = UserDetailsSerializer(read_only=True)
+
+    class Meta:
+        model = Team
+        fields = (
+            "id",
+            "name",
+            "members",
+            "created_by",
+        )
+
+
 class RFOSerializer(serializers.ModelSerializer):
     class Meta:
         model = ReasonForOpening
