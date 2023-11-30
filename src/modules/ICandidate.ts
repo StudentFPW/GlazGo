@@ -9,7 +9,7 @@ export interface ICandidate {
     otch: string
     email: string
     phone: string
-    ref: string
+    referralProgram: number
     resume: string
 }
 

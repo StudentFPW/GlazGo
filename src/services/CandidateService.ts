@@ -24,7 +24,8 @@ const candidateApi = baseApi.injectEndpoints({
             query: () => ({
                 url: `/api-c-p/`,
             }),
-            transformResponse: (response: any): ICandidatesResponseData => camelcaseKeys(response, { deep: true })
+            transformResponse: (response: any): ICandidatesResponseData => camelcaseKeys(response, { deep: true }),
+            providesTags: result => ['Candidate']
         }),
         fetchLimitCandidates: build.query<ICandidatesResponseData, string>({
             query: (params) => ({
@@ -43,7 +44,8 @@ const candidateApi = baseApi.injectEndpoints({
                 url: `/api-new-cand/`,
                 method: 'POST',
                 body: JSON.stringify(decamelizeKeys(candidate))
-            })
+            }),
+            invalidatesTags: ['Candidate']
         })
     })
 })

@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import * as C from '../../styles/components'
 import { useNavigate } from 'react-router-dom'
 import Close from '../../images/icons/close.svg'
@@ -11,11 +11,13 @@ import candidateApi from '../../services/CandidateService'
 const NewCandidate = () => {
     const navigate = useNavigate()
     const handleGoBack = () => navigate(-1)
-
     const {data} = vacancyApi.useFetchAllVacanciesQuery()
     const vacancies = data?.results
+    const [createCandidate, {isSuccess}] = candidateApi.useCreateCandidateMutation()
 
-    const [createCandidate] = candidateApi.useCreateCandidateMutation()
+    useEffect(() => {
+        if (isSuccess) navigate(-1)
+      }, [isSuccess, navigate])
 
     const {
         register,
@@ -59,14 +61,14 @@ const NewCandidate = () => {
                 <S.Input id='email' {...register('email')} />
                 <label htmlFor="source">Источник</label>
                 <S.Input id='source' {...register('source')} /> */}
-                <S.RefProgramm htmlFor="referalProgramm">
-                    <S.Checkbox id='referalProgramm' type='checkbox' checked={isRef} onChange={e => setIsRef(e.target.checked)}/>
+                <S.RefProgramm htmlFor="ref">
+                    <S.Checkbox id='ref' type='checkbox' checked={isRef} onChange={e => setIsRef(e.target.checked)}/>
                     Реферальная программа
                 </S.RefProgramm>
                 {isRef &&
                 <S.Ref>
-                    <label htmlFor="ref">Реферер</label>
-                    <S.Input id='ref' {...register('ref')} />
+                    <label htmlFor="referralProgram">Реферер</label>
+                    <S.Input id='referralProgram' type='number' {...register('referralProgram')} />
                 </S.Ref>
                 }
                 <label htmlFor="resume">Ссылка на резюме</label>

@@ -13,6 +13,7 @@ const baseApi = createApi({
             return headers
         },
     }),
+    tagTypes: ['Candidate'],
     endpoints: () => ({}),
 
 })
