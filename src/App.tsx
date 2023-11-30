@@ -22,7 +22,8 @@ import CandidatesAll from "./components/candidates/CandidatesAll";
 import { IToken } from "./modules/IToken";
 
 const App: FC = () => {
-  const [verify] = authApi.useVerifyMutation()
+  const [verify, {error}] = authApi.useVerifyMutation()
+  const [refresh] = authApi.useRefreshMutation()
   const dispatch = useAppDispatch()
 
   useEffect(() => {
@@ -30,10 +31,19 @@ const App: FC = () => {
       const token = localStorage.getItem('accessToken')
       const queryBody: IToken = { token }
       verify(queryBody)
-      dispatch(setAuth())
+      dispatch(setAuth(true))
     }
+    // if (localStorage.getItem('refreshToken')) {
+    //   const token = localStorage.getItem('accessToken')
+    //   const queryBody: IToken = { token: token}
+    //   refresh(queryBody)
+    // }
   }, [])
 
+  if (error) {
+    localStorage.removeItem('accessToken')
+    dispatch(setAuth(false))
+  }
   const isAuth = useAppSelector(state => state.auth.isAuth)
 
   return (

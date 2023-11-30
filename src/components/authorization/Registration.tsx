@@ -6,15 +6,22 @@ import userApi from '../../services/AuthService'
 import { useNavigate } from 'react-router-dom'
 import { IRegQueryData } from '../../modules/IReg'
 import Logo from '../../images/icons/logo.svg'
+import { useAppDispatch } from '../../hooks/redux'
+import { setAuth } from '../../store/redusers/authSlice'
 
 const Registration:FC = () => {
 
   const [registration, {data, error, isSuccess}] = userApi.useRegistrationMutation()
+  const dispatch = useAppDispatch()
 
-  if (data) {
-    localStorage.setItem('accessToken', data.access)
-    localStorage.setItem('role', data.user.role.toString())
-  }
+  useEffect(() => {
+    if (data) {
+      localStorage.setItem('accessToken', data.access)
+      localStorage.setItem('refreshToken', data.access)
+      localStorage.setItem('role', data.user.role.toString())
+      dispatch(setAuth(true))
+    }
+  }, [data])
 
   const navigate = useNavigate()
 

@@ -6,8 +6,8 @@ const authSlice = createSlice({
         isAuth: false,
     },
     reducers: {
-        setAuth(state) {
-            state.isAuth = true
+        setAuth(state, action) {
+            state.isAuth = action.payload
         },
         logout(state) {
             localStorage.removeItem('accessToken')

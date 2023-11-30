@@ -3,7 +3,7 @@ import * as C from '../../styles/components'
 import * as S from './AuthorizationStyles'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { IAuthData } from '../../modules/IAuth'
-import { useNavigate } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 import { useAppDispatch, useAppSelector } from '../../hooks/redux'
 import { setAuth } from '../../store/redusers/authSlice'
 import authApi from '../../services/AuthService'
@@ -11,6 +11,10 @@ import Logo from '../../images/icons/logo.svg'
 
 const Authorization:FC = () => {
   const isAuth = useAppSelector(state => state.auth.isAuth)
+  const navigate = useNavigate()
+  // const location = useLocation()
+  // const previousPath = location.state?.from
+  // console.log(previousPath)
   useEffect(() => {
     if (isAuth) navigate(-1)
   }, [isAuth])
@@ -23,17 +27,17 @@ const Authorization:FC = () => {
   useEffect(() => {
     if (data) {
       localStorage.setItem('accessToken', data.access)
+      localStorage.setItem('refreshToken', data.access)
       localStorage.setItem('role', data.user.role.toString())
-      dispatch(setAuth())
+      dispatch(setAuth(true))
     }
   }, [data])
 
-  const navigate = useNavigate()
 
   const handleGoToReg = () => navigate('/registration')
 
   useEffect(() => {
-    if (isSuccess) navigate('/vacancies')
+    if (isSuccess) navigate('/')
   }, [isSuccess, navigate])
 
   const {

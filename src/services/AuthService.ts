@@ -36,13 +36,14 @@ const authApi = baseApi.injectEndpoints({
                 // credentials: 'include'
             })
         }),
-        // checkAuth: build.mutation({
-        //     query: () => ({
-        //         url: '/user/token/refresh/',
-        //         method: 'POST',
-        //         credentials: 'include'
-        //     })
-        // })
+        refresh: build.mutation({
+            query: (token) => ({
+                url: '/user/token/refresh/',
+                method: 'POST',
+                body: JSON.stringify(decamelizeKeys(token))
+                // credentials: 'include'
+            })
+        })
     })
 })
 

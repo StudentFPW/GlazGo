@@ -4,6 +4,15 @@ import { css, styled } from 'styled-components'
 import Burger from '../../images/icons/burger.svg'
 import Close from '../../images/icons/close.svg'
 import Logo from '../../images/icons/logo.svg'
+import Folder from '../../images/icons/folder.svg'
+import List from '../../images/icons/list.svg'
+import Envelope from '../../images/icons/envelope.svg'
+import UsersThree from '../../images/icons/users-three.svg'
+import Newspaper from '../../images/icons/newspaper.svg'
+import Cloud from '../../images/icons/cloud.svg'
+import User from '../../images/icons/user.svg'
+import Settings from '../../images/icons/settings.svg'
+import Help from '../../images/icons/help.svg'
 import * as C from '../../styles/components'
 import { useAppDispatch, useAppSelector } from '../../hooks/redux'
 import authApi from '../../services/AuthService'
@@ -51,9 +60,23 @@ const MenuBurger: FC = () => {
                         <C.Container>
                             <nav>
                                 <ul>
-                                    <li><NavLink to={ERoutes.Vacancies} onClick={handleToggleNav}>Вакансии</NavLink></li>
-                                    <li><NavLink to={ERoutes.CandidatesAll} onClick={handleToggleNav}>Кандидаты</NavLink></li>
-                                    <li>Чат</li>
+                                    <Li>
+                                        <IconWrapper><Folder/></IconWrapper>
+                                        <NavLink to={ERoutes.Vacancies} onClick={handleToggleNav}>Вакансии</NavLink>
+                                    </Li>
+                                    <Li>
+                                        <IconWrapper><UsersThree/></IconWrapper>
+                                        <NavLink to={ERoutes.CandidatesAll} onClick={handleToggleNav}>Кандидаты</NavLink>
+                                    </Li>
+                                    <Li><IconWrapper><Envelope/></IconWrapper>
+                                        <NavLink to={ERoutes.Zayavka} onClick={handleToggleNav}>Создать заявку</NavLink>
+                                    </Li>
+                                    <Li><IconWrapper><List/></IconWrapper>Проекты</Li>
+                                    <Li><IconWrapper><Newspaper/></IconWrapper>Отчеты</Li>
+                                    <Li><IconWrapper><Cloud/></IconWrapper>Чат</Li>
+                                    <Li><IconWrapper><User/></IconWrapper>Профиль</Li>
+                                    <Li><IconWrapper><Settings/></IconWrapper>Настройки</Li>
+                                    <Li><IconWrapper><Help/></IconWrapper>Поддержка</Li>
                                 </ul>
                             </nav>
                         </C.Container>
@@ -119,9 +142,26 @@ const NavWrapper = styled.div`
     top: 64px;
     transition: top 2s;
         ul {
-        display: flex;
-        flex-direction: column;
-        row-gap: 20px;
-        margin: 24px 0;
+            border-top: 1px solid ${({ theme }) => theme.colors.white};
+            display: flex;
+            flex-direction: column;
+            row-gap: 20px;
+            padding: 24px 0;
+        }
+`
+const Li = styled.li`
+    display: flex;
+    column-gap: 16px;
+    align-items: center;
+`
+const IconWrapper = styled.div`
+    height: 24px;
+    svg {
+        width: 24px;
+        height: 24px;
+        path {
+            fill:  ${({ theme }) => theme.colors.white};
+            stroke: ${({ theme }) => theme.colors.white};
+        }
     }
 `

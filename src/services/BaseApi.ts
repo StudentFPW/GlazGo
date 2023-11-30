@@ -1,6 +1,5 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/dist/query/react";
 
-
 const baseApi = createApi({
     reducerPath: 'baseApi',
     baseQuery: fetchBaseQuery({
@@ -12,9 +11,10 @@ const baseApi = createApi({
                 headers.set('Authorization', `Bearer ${token}`)
             }
             return headers
-        }
+        },
     }),
     endpoints: () => ({}),
+
 })
 
 export default baseApi

@@ -8,24 +8,22 @@ import { useNavigate } from 'react-router-dom'
 import { styled } from 'styled-components'
 import candidateApi from '../../services/CandidateService'
 import { IPagination } from '../../modules/IPagination'
+import CTableAll from './table/CTableAll'
 
 const CandidatesAll: FC = () => {
   const navigate = useNavigate()
-  const handleGoToCandidates = () => {
-    navigate(-1)
-  }
   const {data} = candidateApi.useFetchAllCandidatesQuery()
 
   return (
     <div>
       <Title>
           <C.H2>Кандидаты</C.H2>
-          <C.NButton onClick={handleGoToCandidates}>
+          <C.NButton onClick={() => navigate('/')}>
               <C.SvgIconWrapper><Close/></C.SvgIconWrapper>
           </C.NButton>
       </Title>
         <Options path={'/new-candidate'}/>
-        <CTable />
+        <CTableAll />
         {data && <Pagination count={data.count} previous={data.previous} next={data.next} />}
     </div>
   )

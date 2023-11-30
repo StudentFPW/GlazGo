@@ -5,8 +5,10 @@ import Close from '../../images/icons/close.svg'
 import { Link } from 'react-router-dom'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { IVacancyChangeQueryData } from '../../modules/IVacancy'
+import vacancyApi from '../../services/VacancyService'
 
 const Zayavka = () => {
+    const [createVacancy] = vacancyApi.useCreateVacancyMutation()
     const {
         register,
         formState: { errors, isValid},
@@ -14,7 +16,7 @@ const Zayavka = () => {
     } = useForm<IVacancyChangeQueryData>({mode: 'onBlur'})
 
     const onSubmit: SubmitHandler<IVacancyChangeQueryData> = async (data) => {
-    // await login(data)
+    await createVacancy(data)
     }
 
     return (

@@ -9,17 +9,17 @@ import { useAppSelector } from '../../../hooks/redux'
 const CTableAll: FC = () => {
     const {data} = candidateApi.useFetchAllCandidatesQuery()
     const candidates = data?.results
-    console.log(candidates)
-    const url = data?.next.slice(data?.next.indexOf('?'))
-    console.log(url)
-    const isNext = useAppSelector(state => state.pagination.isNext)
-    useEffect(() => {
-        if (isNext) {
-            const {data: datas} = candidateApi.useFetchLimitCandidatesQuery(url ? url : '')
-            console.log(datas)
-            console.log('datas')
-        }
-    }, [isNext])
+    // console.log(candidates)
+    // const url = data?.next.slice(data?.next.indexOf('?'))
+    // console.log(url)
+    // const isNext = useAppSelector(state => state.pagination.isNext)
+    // useEffect(() => {
+    //     if (isNext) {
+    //         const {data: datas} = candidateApi.useFetchLimitCandidatesQuery(url ? url : '')
+    //         console.log(datas)
+    //         console.log('datas')
+    //     }
+    // }, [isNext])
     // if (isNext) {
     //     const {data: datas} = candidateApi.useFetchLimitCandidatesQuery(url ? url : '')
     //     console.log(datas)

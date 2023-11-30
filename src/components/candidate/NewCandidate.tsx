@@ -44,7 +44,7 @@ const NewCandidate = () => {
                 <S.Input id='name' {...register('name')}/>
                 <label htmlFor="otch">Отчество</label>
                 <S.Input id='otch' {...register('otch')}/>
-                <label htmlFor="birthday">др</label>
+                <label htmlFor="birthday">Дата рождения</label>
                 <S.Input type='date' id='birthday' {...register('birthday')}/>
                 <label htmlFor="vacancy">Вакансия</label>
                 <S.Select id="vacancy" {...register('vacancy')}>
