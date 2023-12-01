@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { IVacancyChangeQueryData } from '../../modules/IVacancy'
 import vacancyApi from '../../services/VacancyService'
+import { REASON, REGION, SCHEDULE } from '../../config'
 
 const Zayavka = () => {
     const [createVacancy] = vacancyApi.useCreateVacancyMutation()
@@ -29,7 +30,7 @@ const Zayavka = () => {
                     </C.NButton>
                 </Link>
             </S.Title>
-            <S.Info>
+            {/* <S.Info>
                 <S.AutoItem>
                     <p>Заказчик:</p>
                     <p></p>
@@ -42,7 +43,7 @@ const Zayavka = () => {
                     <p>Компания:</p>
                     <p></p>
                 </S.AutoItem>
-            </S.Info>
+            </S.Info> */}
             <S.Form onSubmit={handleSubmit(onSubmit)}>
                     <label htmlFor="project">Проект</label>
                     <S.Select id="project" {...register('project')}>
@@ -53,28 +54,28 @@ const Zayavka = () => {
                     </S.Select>
                     <label htmlFor="">Вакансия</label>
                     <S.Input />
-                    <label htmlFor="region" {...register('region')}>Город</label>
-                    <S.Select id="region">
+                    <label htmlFor="region">Город</label>
+                    <S.Select id="region" {...register('region')}>
                         <option value="0"></option>
-                        <option value="1">Город 1</option>
-                        <option value="2">Город 2</option>
-                        <option value="3">Город 3</option>
+                        {Object.keys(REGION).map((key) => (
+                            <option value={key} key={key}>{REGION[parseInt(key)]}</option>
+                        ))}
                     </S.Select>
                     <label htmlFor="salary" {...register('salary')}>Зарплата</label>
                     <S.Input id="salary" type="number" {...register('salary')}/>
                     <label htmlFor="schedule">График</label>
                     <S.Select id="schedule" {...register('schedule')}>
                         <option value="0"></option>
-                        <option value="1">2/2</option>
-                        <option value="2">5/2</option>
-                        <option value="3">3/3</option>
+                        {Object.keys(SCHEDULE).map((key) => (
+                            <option value={key} key={key}>{SCHEDULE[parseInt(key)]}</option>
+                        ))}
                     </S.Select>
-                    <label htmlFor="cause">Причина открытия вакансии</label>
-                    <S.Select id="cause" {...register('cause')}>
+                    <label htmlFor="reason">Причина открытия вакансии</label>
+                    <S.Select id="reason" {...register('reason')}>
                         <option value="0"></option>
-                        <option value="1">Расширение штата</option>
-                        <option value="2">Увольнение сотрудника</option>
-                        <option value="3">Повышение сотрудника</option>
+                        {Object.keys(REASON).map((key) => (
+                            <option value={key} key={key}>{REASON[parseInt(key)]}</option>
+                        ))}
                     </S.Select>
                     <label htmlFor="link">Ссылка на вакансию</label>
                     <S.Input id="link" {...register('link')}/>

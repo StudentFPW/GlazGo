@@ -6,15 +6,9 @@ export const Title = styled.div`
     justify-content: space-between;
     align-items: center;
     width: 100%;
-    /* margin-bottom: 32px; */
-    /* position: relative; */
 `
-export const Header = styled.div`
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    width: 100%;
-    position: relative;
+export const SubTitle = styled.div`
+    text-align: center;
 `
 export const Status = styled.div`
     /* position: absolute;
@@ -57,9 +51,10 @@ export const ItemValue = styled.div`
     overflow: auto;
     white-space: nowrap;
 `
-export const MessengerWrapper = styled.div`
+export const Phone = styled.div`
     display: flex;
-    /* justify-content: center; */
+    align-items: center;
+    justify-content: space-between;
     margin-bottom: 14px;
     column-gap: 30px;
 `

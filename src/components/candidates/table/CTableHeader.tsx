@@ -44,7 +44,7 @@ const Header = styled.thead`
             width: 200px;
         }
         > th:nth-child(2) {
-            width: 150px;
+            width: 100px;
         }
         > th:nth-child(3) {
             width: 150px;

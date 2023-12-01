@@ -1,10 +1,10 @@
-import React, { FC, useState } from 'react'
+import React, { FC, useEffect, useState } from 'react'
 import * as S from './VacancyStyles'
 import * as C from '../../styles/components'
 import Close from '../../images/icons/close.svg'
 import { useNavigate, useParams } from 'react-router-dom'
 import vacancyApi from '../../services/VacancyService'
-import { VACANCY_STATUS } from '../../config'
+import { REASON, REGION, SCHEDULE, VACANCY_STATUS } from '../../config'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { IVacancyChangeQueryData } from '../../modules/IVacancy'
 import candidateApi from '../../services/CandidateService'
@@ -14,7 +14,7 @@ const Vacancy: FC = () => {
     const {id} = useParams()
     const {data: vacancy} = vacancyApi.useFetchVacancyQuery(id ? id : '')
     const navigate = useNavigate()
-    let status, customer, recruiter, date
+    let status: number | undefined, customer, recruiter, date
     if (vacancy) {
         status = vacancy.statusVacancy
         customer = vacancy.customer
@@ -44,6 +44,13 @@ const Vacancy: FC = () => {
             statusVacancy: status,
         }
     })
+
+    useEffect(() => {
+        reset({
+          salary: vacancy?.salary,
+          statusVacancy: status,
+        });
+      }, [reset, vacancy, status]);
 
     const onSubmit: SubmitHandler<IVacancyChangeQueryData> = async (data) => {
     // await login(data)
@@ -87,52 +94,51 @@ const Vacancy: FC = () => {
                 </div>
             </S.Head>
             <S.Info>
-                <S.AutoItem>
-                    <p>Заказчик:</p>
-                    <p>{customer?.lastName} {customer?.firstName}</p>
-                </S.AutoItem>
+                {customer?.firstName &&
+                    <S.AutoItem>
+                        <p>Заказчик:</p>
+                        <p>{customer?.lastName} {customer?.firstName}</p>
+                    </S.AutoItem>
+                }
                 <S.AutoItem>
                     <p>Рекрутер:</p>
                     <p>{recruiter?.lastName} {recruiter?.firstName}</p>
                 </S.AutoItem>
-                <S.AutoItem>
+                {/* <S.AutoItem>
                     <p>Компания:</p>
                     <p></p>
-                </S.AutoItem>
+                </S.AutoItem> */}
             </S.Info>
             <S.Form onSubmit={handleSubmit(onSubmit)}>
-                <label htmlFor="project">Проект</label>
+                {/* <label htmlFor="project">Проект</label>
                 <S.Select id="project" disabled={!isChange} {...register('project')}>
                     <option value="0"></option>
                     <option value="1">Проект 1</option>
                     <option value="2">Проект 2</option>
                     <option value="3">Проект 3</option>
-                </S.Select>
+                </S.Select> */}
                 <label htmlFor="region">Город</label>
                 <S.Select id="region" disabled={!isChange} {...register('region')}>
-                    <option value="0"></option>
-                    <option value="1">Город 1</option>
-                    <option value="2">Город 2</option>
-                    <option value="3">Город 3</option>
+                    {Object.keys(REGION).map((key) => (
+                        <option value={key} key={key}>{REGION[parseInt(key)]}</option>
+                    ))}
                 </S.Select>
                 <label htmlFor="salary">Зарплата</label>
                 <S.Input id="salary" type="number" disabled={!isChange} {...register('salary')}/>
                 <label htmlFor="schedule">График</label>
                 <S.Select id="schedule" disabled={!isChange} {...register('schedule')}>
-                    <option value="0"></option>
-                    <option value="1">2/2</option>
-                    <option value="2">5/2</option>
-                    <option value="3">3/3</option>
+                    {Object.keys(SCHEDULE).map((key) => (
+                        <option value={key} key={key}>{SCHEDULE[parseInt(key)]}</option>
+                    ))}
                 </S.Select>
-                <label htmlFor="cause">Причина открытия вакансии</label>
-                <S.Select id="cause" disabled={!isChange} {...register('cause')}>
-                    <option value="0"></option>
-                    <option value="1">Расширение штата</option>
-                    <option value="2">Увольнение сотрудника</option>
-                    <option value="3">Повышение сотрудника</option>
+                <label htmlFor="reason">Причина открытия вакансии</label>
+                <S.Select id="reason" disabled={!isChange} {...register('reason')}>
+                    {Object.keys(REASON).map((key) => (
+                        <option value={key} key={key}>{REASON[parseInt(key)]}</option>
+                    ))}
                 </S.Select>
-                <label htmlFor="link">Ссылка на вакансию</label>
-                <S.Input id="link" disabled={!isChange} {...register('link')}/>
+                {/* <label htmlFor="link">Ссылка на вакансию</label>
+                <S.Input id="link" disabled={!isChange} {...register('link')}/> */}
                 <label htmlFor="candidate">Выбранный кандидат</label>
                 <S.Select id="candidate" disabled={!isChange} {...register('candidate')}>
                     <option value="0"></option>

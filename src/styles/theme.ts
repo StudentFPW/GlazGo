@@ -7,7 +7,8 @@ export const baseTheme: ITheme = {
         black: '#121212',
         white: '#fff',
         gray:  '#BEBEBE',
-        lightGray: '#F0F0F0'
+        lightGray: '#F0F0F0',
+        error: '#EB5757'
     },
 
     // media: {},

@@ -53,5 +53,5 @@ const Table = styled.table`
     max-width: 600px;
     border-collapse: collapse;
     border: 1px solid #D7D7D7;
-    margin: 20px 0;
+    margin: 10px 0;
 `

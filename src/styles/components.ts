@@ -6,6 +6,12 @@ export const Container = styled.div`
   margin: 0 auto;
   width: 100%;
 `
+// FButton - функциональные кнопки
+// LButton - кпопки ссылки
+// NButton - кнопки навигации
+// TButton - кнопки таблицы
+// TFButton - функциональные кнопки таблицы
+
 export const button = css`
     height: 46px;
     width: 100%;
@@ -28,6 +34,13 @@ export const LButton = styled.button`
     background-color: ${({ theme }) => theme.colors.white};
     border: 0.5px solid ${({ theme }) => theme.colors.gray};
     box-shadow: 0px 4px 4px 0px rgba(17, 30, 62, 0.06)
+`
+export const LinkBtn = styled.a`
+    ${button}
+    background-color: ${({ theme }) => theme.colors.white};
+    border: 0.5px solid ${({ theme }) => theme.colors.gray};
+    box-shadow: 0px 4px 4px 0px rgba(17, 30, 62, 0.06);
+    margin: 10px 0;
 `
 export const NButton = styled(LButton)`
     width: 40px;
@@ -76,3 +89,4 @@ export const SvgIconWrapper = styled.div`
         height: 16px;
     }
 `
+

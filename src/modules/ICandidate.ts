@@ -17,6 +17,7 @@ export interface ICandidateProm {
     candidatId: ICandidate
     vacancyId: IVacancy
     statusChange: number
+    statusChangeDate: string
     recruterId: IUser
     appointmentDate: string
 }

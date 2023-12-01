@@ -3,7 +3,7 @@ import { styled } from 'styled-components'
 import Filter from '../../../images/icons/filter.svg'
 
 const VTableHeader = () => {
-    const titles = ['Вакансия', 'Статус', 'Город', 'З/п', 'ID']
+    const titles = ['ID', 'Вакансия', 'Статус', 'Город', 'З/п']
 
     return (
         <Header>
@@ -41,21 +41,17 @@ const Header = styled.thead`
     }
     tr {
         > th:nth-child(1) {
+            width: 60px;
+        }
+        > th:nth-child(2) {
             width: 200px;
         }
-
-        > th:nth-child(2) {
-            width: 150px;
-        }
-
         > th:nth-child(3) {
-            width: 150px;
-        }
-
-        > th:nth-child(4) {
             width: 100px;
         }
-
+        > th:nth-child(4) {
+            width: 150px;
+        }
         > th:nth-child(5) {
             width: 100px;
         }

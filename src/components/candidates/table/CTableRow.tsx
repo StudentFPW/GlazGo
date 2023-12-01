@@ -3,16 +3,16 @@ import styled from 'styled-components'
 import { ICandidateProm } from '../../../modules/ICandidate'
 import { useNavigate } from 'react-router-dom'
 import { CANDIDATE_STATUS } from '../../../config'
+import { formatDate } from '../../../utils'
 
 interface CandidateItemProps {
     candidate: ICandidateProm
 }
 const CTableRow: FC<CandidateItemProps> = ({candidate}) => {
-    const {candidatId, vacancyId, statusChange, recruterId, appointmentDate} = candidate
+    const {candidatId, vacancyId, statusChange, recruterId, appointmentDate, statusChangeDate} = candidate
     const fio = `${candidatId.surname} ${candidatId.name} ${candidatId.otch}`
-
+    const date = formatDate(statusChangeDate) // убрать вывод этой даты
     const [showFullContent, setShowFullContent] = useState(false)
-
     const navigate = useNavigate()
 
     const handleGoToCandidate = () => {
@@ -28,7 +28,7 @@ const CTableRow: FC<CandidateItemProps> = ({candidate}) => {
         <tr>
             <Td data-content={fio} onClick={handleGoToCandidate}>{fio}</Td>
             <Td data-content={CANDIDATE_STATUS[statusChange]}>{CANDIDATE_STATUS[statusChange]}</Td>
-            <Td data-content={appointmentDate}>{appointmentDate}</Td>
+            <Td data-content={appointmentDate ? appointmentDate : date}>{appointmentDate ? appointmentDate : date}</Td>
         </tr>
     )
 }

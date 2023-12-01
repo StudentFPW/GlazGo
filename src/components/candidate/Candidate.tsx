@@ -13,11 +13,12 @@ const Candidate = () => {
     const {data: candidateData } = candidateApi.useFetchCandidateQuery(id ? id : '')
     const navigate = useNavigate()
     const handleGoBack = () => navigate(-1)
-    let candidate, vacancy, recruiter
+    let candidate, vacancy, recruiter, customer
     if (candidateData) {
         candidate = candidateData.candidatId
         vacancy = candidateData.vacancyId
         recruiter = candidateData.recruterId
+        customer = vacancy.customer
     }
 
 
@@ -29,30 +30,32 @@ const Candidate = () => {
                     <C.SvgIconWrapper><Close/></C.SvgIconWrapper>
                 </C.NButton>
             </S.Title>
-            <div>Прикреплен к вакансии ID рекрутером 19.11.2023</div>
+            {/* <S.SubTitle>Прикреплен к вакансии ID рекрутером 19.11.2023</S.SubTitle> */}
             <div>
                 <div>ФИО</div>
                 <S.ItemValue>{candidate?.surname} {candidate?.name} {candidate?.otch}</S.ItemValue>
                 <div>Вакансия</div>
                 <S.ItemValue>{vacancy?.nameVacancy}</S.ItemValue>
-                <div>Заказчик</div>
-                <S.ItemValue></S.ItemValue>
-                <div>Реферер</div>
-                <S.ItemValue></S.ItemValue>
+                {customer?.firstName &&
+                <div>
+                    <div>Заказчик</div>
+                    <S.ItemValue>{customer?.lastName} {customer?.firstName}</S.ItemValue>
+                </div>
+                }
+                {/* <div>Реферер</div>
+                <S.ItemValue></S.ItemValue> */}
                 <div>Рекрутер</div>
                 <S.ItemValue>{recruiter?.lastName} {recruiter?.firstName}</S.ItemValue>
-                <div>Источник</div>
-                <S.ItemValue></S.ItemValue>
+                {/* <div>Источник</div>
+                <S.ItemValue></S.ItemValue> */}
                 <div>Email</div>
                 <S.ItemValue>{candidate?.email}</S.ItemValue>
-                <div>Резюме</div>
-                <S.ItemValue>{candidate?.resume}</S.ItemValue>
-                <div>Телефон</div>
-                <S.ItemValue><a href={`tel:${candidate?.phone}`}>{candidate?.phone}</a></S.ItemValue>
-                <S.MessengerWrapper>
+                <C.LinkBtn href={candidate?.resume} target='_blank'>Резюме</C.LinkBtn>
+                <S.Phone>
+                    <C.LinkBtn href={`tel:${candidate?.phone}`}>{candidate?.phone}</C.LinkBtn>
                     <a href={`https://t.me/${candidate?.phone}`}><S.Messenger><Telegram/></S.Messenger></a>
                     <a href={`https://wa.me/${candidate?.phone}`}><S.Messenger><WatsApp/></S.Messenger></a>
-                </S.MessengerWrapper>
+                </S.Phone>
                 <S.Form>
                     <label htmlFor="">Статус</label>
                     <S.Select name="" id="" value={candidateData?.statusChange}>

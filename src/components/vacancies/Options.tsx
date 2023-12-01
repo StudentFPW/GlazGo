@@ -33,7 +33,7 @@ export default Options
 const BtnContainer = styled.div`
     display: flex;
     column-gap: 12px;
-    margin-bottom: 24px;
+    margin-bottom: 10px;
 `
 const SPlus = styled.div`
     height: 20px;

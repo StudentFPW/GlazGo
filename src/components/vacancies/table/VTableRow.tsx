@@ -2,7 +2,7 @@ import React, { FC, useState } from 'react'
 import styled from 'styled-components'
 import { IVacancy } from '../../../modules/IVacancy'
 import { useNavigate } from 'react-router-dom'
-import { VACANCY_STATUS } from '../../../config'
+import { REGION, VACANCY_STATUS } from '../../../config'
 
 interface VacancyItemProps {
     vacancy: IVacancy
@@ -27,11 +27,11 @@ const VTableRow: FC<VacancyItemProps> = ({vacancy}) => {
 
     return (
         <tr>
+            <Td data-content={id}>{id}</Td>
             <Td data-content={nameVacancy} onClick={handleGoToVacancy}>{nameVacancy}</Td>
             <Td data-content={VACANCY_STATUS[statusVacancy]}>{VACANCY_STATUS[statusVacancy]}</Td>
-            <Td data-content={region}>{region}</Td>
+            <Td data-content={REGION[region]}>{REGION[region]}</Td>
             <Td data-content={salary}>{salary}</Td>
-            <Td data-content={id}>{id}</Td>
         </tr>
     )
 }

@@ -6,6 +6,7 @@ export interface ITheme {
     white: string
     gray:  string
     lightGray: string
+    error: string
   }
   sizes: {
     container: { width: number }

@@ -3,8 +3,9 @@ import { IUser } from "./IUser"
 
 export interface IVacancy {
     nameVacancy: string
+    reason: number
     statusVacancy: number
-    region: string
+    region: number
     salary: number
     id: number
     dateCust: string

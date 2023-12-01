@@ -1,4 +1,4 @@
-import React, { FC, useEffect } from 'react'
+import React, { FC, useEffect, useState } from 'react'
 import * as C from '../../styles/components'
 import * as S from './AuthorizationStyles'
 import { SubmitHandler, useForm } from 'react-hook-form'
@@ -43,11 +43,13 @@ const Authorization:FC = () => {
   const {
     register,
     formState: { errors, isValid},
-    handleSubmit
+    handleSubmit,
+    reset
   } = useForm<IAuthData>({mode: 'onBlur'})
 
   const onSubmit: SubmitHandler<IAuthData> = async (data) => {
     await login(data)
+    reset()
   }
 
   return (
@@ -62,14 +64,14 @@ const Authorization:FC = () => {
       <S.Form onSubmit={handleSubmit(onSubmit)}>
         <S.Label htmlFor="username">Логин</S.Label>
         <S.Input id='username' {...register('username', {required: 'Поле обязательно к заполнению'})}/>
-        {errors?.username && <p>{errors?.username?.message}</p>}
+        {errors?.username && <S.Error>{errors?.username?.message}</S.Error>}
         <S.Label htmlFor="username">Email</S.Label>
         <S.Input id='email' {...register('email', {required: 'Поле обязательно к заполнению'})}/>
-        {errors?.email && <p>{errors?.email?.message}</p>}
+        {errors?.email && <S.Error>{errors?.email?.message}</S.Error>}
         <S.Label htmlFor="password">Пароль</S.Label>
         <S.Input id='password' type="password" {...register('password', {required: 'Поле обязательно к заполнению'})} />
-        {(errors?.password || error) && <p>{errors?.password?.message || 'Ошибка от апи'}</p>}
-        <C.FButton disabled={!isValid}>Продолжить</C.FButton>
+        {(errors?.password || error) && <S.Error>{errors?.password?.message || 'Неверные данные'}</S.Error>}
+        <S.CFButton disabled={!isValid}>Продолжить</S.CFButton>
       </S.Form>
     </div>
   )
