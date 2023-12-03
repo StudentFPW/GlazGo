@@ -9,10 +9,12 @@ class User(AbstractUser):
         (2, "Рекрутер-администратор"),
         (3, "Заказчик"),
         (4, "Заказчик-администратор"),
+        (5, "Неопределен"),
     ]
+
     # Необходимые поля
     referral_token = models.CharField(max_length=255)
-    role = models.IntegerField("Права", choices=ROLES, default=1)
+    role = models.IntegerField("Права", choices=ROLES, default=5)
     first_name = models.CharField("Имя", max_length=30)
     last_name = models.CharField("Фамилия", max_length=150)
     phone = models.CharField("Телефон", max_length=15)

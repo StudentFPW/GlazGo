@@ -8,15 +8,9 @@ from .serializer import *
 from users.models import User as UserX
 
 
-class TeamViewSet(viewsets.ModelViewSet):
-    """
-    Класс TeamViewSet — это набор представлений, который обрабатывает операции CRUD для модели Team с
-    дополнительной логикой для фильтрации набора запросов на основе текущего пользователя и добавления
-    текущего пользователя в качестве участника при создании новой команды.
-    """
-
-    serializer_class = TeamSerializer
-    queryset = Team.objects.all()
+class ProjectViewSet(viewsets.ModelViewSet):
+    serializer_class = ProjectSerializer
+    queryset = Project.objects.all()
 
     def get_queryset(self):
         return self.queryset.filter(members__in=[self.request.user]).first()
@@ -28,30 +22,23 @@ class TeamViewSet(viewsets.ModelViewSet):
 
 
 @api_view(["GET"])
-def get_my_team(request):
-    """
-    Эта функция извлекает команду, членом которой является текущий пользователь, и возвращает ее
-    сериализованные данные.
-
-    :param request:
-        Объект запроса содержит информацию о текущем HTTP-запросе, например, о пользователе,
-        делающем запрос, и любых данных, отправленных вместе с запросом
-
-    :return:
-        Ответ будет содержать сериализованные данные командного объекта.
-    """
-    team = Team.objects.filter(members__in=[request.user]).first()
-    serializer = TeamSerializer(team)
+def get_my_proj(request):
+    project = Project.objects.filter(members__in=[request.user]).first()
+    serializer = ProjectSerializer(project)
     return Response(serializer.data)
 
 
 @api_view(["POST"])
-def add_member(request):  # TODO Эту функцию нужно переопределить !!!
-    team = Team.objects.filter(members__in=[request.user]).first()
+def add_member(request):
+    project = Project.objects.filter(members__in=[request.user]).first()
     username = request.data["username"]
     user = UserX.objects.get(username=username)
-    team.members.add(user)
-    team.save()
+
+    # Этот код используется для добавления участника в команду,
+    # только если текущий пользователь является создателем команды.
+    if request.user.id == project.created_by.id:
+        project.members.add(user)
+        project.save()
     return Response()
 
 
@@ -131,21 +118,21 @@ class VacancyViewSet(viewsets.ModelViewSet):
         """
         Функция назначает команду и пользователя, создавшего ее, объекту сериализатора.
         """
-        team = Team.objects.filter(members__in=[self.request.user]).first()
+        team = Project.objects.filter(members__in=[self.request.user]).first()
         serializer.save(team=team, created_by=self.request.user)
 
-    # def perform_update(self, serializer):
-    #     """
-    #     Функция «perform_update» обновляет поле назначенного объекта объекта на основе member_id, указанного
-    #     в данных запроса.
-    #     """
-    #     obj = self.get_object()
-    #     member_id = self.request.data["assigned_to"]
-    #     if member_id:
-    #         user = User.objects.get(pk=member_id)
-    #         serializer.save(assigned_to=user)
-    #     else:
-    #         serializer.save()
+    def perform_update(self, serializer):
+        """
+        Функция «perform_update» обновляет поле назначенного объекта объекта на основе member_id, указанного
+        в данных запроса.
+        """
+        obj = self.get_object()
+        member_id = self.request.data["recruter"]
+        if member_id:
+            user = UserX.objects.get(pk=member_id)
+            serializer.save(recruter=user)
+        else:
+            serializer.save()
 
     def get_queryset(self):
         """
@@ -156,7 +143,7 @@ class VacancyViewSet(viewsets.ModelViewSet):
             Team, где поле Members содержит self.request.user (текущий пользователь), а затем фильтрует набор
             запросов на основе полученной команды.
         """
-        team = Team.objects.filter(members__in=[self.request.user]).first()
+        team = Project.objects.filter(members__in=[self.request.user]).first()
         return self.queryset.filter(team=team)
 
 

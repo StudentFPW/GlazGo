@@ -7,12 +7,12 @@ from users.models import User
 from users.serializers import UserDetailsSerializer
 
 
-class TeamSerializer(serializers.ModelSerializer):
+class ProjectSerializer(serializers.ModelSerializer):
     members = UserDetailsSerializer(many=True, read_only=True)
     created_by = UserDetailsSerializer(read_only=True)
 
     class Meta:
-        model = Team
+        model = Project
         fields = (
             "id",
             "name",
@@ -52,8 +52,9 @@ class CPHistorySerializer(serializers.ModelSerializer):
 
 
 class VacancySerializer(serializers.ModelSerializer):
-    recruter = UserDetailsSerializer()
-    customer = UserDetailsSerializer()
+    recruter = UserDetailsSerializer(read_only=True)
+    customer = UserDetailsSerializer(read_only=True)
+    project = ProjectSerializer(read_only=True)
 
     class Meta:
         model = Vacancy
@@ -67,9 +68,9 @@ class CandidateSerializer(serializers.ModelSerializer):
 
 
 class CPromotionSerializer(serializers.ModelSerializer):
-    candidat_id = CandidateSerializer()
-    vacancy_id = VacancySerializer()
-    recruter_id = UserDetailsSerializer()
+    candidat_id = CandidateSerializer(read_only=True)
+    vacancy_id = VacancySerializer(read_only=True)
+    recruter_id = UserDetailsSerializer(read_only=True)
 
     class Meta:
         model = CandidatePromotion

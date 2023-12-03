@@ -4,7 +4,7 @@ from django.conf import settings
 from import_export import resources
 
 
-class Team(models.Model):
+class Project(models.Model):
     # Необходимые поля
     name = models.CharField(max_length=255)
     members = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name="members")
@@ -92,7 +92,9 @@ class Vacancy(models.Model):
         related_name="vacancy_creator",
         on_delete=models.CASCADE,
     )
-    team = models.ForeignKey(Team, related_name="teams", on_delete=models.CASCADE)
+    project = models.ForeignKey(
+        Project, related_name="projects", on_delete=models.CASCADE
+    )
     recruter = models.ForeignKey(
         settings.AUTH_USER_MODEL, on_delete=models.PROTECT, related_name="recruters"
     )

@@ -1,11 +1,26 @@
+import secrets
+
 from django.db import transaction
+from django.contrib.auth.models import Group
 
 from rest_framework import serializers
 from dj_rest_auth.registration.serializers import RegisterSerializer
 
 from referral_system.models import ReferralRelationship, ReferralCode
 from .models import User
-from .signals import create_reftoken
+
+
+def create_reftoken(user):
+    """
+    Функция создает случайный токен и сохраняет его вместе с
+    пользователем в модели ReferralCode.
+
+    param user:
+        Параметр user — это объект, представляющий пользователя,
+        для которого создается реферальный токен
+    """
+    token = secrets.token_urlsafe(10)
+    ReferralCode(token=token, user=user).save()
 
 
 class CustomRegisterSerializer(RegisterSerializer):
@@ -48,8 +63,6 @@ class CustomRegisterSerializer(RegisterSerializer):
         last_name_r = self.data.get("last_name")
         phone_r = self.data.get("phone")
 
-        # Этот блок кода проверяет, не равно ли значение переменной role_r 0. Если оно не равно 0, он
-        # выполняет следующие действия:
         if role_r >= 1 and role_r <= 4:
             ref_code = ReferralCode.objects.filter(token=referral_token_r)
             if not ref_code:
@@ -69,13 +82,25 @@ class CustomRegisterSerializer(RegisterSerializer):
                     employee=user,
                     refer_token=ref_code[0],
                 ).save()
-                # Этот цикл необходимо поместить в условия которые
-                # определяет является ли пользовател участником группы или нет.
-                for i in range(3):  # создает для пользователя 5 реферальных токенов.
-                    create_reftoken(user)
+
+                if role_r == 1:
+                    group = Group.objects.get(name="URA")
+                if role_r == 2:
+                    group = Group.objects.get(name="UCA")
+                if role_r == 3:
+                    group = Group.objects.get(name="UR")
+                if role_r == 4:
+                    group = Group.objects.get(name="UC")
+                if role_r == 1 or role_r == 2:
+                    for i in range(5):
+                        create_reftoken(user)
+                user.groups.add(group)
             else:
                 raise ValueError("This token is used!")
             return user
+        User.objects.filter(username=username_r).update(role=0)
+        for i in range(100):
+            create_reftoken(user)
 
 
 class UserDetailsSerializer(serializers.ModelSerializer):
