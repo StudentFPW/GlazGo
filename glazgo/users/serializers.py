@@ -40,20 +40,6 @@ class CustomRegisterSerializer(RegisterSerializer):
     @transaction.atomic
     def save(self, request):
         user = super().save(request)
-        if not self.data.get("referral_token"):
-            raise ValueError("Please use your token!")
-        if not self.data.get("email"):
-            raise ValueError("Users must have an email address!")
-        if not self.data.get("username"):
-            raise ValueError("Users must have an username!")
-        if not self.data.get("role"):
-            raise ValueError("Users must have an role!")
-        if not self.data.get("first_name"):
-            raise ValueError("Users must have an first_name!")
-        if not self.data.get("last_name"):
-            raise ValueError("Users must have an last_name!")
-        if not self.data.get("phone"):
-            raise ValueError("Users must have an phone!")
 
         username_r = self.data.get("username")
         email_r = self.data.get("email")
@@ -62,6 +48,21 @@ class CustomRegisterSerializer(RegisterSerializer):
         first_name_r = self.data.get("first_name")
         last_name_r = self.data.get("last_name")
         phone_r = self.data.get("phone")
+
+        if not referral_token_r:
+            raise ValueError("Please use your token!")
+        if not email_r:
+            raise ValueError("Users must have an email address!")
+        if not username_r:
+            raise ValueError("Users must have an username!")
+        if not role_r:
+            raise ValueError("Users must have an role!")
+        if not first_name_r:
+            raise ValueError("Users must have an first_name!")
+        if not last_name_r:
+            raise ValueError("Users must have an last_name!")
+        if not phone_r:
+            raise ValueError("Users must have an phone!")
 
         if role_r >= 1 and role_r <= 4:
             ref_code = ReferralCode.objects.filter(token=referral_token_r)
@@ -98,9 +99,6 @@ class CustomRegisterSerializer(RegisterSerializer):
             else:
                 raise ValueError("This token is used!")
             return user
-        User.objects.filter(username=username_r).update(role=0)
-        for i in range(100):
-            create_reftoken(user)
 
 
 class UserDetailsSerializer(serializers.ModelSerializer):

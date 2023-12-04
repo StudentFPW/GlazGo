@@ -12,30 +12,46 @@ class ProjectViewSet(viewsets.ModelViewSet):
     serializer_class = ProjectSerializer
     queryset = Project.objects.all()
 
-    def get_queryset(self):
-        return self.queryset.filter(members__in=[self.request.user]).first()
+    def list(self, request):
+        """
+        Функция возвращает список проектов, участником которых является текущий пользователь.
+        """
+        queryset = Project.objects.filter(members__in=[self.request.user])
+        serializer = ProjectSerializer(queryset, many=True)
+        return Response(serializer.data)
 
     def perform_create(self, serializer):
-        obj = serializer.save(created_by=self.request.user)
-        obj.members.add(self.request.user)
-        obj.save()
+        """
+        Функция «perform_create» сохраняет сериализованный объект, устанавливает в поле «create_by» текущего
+        пользователя, добавляет текущего пользователя в поле «members» и сохраняет объект.
+        """
+        user = UserX.objects.get(pk=self.request.user.pk)
+        if user.role == 1 or user.role == 2:
+            obj = serializer.save(created_by=self.request.user)
+            obj.members.add(self.request.user)
+            obj.save()
 
+    # def retrieve(self, request, pk=None):
+    #     pass
 
-@api_view(["GET"])
-def get_my_proj(request):
-    project = Project.objects.filter(members__in=[request.user]).first()
-    serializer = ProjectSerializer(project)
-    return Response(serializer.data)
+    # def update(self, request, pk=None):
+    #     pass
+
+    # def partial_update(self, request, pk=None):
+    #     pass
+
+    # def destroy(self, request, pk=None):
+    #     pass
 
 
 @api_view(["POST"])
 def add_member(request):
-    project = Project.objects.filter(members__in=[request.user]).first()
-    username = request.data["username"]
-    user = UserX.objects.get(username=username)
-
-    # Этот код используется для добавления участника в команду,
-    # только если текущий пользователь является создателем команды.
+    """
+    Функция add_member добавляет пользователя в список участников проекта, если пользователь, сделавший
+    запрос, является создателем проекта.
+    """
+    project = Project.objects.get(pk=request.data["pk"])
+    user = UserX.objects.get(username=request.data["username"])
     if request.user.id == project.created_by.id:
         project.members.add(user)
         project.save()

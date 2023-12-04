@@ -40,6 +40,7 @@ router.register(r"re", RegionViewSet, basename="R")
 router.register(r"wt", WorkTimeViewSet, basename="WT")
 router.register(r"rfo", RFOViewSet, basename="RFO")
 router.register(r"new-cand", CandidateAddedViewSet, basename="NC")
+router.register(r"proj", ProjectViewSet, basename="P")
 
 schema_view = get_schema_view(
     openapi.Info(
@@ -59,8 +60,8 @@ urlpatterns = [
     path("secret-k6F8-admin-73rbHG/", admin.site.urls),
     path("chat/", include("chat.urls")),
     path("user/", include("users.urls")),
-    path("proj/get_my_proj/", get_my_proj, name="get_my_proj"),
-    path("proj/add_member/", add_member, name="add_member"),
+    path("proj_list/", ProjectViewSet.as_view({"get": "list"}), name="proj_list"),
+    path("add_member/", add_member, name="add_member"),
     path("swag<format>/", schema_view.without_ui(cache_timeout=0), name="schema-json"),
     path("redoc/", schema_view.with_ui("redoc", cache_timeout=0), name="schema-redoc"),
     path(

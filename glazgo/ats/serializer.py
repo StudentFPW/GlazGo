@@ -8,8 +8,8 @@ from users.serializers import UserDetailsSerializer
 
 
 class ProjectSerializer(serializers.ModelSerializer):
-    members = UserDetailsSerializer(many=True, read_only=True)
-    created_by = UserDetailsSerializer(read_only=True)
+    # members = UserDetailsSerializer(many=True, read_only=True)
+    # created_by = UserDetailsSerializer(read_only=True)
 
     class Meta:
         model = Project
