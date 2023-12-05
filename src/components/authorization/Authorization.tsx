@@ -10,14 +10,12 @@ import authApi from '../../services/AuthService'
 import Logo from '../../images/icons/logo.svg'
 
 const Authorization:FC = () => {
-  const isAuth = useAppSelector(state => state.auth.isAuth)
+
   const navigate = useNavigate()
   // const location = useLocation()
   // const previousPath = location.state?.from
   // console.log(previousPath)
-  useEffect(() => {
-    if (isAuth) navigate(-1)
-  }, [isAuth])
+
 
   const [login, { data, error, isSuccess }] = authApi.useLoginMutation()
   const dispatch = useAppDispatch()
@@ -35,10 +33,12 @@ const Authorization:FC = () => {
 
 
   const handleGoToReg = () => navigate('/registration')
+  const isAuth = useAppSelector(state => state.auth.isAuth)
 
   useEffect(() => {
     if (isSuccess) navigate('/')
-  }, [isSuccess, navigate])
+    else if (isAuth) navigate(-1)
+  }, [isAuth, isSuccess, navigate])
 
   const {
     register,
