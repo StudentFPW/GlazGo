@@ -22,7 +22,7 @@ import CandidatesAll from "./components/candidates/CandidatesAll";
 import { IToken } from "./modules/IToken";
 
 const App: FC = () => {
-  const [verify, {error}] = authApi.useVerifyMutation()
+  const [verify, {error, isLoading}] = authApi.useVerifyMutation()
   const [refresh] = authApi.useRefreshMutation()
   const dispatch = useAppDispatch()
 
@@ -32,19 +32,29 @@ const App: FC = () => {
       const queryBody: IToken = { token }
       verify(queryBody)
       dispatch(setAuth(true))
+      // refresh(queryBody)
     }
     // if (localStorage.getItem('refreshToken')) {
-    //   const token = localStorage.getItem('accessToken')
+    //   const token = localStorage.getItem('refreshToken')
     //   const queryBody: IToken = { token: token}
     //   refresh(queryBody)
     // }
   }, [])
 
-  if (error) {
-    localStorage.removeItem('accessToken')
-    dispatch(setAuth(false))
-  }
+  useEffect(() => {
+    if (error) {
+      localStorage.removeItem('accessToken')
+      dispatch(setAuth(false))
+    }
+  }, [error])
+
+  const [isPageRefresh, setIsPageRefresh] = useState(true)
   const isAuth = useAppSelector(state => state.auth.isAuth)
+
+
+  // if (isAuth) setIsPageRefresh(false)
+  // if (isPageRefresh) <div>Loading...</div>
+  // if (isLoading) <div>Loading...</div>
 
   return (
     <Routes>

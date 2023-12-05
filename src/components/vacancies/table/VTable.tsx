@@ -5,7 +5,7 @@ import VTableRow from './VTableRow'
 import vacancyApi from '../../../services/VacancyService'
 
 const VTable: FC = () => {
-    const {data} = vacancyApi.useFetchVacanciesQuery(10)
+    const {data} = vacancyApi.useFetchAllVacanciesQuery()
     const vacancies = data?.results
 
     return (

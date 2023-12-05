@@ -20,25 +20,38 @@ const Authorization:FC = () => {
   const [login, { data, error, isSuccess }] = authApi.useLoginMutation()
   const dispatch = useAppDispatch()
 
+  const onSubmit: SubmitHandler<IAuthData> = async (data) => {
+    await login(data)
+    reset()
+  }
+
   // console.log(error?.data)
 
-  useEffect(() => {
-    if (data) {
-      localStorage.setItem('accessToken', data.access)
-      localStorage.setItem('refreshToken', data.access)
-      localStorage.setItem('role', data.user.role.toString())
-      dispatch(setAuth(true))
-    }
-  }, [data])
+  // useEffect(() => {
+  //   if (data) {
+  //     localStorage.setItem('accessToken', data.access)
+  //     localStorage.setItem('refreshToken', data.refresh)
+  //     localStorage.setItem('role', data.user.role.toString())
+  //     dispatch(setAuth(true))
+  //   }
+  // }, [data])
 
 
   const handleGoToReg = () => navigate('/registration')
   const isAuth = useAppSelector(state => state.auth.isAuth)
 
   useEffect(() => {
-    if (isSuccess) navigate('/')
-    else if (isAuth) navigate(-1)
-  }, [isAuth, isSuccess, navigate])
+    if (isSuccess) {
+      dispatch(setAuth(true))
+      if (data) {
+        localStorage.setItem('accessToken', data.access)
+        localStorage.setItem('refreshToken', data.refresh)
+        localStorage.setItem('role', data.user.role.toString())
+      }
+      navigate('/')
+    }
+    if (isAuth) navigate(-1)
+  }, [data, dispatch, isSuccess, navigate])
 
   const {
     register,
@@ -47,10 +60,7 @@ const Authorization:FC = () => {
     reset
   } = useForm<IAuthData>({mode: 'onBlur'})
 
-  const onSubmit: SubmitHandler<IAuthData> = async (data) => {
-    await login(data)
-    reset()
-  }
+
 
   return (
     <div>
