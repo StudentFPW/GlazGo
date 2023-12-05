@@ -41,13 +41,6 @@ const App: FC = () => {
     // }
   }, [])
 
-  useEffect(() => {
-    if (error) {
-      localStorage.removeItem('accessToken')
-      dispatch(setAuth(false))
-    }
-  }, [error])
-
   const [isPageRefresh, setIsPageRefresh] = useState(true)
   const isAuth = useAppSelector(state => state.auth.isAuth)
 
