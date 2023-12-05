@@ -62,6 +62,7 @@ urlpatterns = [
     path("user/", include("users.urls")),
     path("proj_list/", ProjectViewSet.as_view({"get": "list"}), name="proj_list"),
     path("add_member/", add_member, name="add_member"),
+    path("get_vacancy/", get_vacancy, name="get_vacancy"),
     path("swag<format>/", schema_view.without_ui(cache_timeout=0), name="schema-json"),
     path("redoc/", schema_view.with_ui("redoc", cache_timeout=0), name="schema-redoc"),
     path(

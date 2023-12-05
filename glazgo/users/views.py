@@ -9,11 +9,6 @@ from .serializers import ULUSerializer, UserDetailsSerializer
 from .models import User
 
 
-# class UserDetailsViewSet(viewsets.ModelViewSet):
-#     serializer_class = UserDetailsSerializer
-#     queryset = User.objects.all()
-
-
 @api_view(["GET"])
 def user_list(request):
     """

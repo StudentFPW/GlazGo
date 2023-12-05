@@ -44,6 +44,17 @@ class ProjectViewSet(viewsets.ModelViewSet):
     #     pass
 
 
+@api_view(["GET"])
+def get_vacancy(request):
+    """
+    Функция get_vacancy извлекает все вакансии, относящиеся к конкретному проекту, и возвращает их в
+    виде сериализованных данных.
+    """
+    vacancy = Vacancy.objects.filter(project=request.data["pk"])
+    serializer = VacancySerializer(vacancy, many=True)
+    return Response(serializer.data)
+
+
 @api_view(["POST"])
 def add_member(request):
     """

@@ -1,4 +1,5 @@
 import secrets
+import random
 
 from django.db import transaction
 from django.contrib.auth.models import Group
@@ -19,7 +20,7 @@ def create_reftoken(user):
         Параметр user — это объект, представляющий пользователя,
         для которого создается реферальный токен
     """
-    token = secrets.token_urlsafe(10)
+    token = secrets.token_urlsafe(random.randint(25, 30))
     ReferralCode(token=token, user=user).save()
 
 
@@ -99,6 +100,7 @@ class CustomRegisterSerializer(RegisterSerializer):
             else:
                 raise ValueError("This token is used!")
             return user
+        raise ValueError("Incorrect role!")
 
 
 class UserDetailsSerializer(serializers.ModelSerializer):
@@ -129,23 +131,3 @@ class ULUSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ["username"]
-
-
-# Пожалуйста не удалять !!!
-# class CustomRegisterSerializer(RegisterSerializer):
-#     role = serializers.IntegerField()
-#     first_name = serializers.CharField()
-#     last_name = serializers.CharField()
-#     email = serializers.EmailField()
-#     phone = serializers.CharField()
-
-#     @transaction.atomic
-#     def save(self, request):
-#         user = super().save(request)
-#         user.role = self.data.get("role")
-#         user.first_name = self.data.get("first_name")
-#         user.last_name = self.data.get("last_name")
-#         user.email = self.data.get("email")
-#         user.phone = self.data.get("phone")
-#         user.save()
-#         return user

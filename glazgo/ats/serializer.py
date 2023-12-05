@@ -15,8 +15,9 @@ class ProjectSerializer(serializers.ModelSerializer):
         model = Project
         fields = (
             "id",
-            "name",
+            "title",
             "members",
+            "status",
             "created_by",
         )
 
