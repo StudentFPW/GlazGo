@@ -4,6 +4,28 @@ from django.conf import settings
 from import_export import resources
 
 
+class Project(models.Model):
+    STATUS = [
+        (1, "В работе"),
+        (2, "Набор персонала"),
+        (3, "На паузе"),
+    ]
+
+    # Необходимые поля
+    title = models.CharField(max_length=100)
+    description = models.TextField(max_length=255)
+    members = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name="members")
+    created_by = models.ForeignKey(
+        settings.AUTH_USER_MODEL, related_name="created_by", on_delete=models.CASCADE
+    )
+    # Необязательные поля
+    status = models.IntegerField("Статус проекта", choices=STATUS, default=2)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"Заголовок: {self.title}, Дата создания проекта: {self.created_at.strftime(f'%Y-%m-%d')}"
+
+
 class CandidateBase(models.Model):
     file = models.FileField("Файл с базой кандидатов", upload_to="excel/")
     datetime = models.DateTimeField("Время загрузки файла", auto_now_add=True)
@@ -76,6 +98,14 @@ class Vacancy(models.Model):
     ]
 
     # Необходимые поля
+    created_by = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        related_name="vacancy_creator",
+        on_delete=models.CASCADE,
+    )
+    project = models.ForeignKey(
+        Project, related_name="projects", on_delete=models.CASCADE
+    )
     recruter = models.ForeignKey(
         settings.AUTH_USER_MODEL, on_delete=models.PROTECT, related_name="recruters"
     )
@@ -108,7 +138,7 @@ class Vacancy(models.Model):
     )
 
     def __str__(self):
-        return f"Рекрутер: {self.recruter.last_name}, Название вакансии: {self.name_vacancy}, Заказчик: {self.customer.last_name}"
+        return f"В каком проекте: {self.project}, Рекрутер: {self.recruter}, Название вакансии: {self.name_vacancy}, Заказчик: {self.customer.last_name}"
 
 
 class Candidate(models.Model):

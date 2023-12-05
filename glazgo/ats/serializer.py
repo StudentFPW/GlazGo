@@ -1,9 +1,25 @@
+import random
+
 from rest_framework import serializers
 
 from .models import *
 from users.models import User
 from users.serializers import UserDetailsSerializer
-import random
+
+
+class ProjectSerializer(serializers.ModelSerializer):
+    # members = UserDetailsSerializer(many=True, read_only=True)
+    # created_by = UserDetailsSerializer(read_only=True)
+
+    class Meta:
+        model = Project
+        fields = (
+            "id",
+            "title",
+            "members",
+            "status",
+            "created_by",
+        )
 
 
 class RFOSerializer(serializers.ModelSerializer):
@@ -37,8 +53,9 @@ class CPHistorySerializer(serializers.ModelSerializer):
 
 
 class VacancySerializer(serializers.ModelSerializer):
-    recruter = UserDetailsSerializer()
-    customer = UserDetailsSerializer()
+    recruter = UserDetailsSerializer(read_only=True)
+    customer = UserDetailsSerializer(read_only=True)
+    project = ProjectSerializer(read_only=True)
 
     class Meta:
         model = Vacancy
@@ -52,9 +69,9 @@ class CandidateSerializer(serializers.ModelSerializer):
 
 
 class CPromotionSerializer(serializers.ModelSerializer):
-    candidat_id = CandidateSerializer()
-    vacancy_id = VacancySerializer()
-    recruter_id = UserDetailsSerializer()
+    candidat_id = CandidateSerializer(read_only=True)
+    vacancy_id = VacancySerializer(read_only=True)
+    recruter_id = UserDetailsSerializer(read_only=True)
 
     class Meta:
         model = CandidatePromotion

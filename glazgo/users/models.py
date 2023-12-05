@@ -5,14 +5,16 @@ from django.contrib.auth.models import AbstractUser
 class User(AbstractUser):
     ROLES = [
         (0, "Администратор"),
-        (1, "Рекрутер"),
-        (2, "Рекрутер-администратор"),
-        (3, "Заказчик"),
-        (4, "Заказчик-администратор"),
+        (1, "Рекрутер-администратор"),
+        (2, "Заказчик-администратор"),
+        (3, "Рекрутер"),
+        (4, "Заказчик"),
+        (5, "Неопределен"),
     ]
+
     # Необходимые поля
     referral_token = models.CharField(max_length=255)
-    role = models.IntegerField("Права", choices=ROLES, default=1)
+    role = models.IntegerField("Права", choices=ROLES, default=5)
     first_name = models.CharField("Имя", max_length=30)
     last_name = models.CharField("Фамилия", max_length=150)
     phone = models.CharField("Телефон", max_length=15)
