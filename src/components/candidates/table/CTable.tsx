@@ -1,14 +1,24 @@
-import React, { FC } from 'react'
+import React, { FC, useEffect } from 'react'
 import TableHeader from './CTableHeader'
 import { styled } from 'styled-components'
 import TableRow from './CTableRow'
 import candidateApi from '../../../services/CandidateService'
 import { useParams } from 'react-router-dom'
+import { useAppDispatch, useAppSelector } from '../../../hooks/redux'
+import { setPaginationData } from '../../../store/redusers/paginationSlice'
 
 const CTable: FC = () => {
+    const dispatch = useAppDispatch()
     const {id} = useParams()
-    const {data} = candidateApi.useFetchVacancyCandidatesQuery({limit: 10, id: id ? id : ''})
+    const params = useAppSelector(state => state.pagination.params)
+    const {data} = candidateApi.useFetchVacancyCandidatesQuery({id: id ? id : '', params: params ? params : ''})
     const candidates = data?.results
+
+    useEffect(() => {
+        if (data) {
+            dispatch(setPaginationData(data))
+        }
+    }, [data, dispatch])
 
     return (
         <TableContainer>

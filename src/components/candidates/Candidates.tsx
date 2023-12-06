@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import Options from '../vacancies/Options'
 import Pagination from '../vacancies/Pagination'
 import * as C from '../../styles/components'
@@ -7,17 +7,30 @@ import Close from '../../images/icons/close.svg'
 import { useNavigate, useParams } from 'react-router-dom'
 import { styled } from 'styled-components'
 import vacancyApi from '../../services/VacancyService'
+import { useAppDispatch } from '../../hooks/redux'
+import { resetToInitialState } from '../../store/redusers/paginationSlice'
 
 const Candidates = () => {
   const navigate = useNavigate()
   const {id} = useParams()
   const {data: vacancy} = vacancyApi.useFetchVacancyQuery(id ? id : '')
+  const dispatch = useAppDispatch()
+  const handleClose = () => {
+    navigate(-1)
+  }
+
+  useEffect(() => {
+    return () => {
+      // Эта логика выполнится только при размонтировании компонента
+      dispatch(resetToInitialState())
+    };
+  }, [])
 
   return (
     <div>
       <Title>
           <C.H2>Кандидаты</C.H2>
-          <C.NButton onClick={() => navigate(-1)}>
+          <C.NButton onClick={handleClose}>
               <C.SvgIconWrapper><Close/></C.SvgIconWrapper>
           </C.NButton>
       </Title>

@@ -32,9 +32,13 @@ const paginationSlice = createSlice({
         setParams(state, payload: PayloadAction<string>) {
             state.params = payload.payload
         },
+        resetToInitialState(state) {
+            // Просто возвращаем начальное состояние
+            return initialState;
+        }
     }
 })
 
-export const {setPaginationData, setParams} = paginationSlice.actions
+export const {setPaginationData, setParams, resetToInitialState} = paginationSlice.actions
 
 export default paginationSlice.reducer

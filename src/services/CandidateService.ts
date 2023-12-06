@@ -5,33 +5,18 @@ import decamelizeKeys from 'decamelize-keys'
 
 const candidateApi = baseApi.injectEndpoints({
     endpoints: (build) => ({
-        fetchVacancyCandidates: build.query<ICandidatesResponseData, {limit: number, id: string}>({
-            query: ({limit = 10, id}) => ({
-                url: `/api-c-p/?vacancy_id=${id}`,
-                params: {
-                    limit
-                }
+        fetchVacancyCandidates: build.query<ICandidatesResponseData, {id: string, params: string}>({
+            query: ({id, params}) => ({
+                url: `/api-c-p/?vacancy_id=${id}${params}`,
             }),
             transformResponse: (response: any): ICandidatesResponseData => camelcaseKeys(response, { deep: true })
-        }),
-        fetchVacancyAllCandidates: build.query<ICandidatesResponseData, string>({
-            query: (id) => ({
-                url: `/api-c-p/?vacancy_id=${id}`,
-            }),
-            transformResponse: (response: any): ICandidatesResponseData => camelcaseKeys(response, { deep: true })
-        }),
-        fetchAllCandidates: build.query<ICandidatesResponseData, void>({
-            query: () => ({
-                url: `/api-c-p/`,
-            }),
-            transformResponse: (response: any): ICandidatesResponseData => camelcaseKeys(response, { deep: true }),
-            providesTags: result => ['Candidate']
         }),
         fetchCandidates: build.query<ICandidatesResponseData, string>({
             query: (params) => ({
                 url: `/api-c-p/${params}`,
             }),
-            transformResponse: (response: any): ICandidatesResponseData => camelcaseKeys(response, { deep: true })
+            transformResponse: (response: any): ICandidatesResponseData => camelcaseKeys(response, { deep: true }),
+            providesTags: result => ['Candidate']
         }),
         fetchCandidate: build.query<ICandidateProm, string>({
             query: (id) => ({

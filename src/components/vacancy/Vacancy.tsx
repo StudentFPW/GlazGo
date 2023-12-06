@@ -22,7 +22,7 @@ const Vacancy: FC = () => {
         date = formatDate(vacancy.dateCust)
     }
 
-    const {data} = candidateApi.useFetchVacancyAllCandidatesQuery(id ? id : '')
+    const {data} = candidateApi.useFetchVacancyCandidatesQuery({id: id ? id : '', params: ''})
     const candidates = data?.results
 
     const handleGoToBack = () => {
