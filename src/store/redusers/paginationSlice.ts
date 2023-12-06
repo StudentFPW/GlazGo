@@ -18,12 +18,21 @@ const paginationSlice = createSlice({
             state.count = action.payload.count
             state.previous = action.payload.previous ? action.payload.previous.slice(action.payload.previous.indexOf('?')) : ''
             state.next = action.payload.next ? action.payload.next.slice(action.payload.next.indexOf('?')) : ''
-            state.startCount = action.payload.previous ? state.startCount + 10 : 1
-            if (action.payload.count < 10) {
+            if (action.payload.count) {
+                if (action.payload.previous) {
+                    state.startCount = state.startCount + 10
+                } else {
+                    state.startCount = 1
+                }
+            } else {
+                state.startCount = 0
+            }
+            // исправить значения страниц при нажатии кпопки назад
+            if (action.payload.count <= 10) {
                 state.endCount = action.payload.count
             } else if (action.payload.count > 10) {
                 if (state.next) {
-                    state.endCount = 10
+                    state.endCount = state.endCount + 10
                 } else {
                     state.endCount = action.payload.count
                 }

@@ -161,7 +161,7 @@ const Vacancy: FC = () => {
             <S.Buttons>
                 {!isChange && <C.FButton onClick={handleChange}>Изменить вакансию</C.FButton>}
                 <C.FButton onClick={handleCloseVacancy}>Закрыть вакансию</C.FButton>
-                <C.LButton onClick={handleGoToCandidates}>Кандидаты</C.LButton>
+                {candidates && candidates?.length > 0 && <C.LButton onClick={handleGoToCandidates}>Кандидаты</C.LButton>}
                 <C.LButton>Чат с рекрутером</C.LButton>
             </S.Buttons>
         </div>
