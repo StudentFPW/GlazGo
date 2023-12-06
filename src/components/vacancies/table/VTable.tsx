@@ -1,12 +1,22 @@
-import React, { FC } from 'react'
+import React, { FC, useEffect } from 'react'
 import TableHeader from './VTableHeader'
 import { styled } from 'styled-components'
 import VTableRow from './VTableRow'
 import vacancyApi from '../../../services/VacancyService'
+import { useAppDispatch, useAppSelector } from '../../../hooks/redux'
+import { setPaginationData } from '../../../store/redusers/paginationSlice'
 
 const VTable: FC = () => {
-    const {data} = vacancyApi.useFetchAllVacanciesQuery()
+    const dispatch = useAppDispatch()
+    const params = useAppSelector(state => state.pagination.params)
+    const {data} = vacancyApi.useFetchVacanciesQuery(params ? params : '')
     const vacancies = data?.results
+
+    useEffect(() => {
+        if (data) {
+            dispatch(setPaginationData(data))
+        }
+    }, [data, dispatch])
 
     return (
         <TableContainer>

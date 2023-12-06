@@ -5,18 +5,15 @@ import decamelizeKeys from 'decamelize-keys'
 
 const vacancyApi = baseApi.injectEndpoints({
     endpoints: (build) => ({
-        fetchAllVacancies: build.query<IVacancyResponseData, void>({
-            query: () => ({
-                url: '/api-vac/',
-            }),
-            transformResponse: (response: any): IVacancyResponseData => camelcaseKeys(response, { deep: true })
-        }),
-        fetchVacancies: build.query<IVacancyResponseData, number>({
-            query: (limit: number = 10) => ({
-                url: '/api-vac/',
-                params: {
-                    limit
-                }
+        // fetchAllVacancies: build.query<IVacancyResponseData, void>({
+        //     query: () => ({
+        //         url: '/api-vac/',
+        //     }),
+        //     transformResponse: (response: any): IVacancyResponseData => camelcaseKeys(response, { deep: true })
+        // }),
+        fetchVacancies: build.query<IVacancyResponseData, string>({
+            query: (params) => ({
+                url: `/api-vac/${params}`
             }),
             transformResponse: (response: any): IVacancyResponseData => camelcaseKeys(response, { deep: true })
         }),

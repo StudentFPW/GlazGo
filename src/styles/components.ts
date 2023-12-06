@@ -25,7 +25,7 @@ export const FButton = styled.button`
     ${button}
     color: ${({ theme }) => theme.colors.white};
     background-color: ${({ theme }) => theme.colors.primary};
-    &&[disabled] {
+    &[disabled] {
         background-color: ${({ theme }) => theme.colors.inactive};
     }
 `
@@ -45,6 +45,11 @@ export const LinkBtn = styled.a`
 export const NButton = styled(LButton)`
     width: 40px;
     height: 40px;
+    &[disabled] {
+        path {
+        fill:  ${({ theme }) => theme.colors.gray};
+        }
+    }
 `
 export const tButton = css`
     height: 40px;

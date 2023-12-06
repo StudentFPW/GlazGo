@@ -9,11 +9,8 @@ interface VacancyItemProps {
 }
 
 const VTableRow: FC<VacancyItemProps> = ({vacancy}) => {
-
     const {nameVacancy, statusVacancy, region, salary, id} = vacancy
-
     const [showFullContent, setShowFullContent] = useState(false)
-
     const navigate = useNavigate()
 
     const handleGoToVacancy = () => {

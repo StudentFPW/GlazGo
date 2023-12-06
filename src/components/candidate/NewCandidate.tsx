@@ -11,7 +11,7 @@ import candidateApi from '../../services/CandidateService'
 const NewCandidate = () => {
     const navigate = useNavigate()
     const handleGoBack = () => navigate(-1)
-    const {data} = vacancyApi.useFetchAllVacanciesQuery()
+    const {data} = vacancyApi.useFetchVacanciesQuery('')
     const vacancies = data?.results
     const [createCandidate, {isSuccess}] = candidateApi.useCreateCandidateMutation()
 

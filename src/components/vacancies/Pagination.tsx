@@ -1,42 +1,27 @@
-import React, { FC, useEffect } from 'react'
+import { FC } from 'react'
 import styled from 'styled-components'
 import ArrowLeft from '../../images/icons/arrow-left.svg'
 import ArrowRight from '../../images/icons/arrow-right.svg'
 import * as C from '../../styles/components'
-import { ICandidatesResponseData } from '../../modules/ICandidate'
-import { IPagination } from '../../modules/IPagination'
-import candidateApi from '../../services/CandidateService'
-import { useAppDispatch } from '../../hooks/redux'
-import { setNext } from '../../store/redusers/paginationSlice'
+import { useAppDispatch, useAppSelector } from '../../hooks/redux'
+import { setParams } from '../../store/redusers/paginationSlice'
 
-const Pagination: FC<IPagination> = ({count, next, previous}) => {
-    // let url = ''
-    // // let data
-
-    // if (next) {
-    //     return url = next.slice(next.indexOf('?'))
-    // }
-
-    // const handleNextPage = () => {
-    //     if (next.includes('api-c-p')) {
-    //         const {data} = candidateApi.useFetchLimitCandidatesQuery(url)
-    //     }
-    // }
-
+const Pagination: FC = () => {
+    const { count, startCount, endCount, next, previous } = useAppSelector(state => state.pagination)
     const dispatch = useAppDispatch()
-    const handleQuery = () => {
-        dispatch(setNext())
+    const handlePrevPage = () => {
+        dispatch(setParams(previous))
     }
-    // useEffect(() => {
-    //     handleQuery()
-    //   }, [])
+    const handleNextPage = () => {
+        dispatch(setParams(next))
+    }
 
     return (
         <PContainer>
-            <p>{count > 10 ? 10 : count} из {count}</p>
+            <p>{startCount}-{endCount} из {count}</p>
             <Arrows>
-                <C.NButton><ArrowLeft/></C.NButton>
-                <C.NButton onClick={handleQuery}><ArrowRight/></C.NButton>
+                <C.NButton onClick={handlePrevPage} disabled={!previous}><ArrowLeft/></C.NButton>
+                <C.NButton onClick={handleNextPage} disabled={!next}><ArrowRight/></C.NButton>
             </Arrows>
         </PContainer>
     )

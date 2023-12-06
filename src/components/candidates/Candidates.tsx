@@ -6,13 +6,11 @@ import CTable from './table/CTable'
 import Close from '../../images/icons/close.svg'
 import { useNavigate, useParams } from 'react-router-dom'
 import { styled } from 'styled-components'
-import candidateApi from '../../services/CandidateService'
 import vacancyApi from '../../services/VacancyService'
 
 const Candidates = () => {
   const navigate = useNavigate()
   const {id} = useParams()
-  const {data} = candidateApi.useFetchVacancyCandidatesQuery({limit: 10, id: id ? id : ''})
   const {data: vacancy} = vacancyApi.useFetchVacancyQuery(id ? id : '')
 
   return (
@@ -29,7 +27,7 @@ const Candidates = () => {
       </SubTitle>
       <Options path={'/new-candidate'}/>
       <CTable />
-      {data && <Pagination count={data.count} previous={data.previous} next={data.next} />}
+      <Pagination />
     </div>
   )
 }

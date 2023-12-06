@@ -1,31 +1,22 @@
-import React, { FC, useEffect } from 'react'
+import { FC, useEffect } from 'react'
 import TableHeader from './CTableHeader'
 import { styled } from 'styled-components'
 import TableRow from './CTableRow'
 import candidateApi from '../../../services/CandidateService'
-import { useParams } from 'react-router-dom'
-import { useAppSelector } from '../../../hooks/redux'
+import { useAppDispatch, useAppSelector } from '../../../hooks/redux'
+import { setPaginationData } from '../../../store/redusers/paginationSlice'
 
 const CTableAll: FC = () => {
-    const {data} = candidateApi.useFetchAllCandidatesQuery()
+    const dispatch = useAppDispatch()
+    const params = useAppSelector(state => state.pagination.params)
+    const {data} = candidateApi.useFetchCandidatesQuery(params ? params : '')
     const candidates = data?.results
-    // console.log(candidates)
-    // const url = data?.next.slice(data?.next.indexOf('?'))
-    // console.log(url)
-    // const isNext = useAppSelector(state => state.pagination.isNext)
-    // useEffect(() => {
-    //     if (isNext) {
-    //         const {data: datas} = candidateApi.useFetchLimitCandidatesQuery(url ? url : '')
-    //         console.log(datas)
-    //         console.log('datas')
-    //     }
-    // }, [isNext])
-    // if (isNext) {
-    //     const {data: datas} = candidateApi.useFetchLimitCandidatesQuery(url ? url : '')
-    //     console.log(datas)
-    //     console.log('datas')
-    // }
 
+    useEffect(() => {
+        if (data) {
+            dispatch(setPaginationData(data))
+        }
+    }, [data, dispatch])
 
     return (
         <TableContainer>
