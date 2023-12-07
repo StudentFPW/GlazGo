@@ -8,6 +8,8 @@ const initialState: IPagination = {
     params: '',
     startCount: 0,
     endCount: 0,
+    isPrev: false,
+    isNext: true,
 }
 
 const paginationSlice = createSlice({
@@ -18,28 +20,49 @@ const paginationSlice = createSlice({
             state.count = action.payload.count
             state.previous = action.payload.previous ? action.payload.previous.slice(action.payload.previous.indexOf('?')) : ''
             state.next = action.payload.next ? action.payload.next.slice(action.payload.next.indexOf('?')) : ''
-            if (action.payload.count) {
+
+            if (state.count) {
                 if (action.payload.previous) {
-                    state.startCount = state.startCount + 10
+                    if (state.isNext) {
+                        state.startCount = state.startCount + 10
+                    }
+                    if (state.isPrev) {
+                        state.startCount = state.startCount - 10
+                    }
                 } else {
                     state.startCount = 1
                 }
             } else {
                 state.startCount = 0
             }
-            // исправить значения страниц при нажатии кпопки назад
-            if (action.payload.count <= 10) {
-                state.endCount = action.payload.count
-            } else if (action.payload.count > 10) {
-                if (state.next) {
-                    state.endCount = state.endCount + 10
-                } else {
-                    state.endCount = action.payload.count
+
+            if (state.count <= 10) {
+                state.endCount = state.count
+            } else if (state.count > 10) {
+                if (state.isNext) {
+                    if (state.next) {
+                        state.endCount = state.endCount + 10
+                    } else {
+                        state.endCount = state.count
+                    }
+                }
+                if (state.isPrev) {
+                    if (state.endCount === state.count) {
+                        state.endCount = Math.floor(state.count / 10) * 10
+                    } else {
+                        state.endCount = state.endCount - 10
+                    }
                 }
             }
-        },
+      },
         setParams(state, payload: PayloadAction<string>) {
             state.params = payload.payload
+        },
+        setPrev(state, payload: PayloadAction<boolean>) {
+            state.isPrev = payload.payload
+        },
+        setNext(state, payload: PayloadAction<boolean>) {
+            state.isNext = payload.payload
         },
         resetToInitialState(state) {
             // Просто возвращаем начальное состояние
@@ -48,6 +71,6 @@ const paginationSlice = createSlice({
     }
 })
 
-export const {setPaginationData, setParams, resetToInitialState} = paginationSlice.actions
+export const {setPaginationData, setParams, resetToInitialState, setPrev, setNext} = paginationSlice.actions
 
 export default paginationSlice.reducer

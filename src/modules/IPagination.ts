@@ -5,4 +5,6 @@ export interface IPagination {
     params: string
     startCount: number
     endCount: number
+    isPrev: boolean
+    isNext: boolean
 }
