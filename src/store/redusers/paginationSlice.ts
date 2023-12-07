@@ -22,7 +22,7 @@ const paginationSlice = createSlice({
             state.next = action.payload.next ? action.payload.next.slice(action.payload.next.indexOf('?')) : ''
 
             if (state.count) {
-                if (action.payload.previous) {
+                if (state.previous) {
                     if (state.isNext) {
                         state.startCount = state.startCount + 10
                     }

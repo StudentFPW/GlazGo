@@ -1,44 +1,24 @@
-import React, { FC, useEffect, useState } from 'react'
+import { FC, useEffect } from 'react'
 import * as C from '../../styles/components'
 import * as S from './AuthorizationStyles'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { IAuthData } from '../../modules/IAuth'
-import { useLocation, useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { useAppDispatch, useAppSelector } from '../../hooks/redux'
 import { setAuth } from '../../store/redusers/authSlice'
 import authApi from '../../services/AuthService'
 import Logo from '../../images/icons/logo.svg'
 
 const Authorization:FC = () => {
-
   const navigate = useNavigate()
-  // const location = useLocation()
-  // const previousPath = location.state?.from
-  // console.log(previousPath)
-
-
-  const [login, { data, error, isSuccess }] = authApi.useLoginMutation()
   const dispatch = useAppDispatch()
+  const [login, { data, error, isSuccess }] = authApi.useLoginMutation()
+  const isAuth = useAppSelector(state => state.auth.isAuth)
 
   const onSubmit: SubmitHandler<IAuthData> = async (data) => {
     await login(data)
     reset()
   }
-
-  // console.log(error?.data)
-
-  // useEffect(() => {
-  //   if (data) {
-  //     localStorage.setItem('accessToken', data.access)
-  //     localStorage.setItem('refreshToken', data.refresh)
-  //     localStorage.setItem('role', data.user.role.toString())
-  //     dispatch(setAuth(true))
-  //   }
-  // }, [data])
-
-
-  const handleGoToReg = () => navigate('/registration')
-  const isAuth = useAppSelector(state => state.auth.isAuth)
 
   useEffect(() => {
     if (isSuccess) {
@@ -51,7 +31,9 @@ const Authorization:FC = () => {
       navigate('/')
     }
     if (isAuth) navigate(-1)
-  }, [data, dispatch, isSuccess, navigate])
+  }, [data, dispatch, isAuth, isSuccess, navigate])
+
+  const handleGoToReg = () => navigate('/registration')
 
   const {
     register,
@@ -59,8 +41,6 @@ const Authorization:FC = () => {
     handleSubmit,
     reset
   } = useForm<IAuthData>({mode: 'onBlur'})
-
-
 
   return (
     <div>
